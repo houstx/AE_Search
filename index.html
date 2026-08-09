@@ -684,24 +684,43 @@ svg.leaflet-image-layer.leaflet-interactive path {
     height:100vh;display:flex;flex-direction:column}
 
   /* ---------- top bar ---------- */
-  .top{flex:none;background:var(--panel);border-bottom:1px solid var(--line);padding:10px 16px;
-       display:flex;align-items:center;gap:14px;flex-wrap:wrap;z-index:1200;position:relative}
-  .brand{font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap}
-  .brand span{display:block;font-weight:400;font-size:11.5px;color:var(--muted);letter-spacing:.03em}
-  .filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;flex:1}
-  .fg{display:flex;align-items:center;gap:4px;background:#f2efea;border:1px solid var(--line);
-      border-radius:8px;padding:3px 5px 3px 9px}
-  .fg label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
-  select,input[type=range]{font:inherit;font-size:13px;border:none;background:transparent;color:var(--ink);
-      outline:none;cursor:pointer;padding:2px}
-  input[type=range]{width:92px;cursor:grab}
-  .cnt{font-size:12.5px;color:var(--muted);white-space:nowrap}
-  .cnt b{color:var(--accent);font-size:14px}
-  .ainote{flex:1 1 100%;font-size:11px;font-weight:600;color:#7a5310;background:#fdf4e4;border:1px solid #ecd9b4;border-radius:6px;padding:3px 9px;text-align:center}
-  .btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--panel);
-       border-radius:8px;padding:6px 11px;cursor:pointer;white-space:nowrap}
-  .btn:hover{border-color:#c3cbc7}
+  .top{flex:none;background:var(--panel);border-bottom:1px solid var(--line);padding:9px 16px 10px;
+       display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;z-index:1200;position:relative}
+  .brand{font-weight:700;font-size:15.5px;letter-spacing:-.01em;white-space:nowrap;line-height:1.2}
+  .brand span{display:block;font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.03em}
+
+  /* every control in the bar shares one height, radius and border */
+  .ctl{height:30px;border:1px solid var(--line);border-radius:8px;background:var(--panel);
+       font:inherit;font-size:12.5px;color:var(--ink);white-space:nowrap;box-sizing:border-box}
+  .filters{flex:1 1 100%;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .fg{height:30px;display:flex;align-items:center;gap:6px;background:#f4f2ee;border:1px solid var(--line);
+      border-radius:8px;padding:0 7px 0 10px;box-sizing:border-box}
+  .fg label{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+            font-weight:700;cursor:pointer}
+  .fg select{font:inherit;font-size:12.5px;border:none;background:transparent;color:var(--ink);
+             outline:none;cursor:pointer;padding:0;max-width:190px}
+  .fg.act{background:var(--accent-soft);border-color:var(--accent-line)}
+  .fg.act label{color:var(--accent)}
+  .fprice output{font-size:12.5px;font-variant-numeric:tabular-nums;min-width:44px;text-align:right;
+                 font-weight:600}
+  input[type=range]{width:104px;cursor:pointer;accent-color:var(--accent);background:transparent;margin:0}
+  .sep{width:1px;height:20px;background:var(--line);margin:0 3px}
+  .cnt{font-size:12.5px;color:var(--muted);white-space:nowrap;margin-left:auto}
+  .cnt b{color:var(--accent);font-size:15px;font-weight:700}
+  .ainote{flex:1 1 100%;font-size:10.5px;font-weight:600;color:#7a5310;background:#fdf4e4;
+          border:1px solid #ecd9b4;border-radius:6px;padding:3px 9px;text-align:center;margin-top:1px}
+  .btn{height:30px;font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--panel);
+       border-radius:8px;padding:0 11px;cursor:pointer;white-space:nowrap;color:var(--ink);
+       box-sizing:border-box;transition:background .12s,border-color .12s,color .12s}
+  .btn:hover{border-color:#b9c4c0;background:#fbfaf8}
   .btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn.on:hover{background:#0d3f31}
+  .btn.tog::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
+       background:#cfd6d3;margin-right:6px;vertical-align:1px}
+  .btn.tog.on::before{background:#8fd4bd}
+  .btn.go{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+  .btn.go:hover{background:#0d3f31;border-color:#0d3f31}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
 
   /* ---------- layout ---------- */
   .wrap{flex:1 1 auto;min-height:0;display:flex;position:relative}
@@ -714,6 +733,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
         margin-bottom:11px;cursor:pointer;transition:box-shadow .13s,border-color .13s,transform .13s}
   .card:hover,.card.hot{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-1px)}
   .card.sel{border-color:var(--accent);border-width:2px;padding:12px 14px;box-shadow:var(--shadow)}
+  .chead{display:flex;gap:12px;align-items:flex-start}
+  .cbody{flex:1;min-width:0}
+  .thumb{position:relative;flex:none;width:108px;height:104px;border-radius:8px;overflow:hidden;
+         background:#e4e8e6;border:1px solid var(--line);display:block;text-decoration:none}
+  .thumb img{position:absolute;width:256px;height:256px;max-width:none;display:block}
+  a.thumb:hover{border-color:var(--accent);box-shadow:0 0 0 2px rgba(20,80,63,.18)}
+  a.thumb:hover .tcap{background:var(--accent);padding-top:4px}
+  .thumb .tcap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.66));
+        color:#fff;font-size:8.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+        padding:9px 5px 3px;text-align:center;transition:background .12s,padding .12s}
   .crow{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
   .price{font-size:21px;font-weight:700;letter-spacing:-.025em;line-height:1.15}
   .permo{font-size:11.5px;color:var(--muted);font-weight:400;margin-top:1px}
@@ -732,7 +761,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
   .sch{font-size:11.5px;color:#4d4b47;margin-top:7px;padding-top:7px;border-top:1px solid #f0eeea;line-height:1.55}
   .g{font-weight:700;color:#14503f}.y{font-weight:700;color:#8a6212}
-  .r{font-weight:700;color:#8c2f2c}.n{font-weight:700;color:#77746f}
+  .r{font-weight:700;color:#8c2f2c}.f{font-weight:700;color:#8c2f2c}.n{font-weight:700;color:#77746f}
   .note{font-size:12px;color:#55524e;margin-top:6px;font-style:italic}
   .mls{font-size:11px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
   .mls a{color:var(--accent2);text-decoration:none;font-weight:600;border-bottom:1px dotted var(--accent2)}
@@ -812,6 +841,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .views button.on{background:var(--accent);color:#fff}
   .pin.fv{background:#b3781f}
   .b-new{background:#1d6e57;color:#fff}
+  .sharedbar{flex:none;background:#e9f1ee;border-bottom:1px solid var(--accent-line);
+        color:#1d4a3d;font-size:12.5px;padding:8px 16px;display:flex;align-items:center;gap:10px;
+        flex-wrap:wrap;z-index:1150}
+  .sharedbar button{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--accent-line);
+        background:#fff;border-radius:7px;padding:4px 10px;cursor:pointer;color:var(--accent)}
+  .sharedbar button:hover{background:var(--accent);color:#fff}
+  .linkbox{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4000;background:#fff;
+        border:1px solid var(--line);border-radius:11px;padding:16px 18px;box-shadow:0 8px 34px rgba(0,0,0,.3);
+        width:min(520px,92vw);font-size:13px}
+  .linkbox b{display:block;margin-bottom:8px;font-size:14px}
+  .linkbox textarea{width:100%;font:inherit;font-size:12px;border:1px solid var(--line);border-radius:7px;
+        padding:8px;resize:none;color:var(--ink);background:#fbfaf8}
+  .linkbox button{margin-top:9px;font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--accent);
+        background:var(--accent);color:#fff;border-radius:7px;padding:7px 14px;cursor:pointer}
   .flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:3000;
          background:#14503f;color:#fff;font-size:13px;font-weight:600;padding:11px 18px;
          border-radius:9px;box-shadow:0 3px 16px rgba(0,0,0,.28);max-width:88vw;text-align:center}
@@ -841,10 +884,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .top{gap:8px;row-gap:8px}
     .brand{flex:1 1 100%}
     .views{font-size:11px}
-    .views button{padding:6px 8px}
+    .views button{padding:0 8px}
     .cnt{margin-left:auto}
     #map{height:46vh}
     .fg{flex:1 1 auto}
+    .sep{display:none}
+    .filters .btn{flex:1 1 auto;text-align:center}
+    input[type=range]{flex:1;width:auto}
 
     body{overflow:auto;height:auto;display:block}
     .wrap{flex-direction:column;height:auto;display:flex}
@@ -864,35 +910,51 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </div>
 <div class="top">
   <div class="brand">Your Home Search<span>USDA-verified &middot; North Houston &middot; Aug 7, 2026</span></div>
+
   <div class="views">
-      <button data-v="all" class="on">All</button>
-      <button data-v="fav">&#9733; Saved <span id="nFav">0</span></button>
-      <button data-v="note">Notes <span id="nNote">0</span></button>
-      <button data-v="hide">Hidden <span id="nHide">0</span></button>
-    </div>
-    <button class="btn onlym" id="tFilters">Filters &#9662;</button>
+    <button data-v="all" class="on">All</button>
+    <button data-v="fav">&#9733; Saved <b id="nFav">0</b></button>
+    <button data-v="note">Notes <b id="nNote">0</b></button>
+    <button data-v="hide">Hidden <b id="nHide">0</b></button>
+  </div>
+
+  <div class="cnt"><b id="cN">0</b> shown</div>
+  <button class="btn onlym" id="tFilters">Filters &#9662;</button>
+
   <div class="filters">
-    <div class="fg"><label>Stories</label>
+    <div class="fg"><label for="fStory">Stories</label>
       <select id="fStory"><option value="all">Any</option><option value="1">1 story</option><option value="2">2 story</option></select>
     </div>
-    <div class="fg"><label>Max price</label>
+    <div class="fg"><label for="fGf">Bed downstairs</label>
+      <select id="fGf"><option value="all">Any</option><option value="suite">Separate suite</option><option value="yes">Any bed down</option><option value="no">All beds upstairs</option></select>
+    </div>
+    <div class="fg"><label for="fSch">Schools</label>
+      <select id="fSch">
+        <option value="all">Any rating</option>
+        <option value="b">All campuses B</option>
+        <option value="c">B or C only &mdash; no D or F</option>
+        <option value="d">No F campus</option>
+      </select>
+    </div>
+    <div class="fg fprice"><label for="fPrice">Max price</label>
       <input type="range" id="fPrice" min="200000" max="300000" step="5000" value="300000">
-      <span id="fPriceV" style="font-size:12.5px;font-variant-numeric:tabular-nums;min-width:52px">$300k</span>
+      <output id="fPriceV" for="fPrice">$300k</output>
     </div>
-    <div class="fg"><label>Ground-floor bed</label>
-      <select id="fGf"><option value="all">Any</option><option value="suite">Separate suite</option><option value="yes">Any bed down</option></select>
-    </div>
-    <div class="fg"><label>Schools</label>
-      <select id="fSch"><option value="all">Any</option><option value="clean">No D or F campus</option><option value="nof">No F campus</option></select>
-    </div>
-    <button class="btn on" id="tUsda">USDA overlay</button>
-        <button class="btn" id="tView">Only in view</button>
-    <button class="btn" id="tReset">Reset</button>
-    <button class="btn" id="tExport" title="Download your saved homes, comments and hidden list — send this to your agent or use it to move to another device">Save my list</button>
-    <button class="btn" id="tImport" title="Load an update file from your agent, or restore your own saved list">Load file</button>
+    <button class="btn" id="tReset" title="Clear all filters">Reset</button>
+
+    <span class="sep"></span>
+
+    <button class="btn tog on" id="tUsda" title="Shade USDA-ineligible areas on the map">USDA overlay</button>
+    <button class="btn tog" id="tView" title="Only list homes currently visible on the map">Only in view</button>
+
+    <span class="sep"></span>
+
+    <button class="btn go" id="tShare" title="Create a link holding your saved homes and comments, to send to your agent">Share my picks</button>
+    <button class="btn" id="tExport" title="Download your saved homes, comments and hidden list as a file">Download</button>
+    <button class="btn" id="tImport" title="Load a shared list, an agent update, or your own saved file">Load file</button>
     <input type="file" id="fFile" accept="application/json" style="display:none">
   </div>
-  <div class="cnt"><b id="cN">0</b> homes shown</div>
+
   <div class="ainote">AI-generated content &mdash; details may be wrong or out of date. Verify all listings, schools, and USDA eligibility independently. Not lending or financial advice.</div>
 </div>
 
@@ -1467,9 +1529,9 @@ const S = {
   npsouth:   ["Unverified — call NCISD","n","White Oak","r","Porter HS","g"],
   royalpines:["Porter Elem","y","Pine Valley","r","Porter HS","g"],
   maple:     ["Highlands (new)","n","White Oak","r","Porter HS","g"],
-  tavola:    ["Tavola Elem","g","Keefer Crossing","r","New Caney HS","y"],
-  tavolaw:   ["New Caney Elem","g","Keefer Crossing","r","New Caney HS","y"],
-  landing:   ["New Caney Elem","g","Keefer Crossing","r","New Caney HS","y"],
+  tavola:    ["Tavola Elem","g","Keefer Crossing","f","New Caney HS","y"],
+  tavolaw:   ["New Caney Elem","g","Keefer Crossing","f","New Caney HS","y"],
+  landing:   ["New Caney Elem","g","Keefer Crossing","f","New Caney HS","y"],
   splTL:     ["Timber Lakes","r","Splendora JH","r","Splendora HS","y"],
   splGL:     ["Greenleaf","r","Splendora JH","r","Splendora HS","y"],
   splPW:     ["Piney Woods","r","Splendora JH","r","Splendora HS","y"],
@@ -1572,7 +1634,8 @@ try{
       url:'https://rdgdwe.sc.egov.usda.gov/arcgis/rest/services/Eligibility/Eligibility/MapServer',
       layers:[4], opacity:0.32, f:'image', useCors:false
     });
-    usdaLayer.addTo(map);
+    // added in fitMap(), once the container has been measured — adding it while
+    // the map is 0×0 leaves a mis-sized export image on screen
   }
 }catch(err){ usdaLayer=null; }
 if(!usdaLayer){
@@ -1588,14 +1651,39 @@ let markers=[], cards=[], shown=[];
 const money=n=>'$'+n.toLocaleString();
 const kk=n=>'$'+Math.round(n/1000)+'k';
 const schHTML=s=>`${s[0]} <span class="${s[1]}">${rate(s[1])}</span> · ${s[2]} <span class="${s[3]}">${rate(s[3])}</span> · ${s[4]} <span class="${s[5]}">${rate(s[5])}</span>`;
-function rate(c){return c==='g'?'B':c==='y'?'C':c==='r'?'D/F':'NR';}
+function rate(c){return c==='g'?'B':c==='y'?'C':c==='r'?'D':c==='f'?'F':'NR';}
+
+/* Card thumbnail. If a listing carries a real photo URL (d.img) that wins;
+   otherwise show current aerial imagery centred on the lot itself. */
+const THUMB_W=108, THUMB_H=104, THUMB_Z=18;
+function thumbHTML(d){
+  const open=d.u?` href="${d.u}" target="_blank" rel="noopener"`:'';
+  const tag=d.u?'a':'div';
+  if(d.img) return `<${tag} class="thumb"${open}><img src="${d.img}" alt="${d.a}" loading="lazy"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></${tag}>`;
+  const n=Math.pow(2,THUMB_Z)*256;
+  const px=(d.lon+180)/360*n;
+  const s=Math.sin(d.lat*Math.PI/180);
+  const py=(0.5-Math.log((1+s)/(1-s))/(4*Math.PI))*n;
+  const ox=px-THUMB_W/2, oy=py-THUMB_H/2;            // top-left of the visible window
+  const x0=Math.floor(ox/256), y0=Math.floor(oy/256);
+  let t='';
+  for(let dy=0;dy<2;dy++)for(let dx=0;dx<2;dx++){
+    t+=`<img loading="lazy" alt="" src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${THUMB_Z}/${y0+dy}/${x0+dx}"
+        style="left:${(x0+dx)*256-ox}px;top:${(y0+dy)*256-oy}px">`;
+  }
+  return `<${tag} class="thumb"${open}
+    title="Aerial view of the lot. Imagery can predate new construction — click for the listing photos.">
+    ${t}<span class="tcap">${d.u?'Photos &#8599;':'Aerial'}</span></${tag}>`;
+}
 
 /* ---------------- user state: favorites, notes, hidden ---------------- */
 const KEY='home_search_v1';
 const LS=(()=>{try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return localStorage;}catch(e){return null;}})();
 const ST={fav:{},hide:{},note:{},added:[],lastUpdate:null};
+let sharedMode=false;                                  // true while viewing someone else's link
 function kOf(d){return d.mls||d.a;}
-function persist(){ if(LS){try{LS.setItem(KEY,JSON.stringify(ST));}catch(e){}} }
+function persist(){ if(sharedMode||!LS) return; try{LS.setItem(KEY,JSON.stringify(ST));}catch(e){} }
 (function restore(){
   if(!LS) return;
   try{const j=JSON.parse(LS.getItem(KEY)||'{}');
@@ -1614,17 +1702,23 @@ const nNote=()=>Object.values(ST.note).filter(v=>v&&v.trim()).length;
 
 let view='all', viewOnly=false, openKey=null;
 
-function passes(d){
+function passes(d,over){
+  const o=over||{};
   const st=document.getElementById('fStory').value;
   const mx=+document.getElementById('fPrice').value;
   const gf=document.getElementById('fGf').value;
-  const sc=document.getElementById('fSch').value;
+  const sc=o.sc!==undefined?o.sc:document.getElementById('fSch').value;
   if(st!=='all' && d.st!==+st) return false;
   if(d.p>mx) return false;
   if(gf==='suite' && d.gf!=='suite') return false;
   if(gf==='yes' && d.gf==='no') return false;
-  if(sc==='clean' && (d.s[1]==='r'||d.s[3]==='r'||d.s[5]==='r'||d.s[1]==='n')) return false;
-  if(sc==='nof' && d.s[2].indexOf('Keefer')>-1) return false;
+  if(gf==='no' && d.gf!=='no') return false;
+  if(sc!=='all'){
+    const rank={g:1,y:2,n:2.5,r:3,f:4};
+    const worst=Math.max(rank[d.s[1]]||2.5,rank[d.s[3]]||2.5,rank[d.s[5]]||2.5);
+    const cap= sc==='b'?1 : sc==='c'?2.5 : 3;   // b: all B · c: no D/F · d: no F
+    if(worst>cap) return false;
+  }
   return true;
 }
 function inView(d){
@@ -1638,7 +1732,16 @@ function inView(d){
 
 function build(){
   shown = P.filter(d=> d.ref ? true : (passes(d) && inView(d)));
-  renderList(); renderMarkers(); counts();
+  renderList(); renderMarkers(); counts(); schoolCounts();
+}
+/* show how many homes each school-rating option would leave, so a zero is
+   informative rather than a dead end */
+function schoolCounts(){
+  const sel=document.getElementById('fSch');
+  [...sel.options].forEach(o=>{
+    const n=P.filter(d=>!d.ref && passes(d,{sc:o.value}) && inView(d)).length;
+    o.textContent=(o.dataset.lbl||(o.dataset.lbl=o.textContent))+' ('+n+')';
+  });
 }
 function counts(){
   document.getElementById('nFav').textContent=nFav();
@@ -1721,20 +1824,25 @@ function renderList(){
     c.className='card'+(isOpen?' open':'')+(ST.fav[k]?' isfav':'')+(ST.hide[k]?' ishid':'');
     c.innerHTML=`
       <span class="fav ${ST.fav[k]?'on':''}" data-k="${k}" title="Save this home">${ST.fav[k]?'&#9733;':'&#9734;'}</span>
-      <div class="crow">
-        <div><div class="price">${money(d.p)}</div>
-          <div class="permo">est. ${money(d.m)}/mo all-in</div></div>
-        <div class="badges" style="margin-right:26px">
-          ${d.isNew?'<span class="b b-new">New</span>':''}
-          ${d.top?'<span class="b b-top">Top pick</span>':''}
-          <span class="b b-elig">&#10003; USDA verified</span>
-          ${d.gf==='suite'?'<span class="b b-elig">Ground-floor suite</span>':''}
-          ${d.gf==='no'?'<span class="b b-inel">All beds upstairs</span>':''}
+      <div class="chead">
+        ${thumbHTML(d)}
+        <div class="cbody">
+          <div class="crow">
+            <div><div class="price">${money(d.p)}</div>
+              <div class="permo">est. ${money(d.m)}/mo all-in</div></div>
+            <div class="badges" style="margin-right:26px">
+              ${d.isNew?'<span class="b b-new">New</span>':''}
+              ${d.top?'<span class="b b-top">Top pick</span>':''}
+              <span class="b b-elig">&#10003; USDA verified</span>
+              ${d.gf==='suite'?'<span class="b b-elig">Ground-floor suite</span>':''}
+              ${d.gf==='no'?'<span class="b b-inel">All beds upstairs</span>':''}
+            </div>
+          </div>
+          <div class="specs">${d.bd} bd <span>&middot;</span> ${d.ba} <span>&middot;</span> ${d.sf.toLocaleString()} sf <span>&middot;</span> ${d.st} story <span>&middot; built ${d.yr}</span></div>
+          <div class="addr">${d.a}</div>
+          <div class="sub">${d.c}${d.hoa?' &middot; HOA $'+d.hoa+'/yr':''}</div>
         </div>
       </div>
-      <div class="specs">${d.bd} bd <span>&middot;</span> ${d.ba} <span>&middot;</span> ${d.sf.toLocaleString()} sf <span>&middot;</span> ${d.st} story <span>&middot; built ${d.yr}</span></div>
-      <div class="addr">${d.a}</div>
-      <div class="sub">${d.c}${d.hoa?' &middot; HOA $'+d.hoa+'/yr':''}</div>
       <div class="sch">${schHTML(d.s)}</div>
       ${(ST.note[k]&&ST.note[k].trim())?`<div class="cnote">${ST.note[k].replace(/</g,'&lt;')}</div>`:''}
       <div class="mls" style="padding-bottom:14px">${d.mls?`MLS ${d.mls}`:'Builder inventory'}</div>
@@ -1742,7 +1850,7 @@ function renderList(){
       ${drawer(d)}`;
 
     c.addEventListener('click',e=>{
-      if(e.target.closest('.fav')) return;
+      if(e.target.closest('.fav')||e.target.closest('a.thumb')) return;
       openKey = (openKey===k) ? null : k;
       renderList();
       if(openKey===k){
@@ -1846,8 +1954,94 @@ document.querySelectorAll('.views button').forEach(b=>b.addEventListener('click'
   b.classList.add('on'); view=b.dataset.v; openKey=null; build();
 }));
 document.getElementById('tView').addEventListener('click',e=>{
-  viewOnly=!viewOnly; e.target.classList.toggle('on',viewOnly); renderList();
+  viewOnly=!viewOnly; e.currentTarget.classList.toggle('on',viewOnly); renderList();
 });
+
+/* ---------------- filters ---------------- */
+const fStory=document.getElementById('fStory'), fGf=document.getElementById('fGf'),
+      fSch=document.getElementById('fSch'), fPrice=document.getElementById('fPrice'),
+      fPriceV=document.getElementById('fPriceV');
+
+function syncChips(){
+  // highlight a filter chip whenever it is doing something
+  fStory.parentElement.classList.toggle('act',fStory.value!=='all');
+  fGf.parentElement.classList.toggle('act',fGf.value!=='all');
+  fSch.parentElement.classList.toggle('act',fSch.value!=='all');
+  fPrice.parentElement.classList.toggle('act',+fPrice.value < +fPrice.max);
+  fPriceV.textContent = (+fPrice.value >= +fPrice.max) ? 'Any' : kk(+fPrice.value);
+}
+function applyFilters(){ syncChips(); openKey=null; build(); }
+
+[fStory,fGf,fSch].forEach(el=>el.addEventListener('change',applyFilters));
+fPrice.addEventListener('input',()=>{ syncChips(); build(); });
+
+document.getElementById('tReset').addEventListener('click',()=>{
+  fStory.value='all'; fGf.value='all'; fSch.value='all'; fPrice.value=fPrice.max;
+  if(viewOnly){ viewOnly=false; document.getElementById('tView').classList.remove('on'); }
+  applyFilters();
+});
+
+/* USDA ineligible-area shading on/off */
+document.getElementById('tUsda').addEventListener('click',e=>{
+  if(!usdaLayer) return;
+  usdaOn=!usdaOn;
+  if(usdaOn) usdaLayer.addTo(map); else map.removeLayer(usdaLayer);
+  e.currentTarget.classList.toggle('on',usdaOn);
+});
+
+/* ---------------- share picks with the agent ---------------- */
+const b64  = s => btoa(String.fromCharCode.apply(null,new TextEncoder().encode(s)))
+                    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64= s => new TextDecoder().decode(
+                    Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0)));
+
+document.getElementById('tShare').addEventListener('click',()=>{
+  const favs=Object.keys(ST.fav).filter(k=>ST.fav[k]);
+  const notes={}; Object.keys(ST.note).forEach(k=>{ if(ST.note[k]&&ST.note[k].trim()) notes[k]=ST.note[k].trim(); });
+  if(!favs.length && !Object.keys(notes).length){
+    flash('Save a home or add a comment first, then share.','bad'); return;
+  }
+  const link=location.origin+location.pathname+'#picks='+b64(JSON.stringify({v:1,f:favs,n:notes}));
+  const done=()=>flash(`Link copied — ${favs.length} saved home${favs.length===1?'':'s'}. Paste it in a text or email to your agent.`,'good');
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(link).then(done).catch(()=>showLink(link));
+  } else showLink(link);
+});
+function showLink(link){
+  const w=document.createElement('div'); w.className='linkbox';
+  w.innerHTML=`<b>Send this link to your agent</b>
+    <textarea readonly rows="3"></textarea>
+    <button>Close</button>`;
+  w.querySelector('textarea').value=link;
+  w.querySelector('button').addEventListener('click',()=>w.remove());
+  document.body.appendChild(w);
+  const t=w.querySelector('textarea'); t.focus(); t.select();
+}
+
+/* Opening a #picks= link shows that person's saved list, read-only. */
+(function readShared(){
+  const m=/[#&]picks=([A-Za-z0-9\-_]+)/.exec(location.hash);
+  if(!m) return;
+  let j; try{ j=JSON.parse(unb64(m[1])); }catch(e){ return; }
+  if(!j || !Array.isArray(j.f)) return;
+  sharedMode=true;
+  ST.fav={}; ST.note={}; ST.hide={};
+  j.f.forEach(k=>ST.fav[k]=true);
+  Object.assign(ST.note,j.n||{});
+  view='fav';
+  document.querySelectorAll('.views button').forEach(b=>b.classList.toggle('on',b.dataset.v==='fav'));
+  const n=j.f.length, c=Object.keys(j.n||{}).length;
+  const bar=document.createElement('div'); bar.className='sharedbar';
+  bar.innerHTML=`<b>Shared list.</b> Viewing someone else's picks &mdash;
+    ${n} saved home${n===1?'':'s'}${c?` and ${c} comment${c===1?'':'s'}`:''}.
+    Nothing here is saved to this device. <button>Back to my own search</button>`;
+  bar.querySelector('button').addEventListener('click',()=>{
+    location.href=location.origin+location.pathname;
+  });
+  document.querySelector('.top').insertAdjacentElement('afterend',bar);
+})();
+// pasting a shared link into an already-open tab only changes the hash
+window.addEventListener('hashchange',()=>{ if(/[#&]picks=/.test(location.hash)) location.reload(); });
 
 /* ---------------- backup / restore ---------------- */
 document.getElementById('tExport').addEventListener('click',()=>{
@@ -1923,12 +2117,26 @@ function flash(msg,kind){
     const s=document.querySelector('.brand span');
     if(s) s.innerHTML += ' &middot; updated ' + ST.lastUpdate;
   }
-  if(nFav()||nNote()||nHide()){
+  if(!sharedMode && (nFav()||nNote()||nHide())){
     setTimeout(()=>flash('Welcome back — your saved homes, comments and hidden list were carried over.','good'),400);
   }
 })();
 
+syncChips();
 build();
+
+/* Leaflet caches the container size at init; the toolbar wraps to a different
+   height depending on window width, so re-measure once laid out and on resize. */
+function fitMap(){
+  map.invalidateSize();
+  if(usdaLayer && usdaOn && map.getSize().x>0 && !map.hasLayer(usdaLayer)){
+    try{ usdaLayer.addTo(map); }catch(e){}
+  }
+  renderMarkers();
+}
+window.addEventListener('load',fitMap);
+window.addEventListener('resize',fitMap);
+setTimeout(fitMap,150);
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
   t.classList.add('on');
