@@ -856,11 +856,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .linkbox{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4000;background:#fff;
         border:1px solid var(--line);border-radius:11px;padding:16px 18px;box-shadow:0 8px 34px rgba(0,0,0,.3);
         width:min(520px,92vw);font-size:13px}
-  .linkbox b{display:block;margin-bottom:8px;font-size:14px}
-  .linkbox textarea{width:100%;font:inherit;font-size:12px;border:1px solid var(--line);border-radius:7px;
-        padding:8px;resize:none;color:var(--ink);background:#fbfaf8}
-  .linkbox button{margin-top:9px;font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--accent);
-        background:var(--accent);color:#fff;border-radius:7px;padding:7px 14px;cursor:pointer}
+  .linkbox b{display:block;margin-bottom:3px;font-size:15px}
+  .linkbox .lsub{font-size:12.5px;color:var(--muted);margin-bottom:11px}
+  .linkbox textarea{width:100%;font:inherit;font-size:11.5px;border:1px solid var(--line);border-radius:7px;
+        padding:7px 8px;resize:none;color:var(--muted);background:#fbfaf8;margin-top:10px;word-break:break-all}
+  .lrow{display:flex;gap:8px}
+  .lbtn{flex:1;display:inline-flex;align-items:center;justify-content:center;font:inherit;font-size:13.5px;
+        font-weight:700;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
+        padding:11px 12px;cursor:pointer;text-decoration:none;text-align:center;white-space:nowrap}
+  .lbtn:hover{border-color:#b9c4c0;background:#fbfaf8}
+  .lbtn.lgo{background:var(--accent);border-color:var(--accent);color:#fff}
+  .lbtn.lgo:hover{background:#0d3f31}
+  .lbtn.lghost{flex:none;width:100%;margin-top:9px;padding:7px;font-weight:600;font-size:12.5px;
+        color:var(--muted);border-style:none;background:none}
+  .lbtn.lghost:hover{color:var(--ink);background:#f2efea}
   .flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:3000;
          background:#14503f;color:#fff;font-size:13px;font-weight:600;padding:11px 18px;
          border-radius:9px;box-shadow:0 3px 16px rgba(0,0,0,.28);max-width:88vw;text-align:center}
@@ -956,10 +965,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
     <span class="sep"></span>
 
-    <button class="btn go" id="tShare" title="Create a link holding your saved homes and comments, to send to your agent">Share my picks</button>
-    <button class="btn" id="tExport" title="Download your saved homes, comments and hidden list as a file">Download</button>
-    <button class="btn" id="tImport" title="Load a shared list, an agent update, or your own saved file">Load file</button>
-    <input type="file" id="fFile" accept="application/json" style="display:none">
+    <button class="btn go" id="tShare" title="Email your saved homes to Tiffany, or copy a link to text">Share my picks</button>
   </div>
 
   <div class="ainote">AI-generated content &mdash; details may be wrong or out of date. Verify all listings, schools, and USDA eligibility independently. Not lending or financial advice.</div>
@@ -972,7 +978,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="lr"><span class="sw" style="background:#14503f"></span> USDA eligible (verified)</div>
       <div class="lr"><span class="sw" style="background:#8c2f2c"></span> USDA ineligible</div>
       <div class="lr"><span class="sw" style="background:#5f5c57"></span> Reference point (not for sale)</div>
-      <div class="lr"><span class="sw" style="background:rgba(200,60,50,.30);border-color:#b04a44"></span> USDA ineligible area</div>
+      <div class="lr"><span class="sw" style="background:#ecc98f;border-color:#d0a253"></span> USDA ineligible area</div>
+      <div class="lr" id="lgFema" style="display:none"><span class="sw" style="background:#b3cfe8;border-color:#7ea6c9"></span> FEMA flood zone</div>
       <div class="lr" style="margin-top:6px;color:#65635f">▪ after price = single story</div>
     </div>
   </div>
@@ -1829,6 +1836,7 @@ document.getElementById('tFema').addEventListener('click',e=>{
   femaOn=!femaOn;
   if(femaOn) femaLayer.addTo(map); else map.removeLayer(femaLayer);
   e.currentTarget.classList.toggle('on',femaOn);
+  document.getElementById('lgFema').style.display=femaOn?'flex':'none';
   if(femaOn) flash('Blue-hatched areas are FEMA flood zones. Each home’s own zone is under Details.','good');
 });
 
@@ -1838,28 +1846,44 @@ const b64  = s => btoa(String.fromCharCode.apply(null,new TextEncoder().encode(s
 const unb64= s => new TextDecoder().decode(
                     Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0)));
 
+const AGENT_EMAIL='tiffany@houstx.com';
 document.getElementById('tShare').addEventListener('click',()=>{
   const favs=Object.keys(ST.fav).filter(k=>ST.fav[k]);
   const notes={}; Object.keys(ST.note).forEach(k=>{ if(ST.note[k]&&ST.note[k].trim()) notes[k]=ST.note[k].trim(); });
   if(!favs.length && !Object.keys(notes).length){
-    flash('Save a home or add a comment first, then share.','bad'); return;
+    flash('Tap the ☆ on a home to save it first, then share.','bad'); return;
   }
   const link=location.origin+location.pathname+'#picks='+b64(JSON.stringify({v:1,f:favs,n:notes}));
-  const done=()=>flash(`Link copied — ${favs.length} saved home${favs.length===1?'':'s'}. Paste it in a text or email to your agent.`,'good');
-  if(navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(link).then(done).catch(()=>showLink(link));
-  } else showLink(link);
-});
-function showLink(link){
+  const nN=Object.keys(notes).length;
+  const what=`${favs.length} saved home${favs.length===1?'':'s'}${nN?` and ${nN} comment${nN===1?'':'s'}`:''}`;
+  const mail='mailto:'+AGENT_EMAIL
+    +'?subject='+encodeURIComponent('Our favorite homes')
+    +'&body='+encodeURIComponent(`Hi Tiffany,\n\nHere are the homes we saved (${what}) — open this link to see them:\n\n${link}\n\n`);
+
+  const old=document.querySelector('.linkbox'); if(old) old.remove();
   const w=document.createElement('div'); w.className='linkbox';
-  w.innerHTML=`<b>Send this link to your agent</b>
-    <textarea readonly rows="3"></textarea>
-    <button>Close</button>`;
+  w.innerHTML=`<b>Share your picks</b>
+    <div class="lsub">${what}. The link below holds them all.</div>
+    <div class="lrow">
+      <a class="lbtn lgo" href="${mail}">&#9993;&nbsp; Email Tiffany</a>
+      <button class="lbtn" id="lbCopy">Copy link</button>
+    </div>
+    <textarea readonly rows="2"></textarea>
+    <button class="lbtn lghost" id="lbClose">Close</button>`;
   w.querySelector('textarea').value=link;
-  w.querySelector('button').addEventListener('click',()=>w.remove());
+  w.querySelector('#lbClose').addEventListener('click',()=>w.remove());
+  w.querySelector('#lbCopy').addEventListener('click',e=>{
+    const btn=e.currentTarget, t=w.querySelector('textarea');
+    const ok=()=>{ btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy link',1800); };
+    const manual=()=>{ t.focus(); t.select();
+      let done=false; try{ done=document.execCommand('copy'); }catch(err){}
+      if(done) ok(); else flash('Press ⌘C (Mac) or Ctrl-C to copy the selected link.','good'); };
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(link).then(ok).catch(manual);
+    } else manual();
+  });
   document.body.appendChild(w);
-  const t=w.querySelector('textarea'); t.focus(); t.select();
-}
+});
 
 /* Opening a #picks= link shows that person's saved list, read-only. */
 (function readShared(){
@@ -1886,14 +1910,7 @@ function showLink(link){
 // pasting a shared link into an already-open tab only changes the hash
 window.addEventListener('hashchange',()=>{ if(/[#&]picks=/.test(location.hash)) location.reload(); });
 
-/* ---------------- backup / restore ---------------- */
-document.getElementById('tExport').addEventListener('click',()=>{
-  const blob=new Blob([JSON.stringify(ST,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob); a.download='my-home-search-notes.json'; a.click();
-  URL.revokeObjectURL(a.href);
-});
-document.getElementById('tImport').addEventListener('click',()=>document.getElementById('fFile').click());
+/* ---------------- agent updates (updates.json) ---------------- */
 function applyUpdate(j,silent){
   let addedN=0, notesN=0;
   if(j.fav||j.hide||j.note){
@@ -1922,18 +1939,6 @@ function applyUpdate(j,silent){
   }
   return {ok:true,addedN:addedN};
 }
-
-document.getElementById('fFile').addEventListener('change',ev=>{
-  const f=ev.target.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{
-    let j; try{ j=JSON.parse(r.result); }
-    catch(e){ flash('That file could not be read. Pick the file your agent sent you, or your own saved list.','bad'); return; }
-    const res=applyUpdate(j,false);
-    if(!res.ok) flash("That file didn't contain any homes or notes.",'bad');
-  };
-  r.readAsText(f); ev.target.value='';
-});
 
 /* Hosted mode: quietly check for an update file next to this page.
    Fails silently when opened straight from a folder (no server), which is fine. */
