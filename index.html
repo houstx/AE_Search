@@ -847,6 +847,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .views button.on{background:var(--accent);color:#fff}
   .pin.fv{background:#b3781f}
   .b-new{background:#1d6e57;color:#fff}
+  body.noscroll{overflow:hidden}
+  .lviewer{position:fixed;inset:0;z-index:5000;background:rgba(20,25,23,.55);display:flex;
+        align-items:center;justify-content:center;padding:18px}
+  .lvbox{width:min(1180px,100%);height:100%;background:#fff;border-radius:12px;overflow:hidden;
+        display:flex;flex-direction:column;box-shadow:0 12px 48px rgba(0,0,0,.4)}
+  .lvtop{flex:none;display:flex;align-items:center;gap:10px;padding:9px 12px;
+        background:var(--panel);border-bottom:1px solid var(--line)}
+  .lvtop b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lvhint{flex:1;font-size:11px;color:var(--muted);min-width:0;overflow:hidden;
+        text-overflow:ellipsis;white-space:nowrap}
+  .lvbtn{flex:none;display:inline-flex;align-items:center;font:inherit;font-size:12.5px;font-weight:700;
+        border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
+        padding:6px 11px;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .lvbtn:hover{border-color:#b9c4c0;background:#fbfaf8}
+  .lvbtn.lvgo{background:var(--accent);border-color:var(--accent);color:#fff}
+  .lvbtn.lvgo:hover{background:#0d3f31}
+  .lviewer iframe{flex:1;width:100%;border:0;background:#f4f4f4}
+  @media(max-width:860px){
+    .lviewer{padding:0}
+    .lvbox{border-radius:0}
+    .lvhint{display:none}
+  }
   .sharedbar{flex:none;background:#e9f1ee;border-bottom:1px solid var(--accent-line);
         color:#1d4a3d;font-size:12.5px;padding:8px 16px;display:flex;align-items:center;gap:10px;
         flex-wrap:wrap;z-index:1150}
@@ -1484,9 +1506,9 @@ function floodHTML(d){
    otherwise show current aerial imagery centred on the lot itself. */
 const THUMB_W=108, THUMB_H=104, THUMB_Z=18;
 function thumbHTML(d){
-  const open=d.u?` href="${d.u}" target="_blank" rel="noopener"`:'';
+  const open=d.u?` href="${d.u}" target="_blank" rel="noopener" data-t="${d.a}"`:'';
   const tag=d.u?'a':'div';
-  if(d.img) return `<${tag} class="thumb"${open}><img src="${d.img}" alt="${d.a}" loading="lazy"
+  if(d.img) return `<${tag} class="thumb${d.u?' emb':''}"${open}><img src="${d.img}" alt="${d.a}" loading="lazy"
       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></${tag}>`;
   const n=Math.pow(2,THUMB_Z)*256;
   const px=(d.lon+180)/360*n;
@@ -1499,7 +1521,7 @@ function thumbHTML(d){
     t+=`<img loading="lazy" alt="" src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${THUMB_Z}/${y0+dy}/${x0+dx}"
         style="left:${(x0+dx)*256-ox}px;top:${(y0+dy)*256-oy}px">`;
   }
-  return `<${tag} class="thumb"${open}
+  return `<${tag} class="thumb${d.u?' emb':''}"${open}
     title="Aerial view of the lot. Imagery can predate new construction — click for the listing photos.">
     ${t}<span class="tcap">${d.u?'Photos &#8599;':'Aerial'}</span></${tag}>`;
 }
@@ -1613,7 +1635,7 @@ function drawer(d){
     <h5>FEMA flood zone</h5>
     ${floodHTML(d)}
     ${d.n?`<h5>Notes on this home</h5><div style="font-size:12.5px">${d.n}</div>`:''}
-    ${d.u?`<a class="harbtn" href="${d.u}" target="_blank" rel="noopener">Open full listing on HAR &#8599;</a>`:
+    ${d.u?`<a class="harbtn emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">View full listing on HAR</a>`:
           `<div style="font-size:12.5px;color:#65635f;margin-top:12px">Builder inventory — no public listing page. Ask me for the builder sheet.</div>`}
     <div class="acts">
       <button class="favb ${ST.fav[k]?'on':''}" data-k="${k}">${ST.fav[k]?'&#9733; Saved':'&#9734; Save'}</button>
@@ -1727,7 +1749,7 @@ function popHTML(d){
       <span style="color:#14503f;font-weight:600">&#10003; USDA eligible (verified)</span><br>
       ${isSFHA(d)?`<span style="color:#8c2f2c;font-weight:700">&#9888; FEMA flood zone ${d.fz}</span><br>`:''}
       Est. ${money(d.m)}/mo${ST.fav[k]?'<br><span style="color:#b3781f;font-weight:600">&#9733; Saved</span>':''}<br>
-      ${d.u?`<a href="${d.u}" target="_blank" rel="noopener">Open on HAR &#8599;</a>`:''}</div>`;
+      ${d.u?`<a class="emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">Open on HAR &#8599;</a>`:''}</div>`;
 }
 
 function renderMarkers(){
@@ -1845,6 +1867,41 @@ const b64  = s => btoa(String.fromCharCode.apply(null,new TextEncoder().encode(s
                     .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const unb64= s => new TextDecoder().decode(
                     Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0)));
+
+/* ---------------- in-site listing viewer ----------------
+   HAR pages open inside the app; "Open full site" is the escape hatch for
+   maximizing or whenever HAR insists on its human-verification page. */
+function openListing(url,title){
+  closeListing();
+  const w=document.createElement('div'); w.className='lviewer'; w.id='lviewer';
+  w.innerHTML=`
+    <div class="lvbox">
+      <div class="lvtop">
+        <b>${title||'Listing'}</b>
+        <span class="lvhint">from HAR.com &mdash; blank page or &quot;press &amp; hold&quot; check? Use Open full site.</span>
+        <a class="lvbtn lvgo" href="${url}" target="_blank" rel="noopener">Open full site &#8599;</a>
+        <button class="lvbtn" id="lvClose">Close &#10005;</button>
+      </div>
+      <iframe src="${url}" title="${title||'Listing'} on HAR.com"></iframe>
+    </div>`;
+  w.addEventListener('click',e=>{ if(e.target===w) closeListing(); });
+  w.querySelector('#lvClose').addEventListener('click',closeListing);
+  document.body.appendChild(w);
+  document.body.classList.add('noscroll');
+}
+function closeListing(){
+  const w=document.getElementById('lviewer');
+  if(w) w.remove();
+  document.body.classList.remove('noscroll');
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeListing(); });
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a.emb');
+  if(!a) return;
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;   // let power users open a real tab
+  e.preventDefault(); e.stopPropagation();
+  openListing(a.href,a.dataset.t);
+},true); // capture: the details drawer stops bubbling clicks
 
 const AGENT_EMAIL='tiffany@houstx.com';
 document.getElementById('tShare').addEventListener('click',()=>{
