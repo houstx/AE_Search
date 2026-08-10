@@ -937,6 +937,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     input[type=range]{flex:1;width:auto}
 
     body{overflow:auto;height:auto;display:block}
+    /* the brief and MLS tabs need the full-height flex shell back, or their
+       iframes collapse to the 150px default and the page looks cut off */
+    body.brief{display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
     .wrap{flex-direction:column;height:auto;display:flex}
     #map{flex:none;height:46vh;width:100%;position:sticky;top:0;z-index:500}
     .list{flex:none;max-width:none;width:100%;border-left:none;border-top:1px solid var(--line);
