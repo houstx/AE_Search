@@ -912,6 +912,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
   #pane-brief{flex:1 1 auto;min-height:0;display:none;background:#faf8f5}
   #pane-brief.show{display:block}
   #pane-brief iframe{width:100%;height:100%;border:0;display:block}
+  #pane-idx{flex:1 1 auto;min-height:0;display:none;background:#faf8f5;flex-direction:column}
+  #pane-idx.show{display:flex}
+  #pane-idx iframe{flex:1;width:100%;border:0;display:block;background:#fff}
+  .idxbar{flex:none;display:flex;align-items:center;gap:12px;padding:8px 14px;font-size:12px;
+        color:var(--muted);background:var(--panel);border-bottom:1px solid var(--line)}
+  .idxbar span{flex:1;min-width:0}
+  .idxbar b{color:var(--ink)}
   body.brief .top,body.brief .wrap{display:none}
   .onlym{display:none}
   @media(max-width:860px){
@@ -944,6 +951,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <div class="tabs">
   <button class="tab on" data-p="map">Map &amp; listings</button>
   <button class="tab" data-p="brief">Full brief</button>
+  <button class="tab" data-p="idx">All MLS search</button>
 </div>
 <div class="top">
   <div class="brand">Your Home Search<span>USDA-verified &middot; North Houston &middot; Aug 7, 2026</span></div>
@@ -1008,6 +1016,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <div class="list" id="list"></div>
 </div>
 
+<div id="pane-idx">
+  <div class="idxbar">
+    <span>Live search of <b>every active MLS listing</b> from HAR.com &mdash; not just the curated USDA-eligible set on the map tab. Blank page or &quot;press &amp; hold&quot; check? Use the full site.</span>
+    <a class="lvbtn lvgo" href="https://www.har.com/idx/mls/search?sitetype=aws&amp;cid=720390&amp;allmls=y&amp;for_sale=1" target="_blank" rel="noopener">Open full site &#8599;</a>
+  </div>
+  <iframe id="idxFrame" title="All MLS listings search"
+          data-src="https://www.har.com/idx/mls/search?sitetype=aws&amp;cid=720390&amp;allmls=y&amp;for_sale=1"></iframe>
+</div>
 <div id="pane-brief"><iframe title="Full brief" srcdoc="<!DOCTYPE html>
 <html lang=&quot;en&quot;>
 <head>
@@ -1165,7 +1181,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <h4>1. Flood risk is the defining hazard of this corridor</h4>
   <p>The East Fork of the San Jacinto River, Peach Creek and Caney Creek all run through Porter, New Caney and Splendora, and this area has taken repeated severe flooding, including evacuations along FM 1485.</p>
   <p><strong>USDA will not guarantee a loan on new construction inside a Special Flood Hazard Area</strong> without a zone-removal letter or a qualifying elevation certificate; existing homes in a flood zone need flood insurance in force. On a zero-down purchase, flood insurance is worth carrying even outside the mapped zone &amp;mdash; it runs a few hundred dollars a year.</p>
-  <p style=&quot;margin-bottom:0&quot;>Every home on the interactive map now shows its FEMA flood zone under Details, checked against FEMA's National Flood Hazard Layer on August 9, 2026. Of note: <strong>three new builds in The Canopies &amp;mdash; 13905 Viceroy Way, 23757 and 23769 Golden Pheasant Ln &amp;mdash; sit in Zone A</strong>, the high-risk 1% floodplain, and are flagged in red. Re-verify any shortlisted home on FEMA's own map during the option period.</p>
+  <p style=&quot;margin-bottom:0&quot;>Every home on the interactive map shows its FEMA flood zone under Details, checked against FEMA's National Flood Hazard Layer on August 9, 2026. <strong>Three new builds in The Canopies &amp;mdash; 13905 Viceroy Way, 23757 and 23769 Golden Pheasant Ln &amp;mdash; sit in Zone A</strong>, the high-risk 1% floodplain where USDA will not guarantee new construction, and have been excluded from this search for that reason. Re-verify any shortlisted home on FEMA's own map during the option period.</p>
 </div>
 
 <div class=&quot;panel flag&quot;>
@@ -1542,7 +1558,10 @@ function persist(){ if(sharedMode||!LS) return; try{LS.setItem(KEY,JSON.stringif
 })();
 function mergeListings(){
   const have=new Set(BASE.map(d=>d.mls||d.a));
-  P = BASE.concat((ST.added||[]).filter(d=>!have.has(d.mls||d.a)));
+  P = BASE.concat((ST.added||[]).filter(d=>!have.has(d.mls||d.a)))
+    // USDA will not guarantee NEW construction inside a FEMA high-risk zone,
+    // so those homes are not eligible for this search and are excluded outright
+    .filter(d=> d.ref || !(isSFHA(d) && d.yr>=2025));
 }
 mergeListings();
 const nFav =()=>Object.values(ST.fav).filter(Boolean).length;
@@ -2045,10 +2064,15 @@ setTimeout(fitMap,150);
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
   t.classList.add('on');
-  const br = t.dataset.p==='brief';
-  document.body.classList.toggle('brief',br);
-  document.getElementById('pane-brief').classList.toggle('show',br);
-  if(!br) setTimeout(()=>{map.invalidateSize();renderMarkers();},60);
+  const p=t.dataset.p;
+  document.body.classList.toggle('brief',p!=='map');       // hides toolbar + map/list
+  document.getElementById('pane-brief').classList.toggle('show',p==='brief');
+  document.getElementById('pane-idx').classList.toggle('show',p==='idx');
+  if(p==='idx'){                                           // lazy-load: HAR only contacted
+    const f=document.getElementById('idxFrame');           // when this tab is first opened
+    if(!f.src) f.src=f.dataset.src;
+  }
+  if(p==='map') setTimeout(()=>{map.invalidateSize();renderMarkers();},60);
 }));
 </script>
 </body>
