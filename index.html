@@ -760,8 +760,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .addr a:hover{color:var(--accent)}
   .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
   .sch{font-size:11.5px;color:#4d4b47;margin-top:7px;padding-top:7px;border-top:1px solid #f0eeea;line-height:1.55}
+  .a{font-weight:700;color:#0d3d2f}
   .g{font-weight:700;color:#14503f}.y{font-weight:700;color:#8a6212}
   .r{font-weight:700;color:#8c2f2c}.f{font-weight:700;color:#8c2f2c}.n{font-weight:700;color:#77746f}
+  .dist{font-weight:700;color:#3a3835}
+  .schrow{display:grid;grid-template-columns:88px 1fr auto;gap:8px;align-items:baseline;
+          padding:5px 0;border-bottom:1px solid #f0eeea;font-size:12.5px}
+  .schrow:last-child{border-bottom:none}
+  .schlvl{color:#77746f;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .schgr{color:#77746f;font-size:11px}
+  .schhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+           padding-bottom:6px;margin-bottom:2px;border-bottom:1px solid var(--line)}
   .note{font-size:12px;color:#55524e;margin-top:6px;font-style:italic}
   .mls{font-size:11px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
   .mls a{color:var(--accent2);text-decoration:none;font-weight:600;border-bottom:1px dotted var(--accent2)}
@@ -784,6 +793,30 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .leaflet-popup-content{margin:11px 13px;font-size:13px;line-height:1.5}
   .leaflet-popup-content b{font-size:14px}
   .pp a{color:var(--accent);font-weight:600}
+
+  /* ---------- new-build community pins ---------- */
+  .cpin{background:#fff;color:#0f4436;border:2px solid #0f4436;border-radius:7px;
+        font-size:10.5px;font-weight:700;line-height:1.15;padding:3px 7px;max-width:150px;
+        box-shadow:var(--shadow);cursor:pointer;transition:transform .12s;text-align:center}
+  .cpin small{display:block;font-weight:600;font-size:9.5px;opacity:.75;margin-top:1px}
+  .cpin.soon{border-style:dashed;border-color:#b3781f;color:#8a6212;background:#fffdf6}
+  .cpin.final{border-color:#65635f;color:#4a4845}
+  .cpin.tight{padding:2px 6px;font-size:10px;max-width:none}
+  .cpin:hover,.cpin.hot{transform:scale(1.12);z-index:9999!important;background:#f2f8f6}
+  .cstat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;
+         text-transform:uppercase;padding:2px 7px;border-radius:20px;
+         background:#e7f1ed;color:#0f4436}
+  .cstat.soon{background:#fdf1dc;color:#8a6212}
+  .cstat.final{background:#efedea;color:#4a4845}
+  .ccard{cursor:pointer}
+  .ccard .cbuild{display:flex;flex-wrap:wrap;gap:4px;margin:9px 0 0}
+  .ccard .cbuild span{font-size:11px;background:#f2efea;border:1px solid var(--line);
+        border-radius:5px;padding:1px 6px;color:#4a4845}
+  .ccard .cnote2{font-size:12.5px;color:#4a4845;margin-top:9px}
+  .cfilters{display:none;border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
+  .cfilters.show{display:flex}
+  .cfilters .cflab{font-size:10px;font-weight:700;text-transform:uppercase;
+        letter-spacing:.07em;color:var(--accent);margin-right:2px}
 
   /* ---------- legend ---------- */
   .legend{position:absolute;bottom:14px;left:14px;background:rgba(255,255,255,.96);
@@ -847,6 +880,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .views button.on{background:var(--accent);color:#fff}
   .pin.fv{background:#b3781f}
   .b-new{background:#1d6e57;color:#fff}
+  .b-env{background:#7a4a1e;color:#fff}
+  .b-gone{background:#5f5c57;color:#fff}
+  .card.isgone{opacity:.72}
+  .card.isgone .price{text-decoration:line-through;text-decoration-thickness:2px;color:#65635f}
+  .envrow{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line);
+          font-size:12.5px;line-height:1.55}
+  .envrow:last-child{border-bottom:none}
+  .envk{flex:none;width:10px;height:10px;border-radius:50%;margin-top:4px;background:#65635f}
+  .envk.sev3{background:#8c2f2c}.envk.sev2{background:#b3781f}.envk.sev1{background:#65635f}
+  .envs{color:#65635f;font-size:11.5px}
+  .envsrc{color:#65635f;font-size:11px;margin-top:7px;line-height:1.5}
+  .livedot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#1d6e57;margin-right:5px;
+           vertical-align:middle}
   body.noscroll{overflow:hidden}
   .lviewer{position:fixed;inset:0;z-index:5000;background:rgba(20,25,23,.55);display:flex;
         align-items:center;justify-content:center;padding:18px}
@@ -925,6 +971,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .onlym{display:inline-block}
     .filters{display:none;width:100%;order:9;padding-top:2px}
     body.showfilters .filters{display:flex}
+    .cfilters.show{display:none}
+    body.showfilters .cfilters.show{display:flex}
     .top{gap:8px;row-gap:8px}
     .brand{flex:1 1 100%}
     .views{font-size:11px}
@@ -957,13 +1005,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <button class="tab" data-p="idx">All MLS search</button>
 </div>
 <div class="top">
-  <div class="brand">Your Home Search<span>USDA-verified &middot; North Houston &middot; Aug 7, 2026</span></div>
+  <div class="brand">Your Home Search<span>USDA-verified &middot; North Houston &middot; listings Aug 7 &middot; communities Sept 26, 2026</span></div>
 
   <div class="views">
     <button data-v="all" class="on">All</button>
     <button data-v="fav">&#9733; Saved <b id="nFav">0</b></button>
     <button data-v="note">Notes <b id="nNote">0</b></button>
     <button data-v="hide">Hidden <b id="nHide">0</b></button>
+    <button data-v="comm" title="Browse new-build communities instead of individual homes">Communities <b id="nComm">0</b></button>
   </div>
 
   <div class="cnt"><b id="cN">0</b> shown</div>
@@ -976,12 +1025,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="fg"><label for="fGf">Bed downstairs</label>
       <select id="fGf"><option value="all">Any</option><option value="suite">Separate suite</option><option value="yes">Any bed down</option><option value="no">All beds upstairs</option></select>
     </div>
-    <div class="fg"><label for="fSch">Schools</label>
+    <div class="fg"><label for="fSch">Schools overall</label>
       <select id="fSch">
         <option value="all">Any rating</option>
-        <option value="b">All campuses B</option>
-        <option value="c">B or C only &mdash; no D or F</option>
+        <option value="b">All campuses B or better</option>
+        <option value="c">No D or F campus</option>
         <option value="d">No F campus</option>
+      </select>
+    </div>
+    <div class="fg"><label for="fDist">District</label>
+      <select id="fDist"><option value="all">Any district</option></select>
+    </div>
+    <div class="fg"><label for="fLvl">By level</label>
+      <select id="fLvl"><option value="all">Any level</option></select>
+    </div>
+    <div class="fg"><label for="fLvlR">rated at least</label>
+      <select id="fLvlR">
+        <option value="all">Any</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
       </select>
     </div>
     <div class="fg fprice"><label for="fPrice">Max price</label>
@@ -994,11 +1058,50 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
     <button class="btn tog on" id="tUsda" title="Shade USDA-ineligible areas on the map">USDA overlay</button>
     <button class="btn tog" id="tFema" title="Shade FEMA flood zones on the map (National Flood Hazard Layer)">Flood zones</button>
+    <button class="btn tog" id="tHaz" style="display:none" title="Show Superfund sites, landfills and other environmental sites on the map">Environmental sites</button>
     <button class="btn tog" id="tView" title="Only list homes currently visible on the map">Only in view</button>
+    <button class="btn tog" id="tComm" title="Show new-build communities — builder and starting price — from Beltway 8 north to Willis">New-build communities</button>
 
     <span class="sep"></span>
 
     <button class="btn go" id="tShare" title="Email your saved homes to Tiffany, or copy a link to text">Share my picks</button>
+  </div>
+
+  <div class="filters cfilters" id="cFilters">
+    <span class="cflab">New-build communities</span>
+    <div class="fg"><label for="fCLo">Price from</label>
+      <select id="fCLo">
+        <option value="all">Any</option>
+        <option value="150000">$150k+</option>
+        <option value="200000">$200k+</option>
+        <option value="250000">$250k+</option>
+        <option value="300000">$300k+</option>
+        <option value="400000">$400k+</option>
+      </select>
+    </div>
+    <div class="fg"><label for="fCHi">up to</label>
+      <select id="fCHi">
+        <option value="all">Any</option>
+        <option value="200000">$200k</option>
+        <option value="250000">$250k</option>
+        <option value="300000">$300k</option>
+        <option value="350000">$350k</option>
+        <option value="500000">$500k</option>
+        <option value="1000000">$1M</option>
+      </select>
+    </div>
+    <div class="fg"><label for="fCB">Builder</label>
+      <select id="fCB"><option value="all">Any builder</option></select>
+    </div>
+    <div class="fg"><label for="fCSt">Status</label>
+      <select id="fCSt">
+        <option value="all">Any</option>
+        <option value="selling">Now selling</option>
+        <option value="soon">Opening soon</option>
+        <option value="final">Final homes</option>
+      </select>
+    </div>
+    <button class="btn" id="cReset" title="Clear the community filters">Reset</button>
   </div>
 
   <div class="ainote">AI-generated content &mdash; details may be wrong or out of date. Verify all listings, schools, and USDA eligibility independently. Not lending or financial advice.</div>
@@ -1013,6 +1116,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="lr"><span class="sw" style="background:#5f5c57"></span> Reference point (not for sale)</div>
       <div class="lr"><span class="sw" style="background:#ecc98f;border-color:#d0a253"></span> USDA ineligible area</div>
       <div class="lr" id="lgFema" style="display:none"><span class="sw" style="background:#b3cfe8;border-color:#7ea6c9"></span> FEMA flood zone</div>
+      <div class="lr" id="lgComm" style="display:none"><span class="sw" style="background:#fff;border-color:#0f4436;border-width:2px"></span> New-build community</div>
+      <div class="lr" id="lgHaz" style="display:none"><span class="sw" style="background:#8c2f2c;border-radius:50%"></span> Superfund / landfill</div>
       <div class="lr" style="margin-top:6px;color:#65635f">▪ after price = single story</div>
     </div>
   </div>
@@ -1111,6 +1216,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <body>
 <div class=&quot;wrap&quot;>
 
+<div style=&quot;background:#fdf3e0;border:1px solid #d9b366;border-left:4px solid #b3781f;border-radius:6px;padding:12px 14px;margin-bottom:18px;font-size:13px;line-height:1.6;color:#5c4a24&quot;>
+<strong>School ratings in this brief are out of date.</strong> This brief was written against the TEA 2025
+ratings. TEA published the <strong>2026</strong> A&amp;ndash;F ratings on August 14, 2026, and most campuses in
+this search moved &amp;mdash; some up, some down. The <strong>Map &amp;amp; listings</strong> tab shows the
+current 2026 rating for every campus, broken out by level. Treat the school commentary below as the reasoning
+from August 2026, not as current fact, until it has been rewritten.
+</div>
+
 <header>
   <div class=&quot;eyebrow&quot;>Prepared for you &amp;middot; August 7, 2026</div>
   <h1>Home Search, Schools &amp;amp; Financing Brief</h1>
@@ -1121,8 +1234,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </header>
 
 <div class=&quot;panel stop&quot;>
-  <h4>Time-sensitive: new school ratings publish in seven days</h4>
-  <p style=&quot;margin-bottom:0&quot;>Every rating in this brief is the <strong>TEA 2025 rating</strong> (issued August 15, 2025, based on the 2024&amp;ndash;25 school year) &amp;mdash; the most recent official data available today. <strong>TEA publishes 2026 ratings on August 14, 2026.</strong> Two campuses that serve homes on this list are currently unrated and may receive their first-ever score that day, and Keefer Crossing Middle's F could move in either direction. If schools weigh heavily in your decision, it may be worth waiting the extra week.</p>
+  <h4>Resolved: the 2026 school ratings have since published</h4>
+  <p style=&quot;margin-bottom:0&quot;>Every rating written into this brief is the <strong>TEA 2025 rating</strong>
+  (issued August 15, 2025, based on the 2024&amp;ndash;25 school year). <strong>TEA published the 2026 ratings on
+  August 14, 2026</strong>, and they answered both of the open questions above: Highlands Elementary received its
+  first-ever rating, a <strong>C</strong>, and Keefer Crossing Middle rose from <strong>F to C</strong>. Several
+  others moved too &amp;mdash; Tavola Elementary fell from B to D, while Porter High and West Fork High both reached
+  <strong>A</strong>. The <strong>Map &amp;amp; listings</strong> tab carries the current 2026 rating for every
+  campus, split out by level. The commentary in this brief has not yet been rewritten around those numbers.</p>
 </div>
 
 <div class=&quot;panel key&quot;>
@@ -1175,7 +1294,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </table>
 </div>
 
-<p class=&quot;legend&quot;><strong>Rating key:</strong> <span class=&quot;g&quot;>B</span> = TEA rating B &amp;nbsp;·&amp;nbsp; <span class=&quot;y&quot;>C</span> = C &amp;nbsp;·&amp;nbsp; <span class=&quot;r&quot;>D or F</span> &amp;nbsp;·&amp;nbsp; <span class=&quot;n&quot;>NR</span> = not rated. All ratings are TEA 2025, issued August 15, 2025. Est/mo figures assume a <strong>6.99% 30-year fixed</strong> rate with $0 down, 2.0% combined taxes, insurance, USDA fees and HOA &amp;mdash; planning estimates, not a quote.</p>
+<p class=&quot;legend&quot;><strong>Rating key:</strong> <span class=&quot;g&quot;>B</span> = TEA rating B &amp;nbsp;·&amp;nbsp; <span class=&quot;y&quot;>C</span> = C &amp;nbsp;·&amp;nbsp; <span class=&quot;r&quot;>D or F</span> &amp;nbsp;·&amp;nbsp; <span class=&quot;n&quot;>NR</span> = not rated. Ratings shown in this brief are TEA 2025; the listings tab carries the current TEA 2026 ratings. Est/mo figures assume a <strong>6.99% 30-year fixed</strong> rate with $0 down, 2.0% combined taxes, insurance, USDA fees and HOA &amp;mdash; planning estimates, not a quote.</p>
 
 <!-- ============ DUE DILIGENCE ============ -->
 <h2>What to Watch For</h2>
@@ -1377,20 +1496,22 @@ try{
    ============================================================ */
 
 // schools: [elem, elemRating, mid, midRating, high, highRating]
+// Offline fallback only. schools.json carries the real thing — every level a
+// subdivision feeds, with TEA's current rating. These letters are TEA 2026.
 const S = {
-  peppervine:["Bens Branch","g","Woodridge Forest","y","West Fork","g"],
-  npwoods:   ["Brookwood Forest","g","Woodridge Forest","y","West Fork","g"],
-  npsouth:   ["Unverified — call NCISD","n","White Oak","r","Porter HS","g"],
-  royalpines:["Porter Elem","y","Pine Valley","r","Porter HS","g"],
-  maple:     ["Highlands (new)","n","White Oak","r","Porter HS","g"],
-  tavola:    ["Tavola Elem","g","Keefer Crossing","f","New Caney HS","y"],
-  tavolaw:   ["New Caney Elem","g","Keefer Crossing","f","New Caney HS","y"],
-  landing:   ["New Caney Elem","g","Keefer Crossing","f","New Caney HS","y"],
-  splTL:     ["Timber Lakes","r","Splendora JH","r","Splendora HS","y"],
-  splGL:     ["Greenleaf","r","Splendora JH","r","Splendora HS","y"],
-  splPW:     ["Piney Woods","r","Splendora JH","r","Splendora HS","y"],
-  splPC:     ["Peach Creek","r","Splendora JH","r","Splendora HS","y"],
-  granger:   ["Hope Elem","y","Grangerland → Moorhead","r","Caney Creek","g"],
+  peppervine: ["Bens Branch Elem","y","Woodridge Forest MS","y","West Fork HS","a"],
+  npwoods:    ["Brookwood Forest Elem","g","Woodridge Forest MS","y","West Fork HS","a"],
+  npsouth:    ["Unverified — call the district","n","White Oak MS","y","Porter HS","a"],
+  royalpines: ["Porter Elem","y","Pine Valley MS","r","Porter HS","a"],
+  maple:      ["Highlands Elem","y","White Oak MS","y","Porter HS","a"],
+  tavola:     ["Tavola Elem","r","Keefer Crossing MS","y","New Caney HS","g"],
+  tavolaw:    ["New Caney Elem","y","Keefer Crossing MS","y","New Caney HS","g"],
+  landing:    ["New Caney Elem","y","Keefer Crossing MS","y","New Caney HS","g"],
+  splTL:      ["Timber Lakes Elem","y","Coleman 6th Grade → Splendora JH","r","Splendora HS","y"],
+  splGL:      ["Greenleaf Elem","y","Coleman 6th Grade → Splendora JH","r","Splendora HS","y"],
+  splPW:      ["Piney Woods Elem","g","Coleman 6th Grade → Splendora JH","r","Splendora HS","y"],
+  splPC:      ["Peach Creek Elem","r","Coleman 6th Grade → Splendora JH","r","Splendora HS","y"],
+  granger:    ["Hope Elem","g","Grangerland Int → Moorhead JH","y","Caney Creek HS","g"],
   none:      ["—","n","—","n","—","n"]
 };
 
@@ -1472,12 +1593,242 @@ const BASE = [
  {a:"The Highlands (Gateway Arch section)",c:"22030 Gateway Arch Dr, Porter 77365",lat:30.127861,lon:-95.306366,fz:"X",p:0,m:0,bd:0,ba:"—",sf:0,yr:0,st:0,gf:"no",hoa:0,mls:"",u:"",s:S.none,e:1,ref:1,n:"Verified ELIGIBLE. Third-party sources claim The Highlands is split by the boundary; every point I sampled inside it came back eligible. Nothing there lists under $340k anyway."}
 ];
 
+/* ===================== NEW-BUILD COMMUNITIES ==========================
+   Communities actively selling or opening in the I-45 North corridor —
+   from Beltway 8 at I-45 north to Willis and Conroe, west to Woodforest,
+   east to Lake Houston, Crosby and Huffman.
+
+   Prices are the builder's own published starting price where one exists,
+   read on September 26, 2026; ranges taken from community and builder
+   sources on the same date. Builders move these weekly. Treat every
+   number here as a starting point for a phone call, not a quote.
+
+   src: kb  = kbhome.com          drh = drhorton.com
+        web = community or builder site / published market sources
+        list= derived from the verified listings already on this map
+   ap:1 = map point is approximate (street-level address not published yet)
+======================================================================= */
+const COMM = [
+ // ---------- Spring / far south end of the corridor ----------
+ {n:"Harmony",c:"Spring 77386",lat:30.097267,lon:-95.372593,st:"selling",
+  b:["Ashton Woods","CastleRock","Highland Homes","Perry Homes","Darling Homes"],
+  lo:220000,hi:null,pl:"From the $220s",src:"web",
+  note:"Master-planned, Conroe ISD. Recreation center, pools, parks. Just north of the Grand Parkway."},
+ {n:"Woodson's Reserve",c:"Spring 77386",lat:30.118702,lon:-95.362717,st:"selling",
+  b:["Toll Brothers","Perry Homes","Meritage","Taylor Morrison","Tri Pointe"],
+  lo:350000,hi:null,pl:"From the mid $300s",src:"web",
+  note:"The community you liked. Verified USDA-INELIGIBLE — it sits inside USDA's urbanized exclusion area, so 100% financing will not work here."},
+ {n:"The Meadows at Imperial Oaks",c:"Conroe / Spring 77385",lat:30.157373,lon:-95.401010,st:"selling",
+  b:["David Weekley","Coventry Homes","Ashton Woods"],
+  lo:300000,hi:600000,pl:"Low $300s – $600s",src:"web",
+  note:"Conroe ISD, minutes from the Woodlands employment centers."},
+
+ // ---------- Conroe ----------
+ {n:"Harper's Preserve",c:"Conroe 77385",lat:30.202400,lon:-95.424520,st:"selling",
+  b:["D.R. Horton","Highland Homes","Perry Homes","Chesmar","Plantation Homes"],
+  lo:300000,hi:1000000,pl:"Low $300s – $1M+",src:"web",
+  note:"On SH 242 just east of I-45. Conroe ISD."},
+ {n:"Artavia",c:"Conroe 77302",lat:30.204697,lon:-95.336410,st:"selling",
+  b:["Perry Homes","Village Builders (Lennar)","David Weekley","Coventry","Highland Homes","Chesmar","Beazer"],
+  lo:280000,hi:700000,pl:"High $200s – $700s",src:"web",
+  note:"2,200-acre master plan on SH 242. Conroe ISD. Entry pricing sits close to your range; most sections are well above it."},
+ {n:"Ladera Creek",c:"Conroe 77302",lat:30.292375,lon:-95.417866,st:"selling",
+  b:["Lennar","Stylecraft"],lo:280000,hi:null,pl:"High $200s+",src:"web",
+  note:"Conroe ISD. One of the few Conroe master plans still opening in the high $200s."},
+ {n:"Grand Central Park",c:"Conroe 77304",lat:30.279154,lon:-95.475130,st:"selling",
+  b:["David Weekley","Drees","Highland Homes","Jamestown Estate","Perry Homes","Westin Homes"],
+  lo:300000,hi:600000,pl:"$300s – $600s+",src:"web",
+  note:"2,046 acres at I-45 and Loop 336. Above your price band, listed for orientation."},
+ {n:"Evergreen",c:"Conroe 77304",lat:30.263971,lon:-95.499448,st:"selling",ap:1,
+  b:["Shea Homes","Chesmar","Perry Homes"],lo:300000,hi:700000,pl:"$300s – $700s",src:"web",
+  note:"Still building out west of Conroe off FM 2854."},
+ {n:"Sagecrest Trails",c:"Conroe 77304",lat:30.357885,lon:-95.488498,st:"selling",
+  b:["KB Home"],lo:208995,hi:null,pl:"From $208,995",src:"kb",
+  note:"KB's Conroe master plan on Teas Nursery Road — 383 acres, 266 homes. Conroe ISD."},
+ {n:"Sagecrest Preserve",c:"Conroe 77304",lat:30.359400,lon:-95.490200,st:"selling",ap:1,
+  b:["KB Home"],lo:230995,hi:null,pl:"From $230,995",src:"kb",
+  note:"The larger-plan section of Sagecrest."},
+ {n:"Glenwood Forest",c:"Conroe",lat:30.341354,lon:-95.510893,st:"soon",ap:1,
+  b:["KB Home"],lo:null,hi:null,pl:"Pricing not yet published",src:"kb",
+  note:"KB Home, registration phase, sales office \"coming soon.\" Plans 1,272–2,410 sf, Conroe ISD, 3–5 miles from downtown Conroe. This is one of the two KB openings that could be the October one — KB has not published a date. Call 888-KB-HOMES to get on the interest list."},
+ {n:"Grangerland Meadows",c:"Grangerland 77306",lat:30.250138,lon:-95.320322,st:"soon",ap:1,
+  b:["KB Home"],lo:null,hi:null,pl:"Pricing not yet published",src:"kb",
+  note:"KB Home, sales office \"coming soon.\" Plans 1,243–2,246 sf, up to 4 bedrooms, Conroe ISD — adjacent to Ben Milam Elementary and Grangerland Intermediate. The other candidate for the October opening. Sales line 281-668-3975."},
+ {n:"Venetian Pines",c:"Conroe 77301",lat:30.324767,lon:-95.439944,st:"final",
+  b:["D.R. Horton"],lo:243000,hi:null,pl:"From the $243s",src:"drh",
+  note:"Final opportunities — only a few homes left."},
+ {n:"Baron Village",c:"Conroe 77306",lat:30.281849,lon:-95.320825,st:"selling",ap:1,
+  b:["D.R. Horton Express"],lo:140000,hi:null,pl:"From the $140s",src:"drh",
+  note:"Cheapest new construction in the corridor, but plans start at 813 sf with 2–3 bedrooms — most are too small for a household of six."},
+ {n:"Silverthorne",c:"Conroe 77303",lat:30.369568,lon:-95.442852,st:"selling",
+  b:["D.R. Horton"],lo:245000,hi:null,pl:"From the $245s",src:"drh",
+  note:"3–6 bedrooms, 1,156 sf and up, up to 4-car garages. The deepest inventory D.R. Horton has in Conroe."},
+ {n:"McCrorey Trails",c:"Conroe 77303",lat:30.424051,lon:-95.364117,st:"selling",
+  b:["D.R. Horton Express"],lo:180000,hi:null,pl:"From the $180s",src:"drh",
+  note:"Entry-level. 3–4 bedrooms from 1,158 sf, one-car garage."},
+ {n:"Williams Reserve East",c:"Conroe 77303",lat:30.389639,lon:-95.308340,st:"selling",ap:1,
+  b:["D.R. Horton"],lo:355000,hi:null,pl:"From the $355s",src:"drh",
+  note:"New phase now selling. 4–5 bedrooms from 2,051 sf, 3-car garages."},
+ {n:"East Williams Cove",c:"Conroe 77303",lat:30.391500,lon:-95.311000,st:"selling",ap:1,
+  b:["D.R. Horton"],lo:355000,hi:null,pl:"From the $355s",src:"drh",
+  note:"Sister section to Williams Reserve East."},
+ {n:"Hills of Westlake",c:"Conroe 77304",lat:30.347175,lon:-95.535171,st:"final",
+  b:["D.R. Horton"],lo:324000,hi:null,pl:"From the $324s",src:"drh",
+  note:"Final opportunities."},
+ {n:"Madeley Creek Preserve",c:"Conroe 77304",lat:30.367896,lon:-95.505285,st:"soon",ap:1,
+  b:["D.R. Horton"],lo:null,hi:null,pl:"Pricing not yet published",src:"drh",
+  note:"Listed as Coming Soon on D.R. Horton's site — no pricing or plans released yet."},
+ {n:"Granger Pines",c:"Conroe 77302",lat:30.236350,lon:-95.310200,st:"selling",
+  b:["D.R. Horton"],lo:250000,hi:null,pl:"From the $250s",src:"drh",
+  note:"Conroe ISD — the only B-rated district in your search, and Hope Elementary is inside the subdivision. Several homes here are already on your map."},
+
+ // ---------- Willis / Lake Conroe ----------
+ {n:"The Woodlands Hills",c:"Willis 77318",lat:30.398720,lon:-95.502566,st:"selling",
+  b:["Highland Homes","Chesmar","Perry Homes","David Weekley","Century Communities","DRB Homes","Ravenna","Westin","Smith Douglas"],
+  lo:280000,hi:800000,pl:"Upper $200s – $800s",src:"web",
+  note:"2,000-acre Howard Hughes master plan at I-45 and FM 830 — 112 acres of open space, 20 parks, activity center. Willis ISD. The upper-$200s entry sections are the ones worth asking about."},
+ {n:"Grace Landing",c:"Willis 77318",lat:30.393309,lon:-95.443697,st:"selling",
+  b:["KB Home"],lo:174995,hi:null,pl:"From $174,995",src:"kb",
+  note:"Lowest published KB starting price anywhere in the corridor. Willis ISD."},
+ {n:"Castles Edge",c:"Willis 77378",lat:30.443586,lon:-95.439268,st:"selling",ap:1,
+  b:["D.R. Horton Express"],lo:145000,hi:null,pl:"From the $145s",src:"drh",
+  note:"Entry-level; plans start at 816 sf with 2–3 bedrooms."},
+ {n:"William Trails",c:"Willis 77378",lat:30.448997,lon:-95.386045,st:"selling",
+  b:["D.R. Horton Express"],lo:157000,hi:null,pl:"From the $157s",src:"drh",
+  note:"A new phase is listed as coming soon. Small plans — 813 sf and up."},
+ {n:"Chambers Creek",c:"Willis 77318",lat:30.446838,lon:-95.504883,st:"selling",
+  b:["Coventry Homes","Jamestown Estate Homes"],lo:null,hi:null,pl:"Contact builder — 55+ community",src:"web",
+  note:"Gated 55+ resort community on Lake Conroe. Listed for completeness; not a fit for a household with children."},
+
+ // ---------- West edge ----------
+ {n:"Woodforest",c:"Montgomery 77316",lat:30.275906,lon:-95.568631,st:"selling",
+  b:["Highland Homes","Taylor Morrison (Bonterra)","David Weekley","Perry Homes","Chesmar"],
+  lo:200000,hi:900000,pl:"$200s – $900s",src:"web",
+  note:"Montgomery County's top-selling master plan. Far west edge of your search area — about 35 minutes from I-45."},
+
+ // ---------- Porter / New Caney / Splendora ----------
+ {n:"The Highlands",c:"Porter 77365",lat:30.134696,lon:-95.308154,st:"selling",
+  b:["Caldwell Communities — 13 builders"],lo:433000,hi:850000,pl:"$433k – $850k",src:"web",
+  note:"2,300 acres with lakes, golf and trails. Sampled points inside it came back USDA-eligible, but nothing lists near your budget."},
+ {n:"Madera Trails",c:"New Caney 77357",lat:30.154438,lon:-95.211759,st:"selling",ap:1,
+  b:["KB Home"],lo:172995,hi:null,pl:"From $172,995",src:"kb",
+  note:"20115 Sunlit Timber Trl. One-story plans 1,043–2,587 sf, up to 5 bedrooms. New Caney ISD. Park, playground and splash pad planned."},
+ {n:"Madera Preserve",c:"New Caney 77357",lat:30.155600,lon:-95.213100,st:"selling",ap:1,
+  b:["KB Home"],lo:208995,hi:null,pl:"From $208,995",src:"kb",
+  note:"The larger-plan section of Madera. New Caney ISD."},
+ {n:"Valley Ranch",c:"New Caney 77357",lat:30.130387,lon:-95.234488,st:"selling",
+  b:["Signorelli Homes","Legend Homes","First America Homes"],lo:180000,hi:400000,pl:"$180s – $400s",src:"web",
+  note:"1,400-acre master plan at US 59 and the Grand Parkway, with its own town center. New Caney ISD."},
+ {n:"Harrington Trails",c:"New Caney 77357",lat:30.231599,lon:-95.233246,st:"selling",
+  b:["Brohn Homes","Century Communities","HistoryMaker","Lennar","Rausch Coleman"],
+  lo:220000,hi:295000,pl:"About $220k – $295k",src:"list",
+  note:"Splendora ISD. Several homes here are already on your map, including the 2,600 sf Mallow Ct pick."},
+ {n:"Pinewood at Grand Texas",c:"New Caney 77357",lat:30.194568,lon:-95.210846,st:"selling",
+  b:["M/I Homes","Lennar"],lo:219000,hi:295000,pl:"About $219k – $295k",src:"list",
+  note:"Splendora ISD, next to the Grand Texas / Big Rivers attractions."},
+ {n:"The Canopies",c:"Splendora 77372",lat:30.249219,lon:-95.209218,st:"selling",
+  b:["D.R. Horton","CastleRock","Risewell Homes","Smith Douglas"],lo:200000,hi:290000,pl:"From the low $200s",src:"web",
+  note:"Splendora ISD, with a new Greenleaf Elementary campus inside the community. Note: three Viceroy Way / Golden Pheasant homes here sit in FEMA Zone A, where USDA will not guarantee new construction."},
+ {n:"The Presswoods",c:"Splendora 77372",lat:30.247700,lon:-95.202100,st:"selling",
+  b:["D.R. Horton"],lo:220000,hi:270000,pl:"About $220k – $270k",src:"list",
+  note:"Splendora ISD. Lowest HOA of the Splendora group at $450/yr."},
+ {n:"Townsend Reserve",c:"Splendora 77372",lat:30.249400,lon:-95.211300,st:"selling",
+  b:["Legend Homes","Lennar"],lo:224990,hi:260000,pl:"About $225k – $260k",src:"list",
+  note:"Splendora ISD. Legend's listings here name USDA explicitly as accepted financing."},
+ {n:"Firefly",c:"Splendora 77372",lat:30.231438,lon:-95.152796,st:"soon",ap:1,
+  b:["D.R. Horton"],lo:null,hi:null,pl:"Pricing not yet published",src:"drh",
+  note:"Listed as Coming Soon by D.R. Horton. Worth a call — every other D.R. Horton community in Splendora opened in the low $200s."},
+ {n:"Hill & Dale Ranch",c:"Splendora 77372",lat:30.201900,lon:-95.161700,st:"selling",
+  b:["Home Creations"],lo:254990,hi:283000,pl:"About $255k – $283k",src:"list",
+  note:"Reported to sit outside a MUD, with a $300/yr HOA — which can make a $283k home here cheaper monthly than a $265k home in a MUD district. Verify the tax rate with the county."},
+ {n:"Peppervine",c:"Porter 77365",lat:30.084090,lon:-95.245691,st:"selling",
+  b:["Centex Homes"],lo:241990,hi:314930,pl:"From $241,990",src:"web",
+  note:"The strongest school feeder in New Caney ISD — no D or F campus anywhere in it. Plans 1,204–2,536 sf, HOA $550/yr."},
+ {n:"Northpark South",c:"Porter 77365",lat:30.068964,lon:-95.266838,st:"selling",
+  b:["Century Communities"],lo:249900,hi:null,pl:"From $249,900",src:"web",
+  note:"New Caney ISD. Too new to appear in the district street listing — confirm the school zone with NCISD before you write an offer."},
+ {n:"Maple Heights",c:"Porter 77365",lat:30.144786,lon:-95.321489,st:"selling",
+  b:["Century Communities"],lo:215000,hi:299000,pl:"About $215k – $299k",src:"list",
+  note:"New Caney ISD. Holds the lowest monthly payment on your whole map."},
+ {n:"Royal Pines",c:"Porter 77365",lat:30.100300,lon:-95.192800,st:"selling",
+  b:["Starlight Homes"],lo:239990,hi:290000,pl:"About $240k – $290k",src:"list",
+  note:"New Caney ISD. Sits just across the USDA eligibility line from Royal Brook at Kingwood, which is ineligible."},
+
+ // ---------- Lake Houston / east ----------
+ {n:"Balmoral",c:"Humble 77346",lat:29.944177,lon:-95.205386,st:"selling",
+  b:["Ashton Woods","Chesmar","CastleRock","Lennar","Colina Homes","Highland Homes"],
+  lo:200000,hi:500000,pl:"$200s – $500s",src:"web",
+  note:"750 acres on the northeast Beltway with the Crystal Lagoon. Humble ISD. Inside the Houston urbanized area — expect this one to be USDA-ineligible; verify before touring."},
+ {n:"Sweetgrass Village",c:"Crosby 77532",lat:29.871843,lon:-95.039459,st:"selling",
+  b:["KB Home"],lo:209995,hi:null,pl:"From $209,995",src:"kb",
+  note:"12806 Autumn Woods Dr. Plans 1,523–2,783 sf, Crosby ISD. Pool, splash pad, pickleball. Far southeast corner of the search area, east of Lake Houston."}
+];
+
 let P = BASE.slice();
+
+/* ================= live data =========================================
+   listings.json  — the current MLS set, rewritten on a schedule by
+                    tools/sync-har.mjs from HAR's licensed IDX feed
+   hazards.json   — Superfund sites, landfills and other environmental
+                    sites, from tools/sync-hazards.mjs (public data)
+   Both are optional. With neither file present the page shows the curated
+   list exactly as it did when every home was entered by hand. */
+let SNAP=null, HAZ=null, SCH=null;
+
+/* great-circle distance in miles */
+function MI(aLat,aLon,bLat,bLon){
+  const R=3958.8, p=Math.PI/180;
+  const h=Math.sin((bLat-aLat)*p/2)**2 +
+          Math.cos(aLat*p)*Math.cos(bLat*p)*Math.sin((bLon-aLon)*p/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+
+const ENVLABEL={
+  'superfund-npl':'Superfund site on the federal priorities list',
+  'superfund-proposed':'Site proposed for the federal Superfund list',
+  'superfund-state':'Texas state Superfund site',
+  'superfund-former':'Former Superfund site, since cleaned up and delisted',
+  'superfund-assessment':'Superfund site under assessment',
+  'superfund-archived':'Former Superfund candidate, no further federal action',
+  'landfill':'Permitted landfill',
+  'rcra':'Hazardous-waste site under cleanup order',
+  'brownfield':'Brownfield'
+};
+/* 3 = active or state Superfund · 2 = former Superfund, landfill, RCRA · 1 = the rest */
+const ENVSEV={'superfund-npl':3,'superfund-proposed':3,'superfund-state':3,
+              'superfund-former':2,'landfill':2,'rcra':2,
+              'superfund-assessment':1,'superfund-archived':1,'brownfield':1};
+
+/* nearest environmental sites to one home, worked out in the browser so the
+   same list serves curated and live listings alike */
+function attachEnv(d){
+  d.env=null;
+  if(!HAZ || !Array.isArray(HAZ.sites) || !Number.isFinite(d.lat)) return;
+  const listMi=HAZ.listMiles||3, alertMi=HAZ.alertMiles||1.5;
+  const all=HAZ.sites
+    .map(x=>({...x, mi:MI(d.lat,d.lon,x.lat,x.lon)}))
+    .sort((a,b)=>a.mi-b.mi);
+  d.env={
+    near: all.filter(x=>x.mi<=listMi).slice(0,5),
+    nearest: all[0]||null,
+    alert: all.some(x=>x.mi<=alertMi && (ENVSEV[x.kind]||0)>=2)
+  };
+}
+
+/* a feed row carries a school key; the ratings table itself stays in this file */
+function fromSnap(r){
+  const d=Object.assign({},r);
+  d.s = S[r.sk] || r.s || S.none;   // r.s survives records saved before the feed existed
+  return d;
+}
 
 /* ---------------- map ---------------- */
 const map = L.map('map',{scrollWheelZoom:true,zoomControl:true}).setView([30.17,-95.25],11);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  maxZoom:19, attribution:'&copy; OpenStreetMap &copy; CARTO'
+/* CARTO began requiring an API key on its public basemap tiles and started
+   stamping "API KEY REQUIRED" across them, so the map now draws on OSM's own
+   standard tiles — free, no key, same attribution requirement. */
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  maxZoom:19, attribution:'&copy; OpenStreetMap contributors'
 }).addTo(map);
 
 // USDA ineligible-areas overlay, straight from USDA's own production service
@@ -1504,11 +1855,99 @@ let markers=[], cards=[], shown=[];
 
 const money=n=>'$'+n.toLocaleString();
 const kk=n=>'$'+Math.round(n/1000)+'k';
-const schHTML=s=>`${s[0]} <span class="${s[1]}">${rate(s[1])}</span> · ${s[2]} <span class="${s[3]}">${rate(s[3])}</span> · ${s[4]} <span class="${s[5]}">${rate(s[5])}</span>`;
-function rate(c){return c==='g'?'B':c==='y'?'C':c==='r'?'D':c==='f'?'F':'NR';}
+function rate(c){return c==='a'?'A':c==='g'?'B':c==='y'?'C':c==='r'?'D':c==='f'?'F':'NR';}
+
+/* ---------------- schools ----------------
+   schools.json carries the district, every level a subdivision feeds, and TEA's
+   current rating for each campus. Without it we fall back to the three-slot
+   table baked into this file. */
+const RANKL={A:1,B:2,C:3,D:4,F:5};
+function rcls(letter){
+  return letter==='A'?'a' : letter==='B'?'g' : letter==='C'?'y'
+       : letter==='D'?'r' : letter==='F'?'f' : 'n';
+}
+const rshort=l=>(!l||l==='Not Rated')?'NR':l;
+
+/* The curated homes point straight at an entry in S rather than naming a zone
+   key, so recover the key from the identity of the array they share. Feed rows
+   carry sk directly. */
+const SKEY=new Map(Object.entries(S).map(([k,v])=>[v,k]));
+function zoneKey(d){ return d.sk || SKEY.get(d.s) || null; }
+
+/* One shape for both sources, so everything downstream stops caring which. */
+function schoolsFor(d){
+  const key=zoneKey(d);
+  if(SCH && SCH.zones && key && SCH.zones[key]){
+    const z=SCH.zones[key];
+    return {district:z.district, districtRating:z.districtRating, note:z.note||'',
+            levels:z.levels, rich:true};
+  }
+  const a=d.s;                                    // legacy three-slot fallback
+  if(!Array.isArray(a)||a.length<6) return {district:'', districtRating:'', note:'', levels:[], rich:false};
+  const mk=(nm,code,lvl,lbl)=> (!nm||nm==='—') ? null
+    : {name:nm, rating:rate(code), lvl, lvlLabel:lbl, grades:'', url:''};
+  return {district:'', districtRating:'', note:'', rich:false,
+          levels:[mk(a[0],a[1],'elementary','Elementary'),
+                  mk(a[2],a[3],'middle','Middle school'),
+                  mk(a[4],a[5],'high','High school')]};
+}
+
+/* the one-line summary under each card */
+function schHTML(d){
+  const s=schoolsFor(d);
+  const got=(s.levels||[]).filter(Boolean);
+  if(!got.length) return `<span class="n">School assignment not confirmed for this subdivision</span>`;
+  const chain=got.map(c=>`${c.name} <span class="${rcls(c.rating)}">${rshort(c.rating)}</span>`).join(' · ');
+  return s.district
+    ? `<span class="dist">${s.district}</span> <span class="${rcls(s.districtRating)}">${rshort(s.districtRating)}</span> &middot; ${chain}`
+    : chain;
+}
+
+/* worst campus in the chain, used by the overall filter */
+function worstRank(d){
+  const got=(schoolsFor(d).levels||[]).filter(Boolean);
+  if(!got.length) return 2.5;
+  return Math.max(...got.map(c=>RANKL[c.rating]||2.5));
+}
+/* rating for one level, or null when the district has no such campus */
+function levelRating(d,lvl){
+  const c=(schoolsFor(d).levels||[]).find(x=>x&&x.lvl===lvl);
+  return c?c.rating:null;
+}
 
 /* FEMA flood zone, pre-queried per address from the NFHL (layer 28), Aug 9 2026 */
 function isSFHA(d){ return /^(A|V)/.test(d.fz||''); }
+function envHTML(d){
+  if(!HAZ) return '';
+  const e=d.env, listMi=HAZ.listMiles||3, alertMi=HAZ.alertMiles||1.5;
+  const src=`<div class="envsrc">Federal sites from the EPA's Cleanups in My Community; state Superfund
+      sites and landfills from the TCEQ. Distances are straight-line from the agency's own published
+      coordinate, which is approximate &mdash; a plume or a landfill boundary is wider than its map pin.</div>`;
+  if(!e || !e.nearest)
+    return `<h5>Environmental sites</h5><div class="fzbox">Not checked for this address.</div>`;
+
+  const row=x=>`<div class="envrow"><span class="envk sev${ENVSEV[x.kind]||1}"></span><div>
+      <b>${x.name}</b> &mdash; ${x.mi.toFixed(1)} mi<br>
+      <span class="envs">${ENVLABEL[x.kind]||'Environmental site'}. ${x.status}${x.addr?' &middot; '+x.addr:''}</span>
+      ${x.url?`<br><a href="${x.url}" target="_blank" rel="noopener">Agency record &#8599;</a>`:''}
+    </div></div>`;
+
+  if(!e.near.length){
+    const n=e.nearest;
+    return `<h5>Environmental sites</h5>
+      <div class="fzbox"><b>Nothing on file within ${listMi} miles.</b> The closest is ${n.name},
+      about ${n.mi.toFixed(1)} miles away &mdash; ${(ENVLABEL[n.kind]||'an environmental site').toLowerCase()}.</div>${src}`;
+  }
+  return `<h5>Environmental sites</h5>
+    <div class="fzbox ${e.alert?'fzbad':'fzmid'}">${e.alert
+      ? `<b>A Superfund site, landfill or waste cleanup sits within ${alertMi} miles.</b>
+         Worth raising with your inspector and asking the seller about before the option period ends.`
+      : `<b>${e.near.length} site${e.near.length>1?'s':''} within ${listMi} miles, none within ${alertMi}.</b>
+         Listed here so you can see what is around, not because any of it is known to affect this home.`}
+    </div>
+    <div class="envlist">${e.near.map(row).join('')}</div>${src}`;
+}
+
 function floodHTML(d){
   const link=`<a href="https://msc.fema.gov/portal/search#searchresultsanchor" target="_blank" rel="noopener">FEMA map</a>`;
   if(!d.fz) return `<div class="fzbox">Not checked &mdash; verify on the ${link} during the option period.</div>`;
@@ -1548,7 +1987,7 @@ function thumbHTML(d){
 /* ---------------- user state: favorites, notes, hidden ---------------- */
 const KEY='home_search_v1';
 const LS=(()=>{try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return localStorage;}catch(e){return null;}})();
-const ST={fav:{},hide:{},note:{},added:[],lastUpdate:null};
+const ST={fav:{},hide:{},note:{},added:[],seen:{},lastUpdate:null,lastGen:null};
 let sharedMode=false;                                  // true while viewing someone else's link
 function kOf(d){return d.mls||d.a;}
 function persist(){ if(sharedMode||!LS) return; try{LS.setItem(KEY,JSON.stringify(ST));}catch(e){} }
@@ -1557,14 +1996,49 @@ function persist(){ if(sharedMode||!LS) return; try{LS.setItem(KEY,JSON.stringif
   try{const j=JSON.parse(LS.getItem(KEY)||'{}');
       Object.assign(ST.fav,j.fav||{});Object.assign(ST.hide,j.hide||{});Object.assign(ST.note,j.note||{});
       if(Array.isArray(j.added)) ST.added=j.added;
-      ST.lastUpdate=j.lastUpdate||null;}catch(e){}
+      if(j.seen && typeof j.seen==='object') ST.seen=j.seen;
+      ST.lastUpdate=j.lastUpdate||null; ST.lastGen=j.lastGen||null;}catch(e){}
 })();
 function mergeListings(){
-  const have=new Set(BASE.map(d=>d.mls||d.a));
-  P = BASE.concat((ST.added||[]).filter(d=>!have.has(d.mls||d.a)))
+  const refs = BASE.filter(d=>d.ref);          // context pins, never for sale
+  let core;
+
+  if(SNAP && Array.isArray(SNAP.listings) && SNAP.listings.length){
+    core = SNAP.listings.map(fromSnap);
+
+    // Homes she saved or wrote a comment on do not simply vanish when they
+    // leave the market — they stay, struck through, with the reason.
+    const here=new Set(core.map(d=>d.mls||d.a));
+    (SNAP.removed||[]).forEach(r=>{
+      const k=r.mls;
+      if(here.has(k)) return;
+      if(!(ST.fav[k] || (ST.note[k]&&ST.note[k].trim()))) return;
+      const old=ST.seen[k];
+      if(!old) return;
+      core.push(Object.assign(fromSnap(old),{gone:r.reason||'No longer listed',goneOn:r.on||''}));
+    });
+  } else {
+    const have=new Set(BASE.map(d=>d.mls||d.a));
+    core = BASE.filter(d=>!d.ref).concat((ST.added||[]).filter(d=>!have.has(d.mls||d.a)));
+  }
+
+  P = core.concat(refs)
     // USDA will not guarantee NEW construction inside a FEMA high-risk zone,
     // so those homes are not eligible for this search and are excluded outright
-    .filter(d=> d.ref || !(isSFHA(d) && d.yr>=2025));
+    .filter(d=> d.ref || d.gone || !(isSFHA(d) && d.yr>=2025));
+
+  P.forEach(attachEnv);
+
+  // remember the full record of anything she has an interest in, so it can
+  // still be rendered after the feed stops carrying it
+  P.forEach(d=>{
+    const k=kOf(d);
+    if(d.ref||d.gone) return;
+    if(ST.fav[k] || (ST.note[k]&&ST.note[k].trim())){
+      const {env,...slim}=d;                       // env is recomputed, never stored
+      ST.seen[k]=slim;
+    }
+  });
 }
 mergeListings();
 const nFav =()=>Object.values(ST.fav).filter(Boolean).length;
@@ -1579,16 +2053,25 @@ function passes(d,over){
   const mx=+document.getElementById('fPrice').value;
   const gf=document.getElementById('fGf').value;
   const sc=o.sc!==undefined?o.sc:document.getElementById('fSch').value;
+  const di=o.di!==undefined?o.di:document.getElementById('fDist').value;
+  const lv=o.lv!==undefined?o.lv:document.getElementById('fLvl').value;
+  const lr=o.lr!==undefined?o.lr:document.getElementById('fLvlR').value;
   if(st!=='all' && d.st!==+st) return false;
   if(d.p>mx) return false;
   if(gf==='suite' && d.gf!=='suite') return false;
   if(gf==='yes' && d.gf==='no') return false;
   if(gf==='no' && d.gf!=='no') return false;
   if(sc!=='all'){
-    const rank={g:1,y:2,n:2.5,r:3,f:4};
-    const worst=Math.max(rank[d.s[1]]||2.5,rank[d.s[3]]||2.5,rank[d.s[5]]||2.5);
-    const cap= sc==='b'?1 : sc==='c'?2.5 : 3;   // b: all B · c: no D/F · d: no F
-    if(worst>cap) return false;
+    // b: every campus B or better · c: nothing below C · d: nothing failing
+    const cap= sc==='b'?2 : sc==='c'?3 : 4;
+    if(worstRank(d)>cap) return false;
+  }
+  if(di!=='all' && schoolsFor(d).district!==di) return false;
+  if(lv!=='all' && lr!=='all'){
+    const r=levelRating(d,lv);
+    // a district without that level, or an unconfirmed campus, cannot be shown
+    // to meet a rating bar, so it drops out rather than passing on a guess
+    if(!r || !RANKL[r] || RANKL[r] > RANKL[lr]) return false;
   }
   return true;
 }
@@ -1603,7 +2086,8 @@ function inView(d){
 
 function build(){
   shown = P.filter(d=> d.ref ? true : (passes(d) && inView(d)));
-  renderList(); renderMarkers(); counts(); schoolCounts();
+  if(view==='comm') renderCommList(); else renderList();
+  renderMarkers(); renderCommLayer(); counts(); schoolCounts();
 }
 /* show how many homes each school-rating option would leave, so a zero is
    informative rather than a dead end */
@@ -1629,9 +2113,43 @@ function parts(d){
           ti:Math.round(d.m-pi-fee-hoa)};
 }
 
+function schoolsBlock(d){
+  const s=schoolsFor(d);
+  const got=(s.levels||[]).filter(Boolean);
+  if(!got.length)
+    return `<div class="fzbox">Campus assignment is not confirmed for this subdivision.
+            Ask the district before you rely on it.</div>`;
+
+  const head = s.district
+    ? `<div class="schhead"><div><b>${s.district}</b>
+         <span class="schgr">district rating</span></div>
+         <div class="${rcls(s.districtRating)}">${rshort(s.districtRating)}</div></div>`
+    : '';
+
+  const rows = got.map(c=>`<div class="schrow">
+      <div class="schlvl">${c.lvlLabel||''}</div>
+      <div>${c.url?`<a href="${c.url}" target="_blank" rel="noopener">${c.name}</a>`:c.name}
+        ${c.grades?`<span class="schgr"> &middot; ${c.grades}${c.enrollment?` &middot; ${c.enrollment.toLocaleString()} students`:''}</span>`:''}</div>
+      <div class="${rcls(c.rating)}">${rshort(c.rating)}</div>
+    </div>`).join('');
+
+  const gaps = (s.levels||[]).some(x=>!x)
+    ? `<div class="note">One level in this chain is not confirmed &mdash; call the district.</div>` : '';
+
+  return `${head}${rows}${gaps}
+    ${s.note?`<div class="note">${s.note}</div>`:''}
+    <div class="envsrc">${SCH
+      ? `Official TEA A&ndash;F accountability ratings, released ${SCH.ratingYearLabel||'August 2026'}.
+         Campus assignment is the district's and can change; confirm before you rely on it.`
+      : `Official state (TEA) ratings.`}</div>`;
+}
+
 function drawer(d){
   const k=kOf(d), b=parts(d), note=ST.note[k]||'';
   return `<div class="drawer" onclick="event.stopPropagation()">
+    ${d.gone?`<div class="fzbox fzbad" style="margin-bottom:12px"><b>No longer on the market.</b>
+      The MLS now shows this as <b>${d.gone}</b>${d.goneOn?` (noticed ${d.goneOn})`:''}. It is kept here
+      because you saved it or wrote a comment on it. Everything below is the last information we had.</div>`:''}
     <h5>Monthly payment, estimated</h5>
     <dl class="dgrid">
       <dt>Rate assumed</dt><dd>6.99% &middot; 30-year fixed <span style="color:#65635f">(not a quote or lock)</span></dd>
@@ -1643,12 +2161,7 @@ function drawer(d){
       <dt style="font-weight:700;color:#1c1b19">Total</dt><dd style="font-weight:700">${money(d.m)}</dd>
     </dl>
     <h5>Schools</h5>
-    <div style="font-size:12.5px;line-height:1.7">
-      Elementary — ${d.s[0]} <span class="${d.s[1]}">${rate(d.s[1])}</span><br>
-      Middle — ${d.s[2]} <span class="${d.s[3]}">${rate(d.s[3])}</span><br>
-      High — ${d.s[4]} <span class="${d.s[5]}">${rate(d.s[5])}</span>
-      <div style="color:#65635f;font-size:11.5px;margin-top:5px">Official state (TEA) ratings, issued Aug 2025. New ratings publish Aug 14, 2026.</div>
-    </div>
+    ${schoolsBlock(d)}
     <h5>USDA eligibility</h5>
     <div class="verif">&#10003; <b>Verified eligible.</b> This exact address was tested against USDA Rural
       Development's own eligibility map at <code>${d.lat.toFixed(6)}, ${d.lon.toFixed(6)}</code> and returned
@@ -1656,6 +2169,7 @@ function drawer(d){
       determination at application.</div>
     <h5>FEMA flood zone</h5>
     ${floodHTML(d)}
+    ${envHTML(d)}
     ${d.n?`<h5>Notes on this home</h5><div style="font-size:12.5px">${d.n}</div>`:''}
     ${d.u?`<a class="harbtn emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">View full listing on HAR</a>`:
           `<div style="font-size:12.5px;color:#65635f;margin-top:12px">Builder inventory — no public listing page. Ask me for the builder sheet.</div>`}
@@ -1673,7 +2187,7 @@ function renderList(){
   listEl.innerHTML=''; cards=[];
   const b=map.getBounds();
   const live=shown.filter(d=>!d.ref && (!viewOnly || b.contains([d.lat,d.lon])));
-  live.sort((a,b2)=>(b2.isNew?1:0)-(a.isNew?1:0));
+  live.sort((a,b2)=>(a.gone?1:0)-(b2.gone?1:0) || (b2.isNew?1:0)-(a.isNew?1:0));
   document.getElementById('cN').textContent=live.length;
 
   if(view==='hide'){
@@ -1693,9 +2207,10 @@ function renderList(){
   }
 
   live.forEach(d=>{
+   try{
     const k=kOf(d), isOpen=openKey===k;
     const c=document.createElement('div');
-    c.className='card'+(isOpen?' open':'')+(ST.fav[k]?' isfav':'')+(ST.hide[k]?' ishid':'');
+    c.className='card'+(isOpen?' open':'')+(ST.fav[k]?' isfav':'')+(ST.hide[k]?' ishid':'')+(d.gone?' isgone':'');
     c.innerHTML=`
       <span class="fav ${ST.fav[k]?'on':''}" data-k="${k}" title="Save this home">${ST.fav[k]?'&#9733;':'&#9734;'}</span>
       <div class="chead">
@@ -1707,7 +2222,9 @@ function renderList(){
             <div class="badges" style="margin-right:26px">
               ${d.isNew?'<span class="b b-new">New</span>':''}
               ${d.top?'<span class="b b-top">Top pick</span>':''}
+              ${d.gone?`<span class="b b-gone">${d.gone}</span>`:''}
               ${isSFHA(d)?`<span class="b b-flood">Flood zone ${d.fz}</span>`:''}
+              ${(d.env&&d.env.alert)?'<span class="b b-env">Environmental site nearby</span>':''}
               <span class="b b-elig">&#10003; USDA verified</span>
               ${d.gf==='suite'?'<span class="b b-elig">Ground-floor suite</span>':''}
               ${d.gf==='no'?'<span class="b b-inel">All beds upstairs</span>':''}
@@ -1718,7 +2235,7 @@ function renderList(){
           <div class="sub">${d.c}${d.hoa?' &middot; HOA $'+d.hoa+'/yr':''}</div>
         </div>
       </div>
-      <div class="sch">${schHTML(d.s)}</div>
+      <div class="sch">${schHTML(d)}</div>
       ${(ST.note[k]&&ST.note[k].trim())?`<div class="cnote">${ST.note[k].replace(/</g,'&lt;')}</div>`:''}
       <div class="mls" style="padding-bottom:14px">${d.mls?`MLS ${d.mls}`:'Builder inventory'}</div>
       <span class="chev">${isOpen?'Close &#9650;':'Details &#9660;'}</span>
@@ -1731,7 +2248,8 @@ function renderList(){
       if(openKey===k){
         const el=cards.find(x=>x.d===d);
         if(el) el.el.scrollIntoView({behavior:'smooth',block:'nearest'});
-        map.flyTo([d.lat,d.lon],Math.max(map.getZoom(),15),{duration:.6});
+        if(Number.isFinite(d.lat)&&Number.isFinite(d.lon))
+          map.flyTo([d.lat,d.lon],Math.max(map.getZoom(),15),{duration:.6});
       }
     });
     c.querySelector('.fav').addEventListener('click',e=>{
@@ -1740,6 +2258,10 @@ function renderList(){
     c.addEventListener('mouseenter',()=>spot(d,true));
     c.addEventListener('mouseleave',()=>spot(d,false));
     listEl.appendChild(c); cards.push({el:c,d:d});
+   }catch(err){
+     // a single malformed listing is skipped; the rest of her list still renders
+     console.warn('Could not render listing',d&&d.mls,err);
+   }
   });
 
   // drawer controls
@@ -1778,6 +2300,7 @@ function renderMarkers(){
   markers.forEach(m=>map.removeLayer(m)); markers=[];
   const CELL=58, cells={};
   shown.forEach(d=>{
+    if(!Number.isFinite(d.lat)||!Number.isFinite(d.lon)) return;   // unmappable record
     if(d.ref){ cells['ref'+d.a]=[d]; return; }
     const pt=map.latLngToLayerPoint([d.lat,d.lon]);
     const key=Math.floor(pt.x/CELL)+':'+Math.floor(pt.y/CELL);
@@ -1794,6 +2317,7 @@ function renderMarkers(){
       mk.on('mouseover',()=>spot(d,true)); mk.on('mouseout',()=>spot(d,false));
       mk.on('click',()=>{
         if(d.ref) return;
+        if(view==='comm'){ document.querySelector('.views button[data-v="all"]').click(); }
         openKey=kOf(d); renderList();
         const c=cards.find(x=>x.d===d); if(c) c.el.scrollIntoView({behavior:'smooth',block:'center'});
       });
@@ -1817,8 +2341,8 @@ function spot(d,on){
   const c=cards.find(x=>x.d===d); if(c) c.el.classList.toggle('hot',on);
 }
 
-map.on('zoomend',renderMarkers);
-map.on('moveend',()=>{ if(viewOnly) renderList(); });
+map.on('zoomend',()=>{ renderMarkers(); renderCommLayer(); });
+map.on('moveend',()=>{ if(viewOnly) (view==='comm'?renderCommList():renderList()); });
 
 document.getElementById('tFilters').addEventListener('click',e=>{
   document.body.classList.toggle('showfilters');
@@ -1827,32 +2351,67 @@ document.getElementById('tFilters').addEventListener('click',e=>{
 });
 document.querySelectorAll('.views button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.views button').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on'); view=b.dataset.v; openKey=null; build();
+  b.classList.add('on'); view=b.dataset.v; openKey=null;
+  if(view==='comm' && !commOn) setComm(true);
+  build();
 }));
 document.getElementById('tView').addEventListener('click',e=>{
-  viewOnly=!viewOnly; e.currentTarget.classList.toggle('on',viewOnly); renderList();
+  viewOnly=!viewOnly; e.currentTarget.classList.toggle('on',viewOnly);
+  if(view==='comm') renderCommList(); else renderList();
 });
 
 /* ---------------- filters ---------------- */
 const fStory=document.getElementById('fStory'), fGf=document.getElementById('fGf'),
       fSch=document.getElementById('fSch'), fPrice=document.getElementById('fPrice'),
-      fPriceV=document.getElementById('fPriceV');
+      fPriceV=document.getElementById('fPriceV'), fDist=document.getElementById('fDist'),
+      fLvl=document.getElementById('fLvl'), fLvlR=document.getElementById('fLvlR');
+
+/* Districts and levels come from the data, so the toolbar never offers a choice
+   that matches nothing, and never misses one the feed introduces. */
+function fillSchoolFilters(){
+  const dists=[...new Set(P.filter(d=>!d.ref).map(d=>schoolsFor(d).district).filter(Boolean))].sort();
+  const keepD=fDist.value;
+  fDist.innerHTML='<option value="all">Any district</option>'+
+    dists.map(x=>`<option value="${x}">${x}</option>`).join('');
+  fDist.value=[...fDist.options].some(o=>o.value===keepD)?keepD:'all';
+
+  const order=(SCH&&SCH.levelOrder)||['elementary','intermediate','sixth','middle','junior','high'];
+  const labels=(SCH&&SCH.levelLabels)||{};
+  const used=[...new Set(P.filter(d=>!d.ref)
+    .flatMap(d=>(schoolsFor(d).levels||[]).filter(Boolean).map(c=>c.lvl)))]
+    .sort((a,b)=>order.indexOf(a)-order.indexOf(b));
+  const keepL=fLvl.value;
+  fLvl.innerHTML='<option value="all">Any level</option>'+
+    used.map(l=>`<option value="${l}">${labels[l]||l}</option>`).join('');
+  fLvl.value=[...fLvl.options].some(o=>o.value===keepL)?keepL:'all';
+
+  fDist.parentElement.style.display = dists.length>1 ? '' : 'none';
+  const lvOn = used.length>1;
+  fLvl.parentElement.style.display  = lvOn ? '' : 'none';
+  fLvlR.parentElement.style.display = lvOn ? '' : 'none';
+}
+fillSchoolFilters();
 
 function syncChips(){
   // highlight a filter chip whenever it is doing something
   fStory.parentElement.classList.toggle('act',fStory.value!=='all');
   fGf.parentElement.classList.toggle('act',fGf.value!=='all');
   fSch.parentElement.classList.toggle('act',fSch.value!=='all');
+  fDist.parentElement.classList.toggle('act',fDist.value!=='all');
+  const lvOn = fLvl.value!=='all' && fLvlR.value!=='all';
+  fLvl.parentElement.classList.toggle('act',lvOn);
+  fLvlR.parentElement.classList.toggle('act',lvOn);
   fPrice.parentElement.classList.toggle('act',+fPrice.value < +fPrice.max);
   fPriceV.textContent = kk(+fPrice.value);
 }
 function applyFilters(){ syncChips(); openKey=null; build(); }
 
-[fStory,fGf,fSch].forEach(el=>el.addEventListener('change',applyFilters));
+[fStory,fGf,fSch,fDist,fLvl,fLvlR].forEach(el=>el.addEventListener('change',applyFilters));
 fPrice.addEventListener('input',()=>{ syncChips(); build(); });
 
 document.getElementById('tReset').addEventListener('click',()=>{
   fStory.value='all'; fGf.value='all'; fSch.value='all'; fPrice.value=fPrice.max;
+  fDist.value='all'; fLvl.value='all'; fLvlR.value='all';
   if(viewOnly){ viewOnly=false; document.getElementById('tView').classList.remove('on'); }
   applyFilters();
 });
@@ -1882,6 +2441,31 @@ document.getElementById('tFema').addEventListener('click',e=>{
   e.currentTarget.classList.toggle('on',femaOn);
   document.getElementById('lgFema').style.display=femaOn?'flex':'none';
   if(femaOn) flash('Blue-hatched areas are FEMA flood zones. Each home’s own zone is under Details.','good');
+});
+
+/* Environmental sites on the map. Points come from hazards.json, so the layer
+   only exists once that file has loaded. */
+let hazLayer=null, hazOn=false;
+function buildHazLayer(){
+  if(!HAZ || !window.L || hazLayer) return;
+  hazLayer=L.layerGroup();
+  HAZ.sites.forEach(x=>{
+    const sev=ENVSEV[x.kind]||1;
+    const col= sev>=3?'#8c2f2c' : sev===2?'#b3781f' : '#65635f';
+    L.circleMarker([x.lat,x.lon],{radius:6,weight:1.5,color:'#fff',fillColor:col,fillOpacity:.92})
+     .bindPopup(`<b>${x.name}</b><br>${ENVLABEL[x.kind]||'Environmental site'}<br>
+        <span style="color:#65635f">${x.status}</span>
+        ${x.url?`<br><a href="${x.url}" target="_blank" rel="noopener">Agency record</a>`:''}`)
+     .addTo(hazLayer);
+  });
+}
+document.getElementById('tHaz').addEventListener('click',e=>{
+  if(!hazLayer){ flash('Environmental site data has not loaded.','bad'); return; }
+  hazOn=!hazOn;
+  if(hazOn) hazLayer.addTo(map); else map.removeLayer(hazLayer);
+  e.currentTarget.classList.toggle('on',hazOn);
+  document.getElementById('lgHaz').style.display=hazOn?'flex':'none';
+  if(hazOn) flash('Red = active or state Superfund · amber = former Superfund, landfill or waste cleanup.','good');
 });
 
 /* ---------------- share picks with the agent ---------------- */
@@ -2001,6 +2585,7 @@ function applyUpdate(j,silent){
     const have=new Set(P.map(d=>d.mls||d.a));
     incoming.forEach(d=>{
       if(have.has(d.mls||d.a)) return;
+      if(!Array.isArray(d.s) && d.sk) d.s = S[d.sk] || S.none;   // accept a school key
       d.isNew=true; d.addedOn=j.generated||''; ST.added.push(d); addedN++;
     });
     if(j.generated) ST.lastUpdate=j.generated;
@@ -2019,14 +2604,82 @@ function applyUpdate(j,silent){
   return {ok:true,addedN:addedN};
 }
 
-/* Hosted mode: quietly check for an update file next to this page.
-   Fails silently when opened straight from a folder (no server), which is fine. */
-(function autoUpdate(){
+/* ---------------- live data boot ----------------
+   Pulls the scheduled files sitting next to this page. Every one of them is
+   optional: fetch failures, a missing file, or opening the page straight from
+   a folder all leave the curated list on screen untouched. */
+function stampHeader(){
+  const el=document.querySelector('.brand span');
+  if(!el) return;
+  if(SNAP && SNAP.generated){
+    const d=new Date(SNAP.generated);
+    const when=isNaN(d)?SNAP.generated:d.toLocaleString(undefined,
+      {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    el.innerHTML=`<span class="livedot"></span>Live from the HAR MLS &middot; ${SNAP.count||P.length} homes &middot; checked ${when}`;
+  }else if(ST.lastUpdate){
+    el.innerHTML += ' &middot; updated ' + ST.lastUpdate;
+  }
+  // IDX feeds carry a display requirement; state the source wherever live data is shown
+  if(SNAP){
+    const note=document.querySelector('.ainote');
+    if(note && SNAP.attribution && note.textContent.indexOf('REALTORS')===-1){
+      note.innerHTML += ' ' + SNAP.attribution;
+    }
+  }
+}
+
+/* Which homes are new since her last visit, and which have gone. */
+function markArrivals(){
+  if(!SNAP) return {added:0,left:0};
+  const since=ST.lastGen ? String(ST.lastGen).slice(0,10) : null;
+  let added=0;
+  if(since){
+    P.forEach(d=>{
+      if(d.ref||d.gone) return;
+      if((d.firstSeen||'') > since){ d.isNew=true; added++; }
+    });
+  }
+  const left=(SNAP.removed||[]).filter(r=>r.on && (!since || r.on>since)).length;
+  return {added,left};
+}
+
+(function boot(){
   if(!location.protocol.startsWith('http')) return;
-  fetch('updates.json',{cache:'no-store'})
-    .then(r=>r.ok?r.json():null)
-    .then(j=>{ if(j && Array.isArray(j.listings) && j.listings.length) setTimeout(()=>applyUpdate(j,true),950); })
-    .catch(()=>{});
+  const get=f=>fetch(f,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+
+  Promise.all([get('listings.json'),get('hazards.json'),get('updates.json'),get('schools.json')])
+    .then(([snap,haz,upd,sch])=>{
+      let touched=false;
+
+      if(sch && sch.zones && Object.keys(sch.zones).length){ SCH=sch; touched=true; }
+
+      if(haz && Array.isArray(haz.sites) && haz.sites.length){
+        HAZ=haz; buildHazLayer();
+        const b=document.getElementById('tHaz'); if(b) b.style.display='';
+        touched=true;
+      }
+      if(snap && Array.isArray(snap.listings) && snap.listings.length){
+        SNAP=snap; touched=true;
+      }
+
+      if(touched){
+        mergeListings();
+        const {added,left}=markArrivals();
+        fillSchoolFilters(); syncChips(); build(); stampHeader();
+
+        if(SNAP){
+          if(!sharedMode){ ST.lastGen=SNAP.generated; persist(); }
+          const bits=[];
+          if(added) bits.push(added+' new home'+(added>1?'s':''));
+          if(left)  bits.push(left+' came off the market');
+          if(bits.length) setTimeout(()=>flash(bits.join(' · ')+' since you last looked','good'),950);
+        }
+      }
+
+      // the hand-maintained file still works, but only when no live feed is running
+      if(!SNAP && upd && Array.isArray(upd.listings) && upd.listings.length)
+        setTimeout(()=>applyUpdate(upd,true),950);
+    });
 })();
 
 function flash(msg,kind){
@@ -2040,7 +2693,7 @@ function flash(msg,kind){
 
 /* ---- startup: carry-over confirmation + last-update stamp ---- */
 (function startup(){
-  if(ST.lastUpdate){
+  if(ST.lastUpdate && !ST.lastGen){
     const s=document.querySelector('.brand span');
     if(s) s.innerHTML += ' &middot; updated ' + ST.lastUpdate;
   }
@@ -2048,6 +2701,160 @@ function flash(msg,kind){
     setTimeout(()=>flash('Welcome back — your saved homes, comments and hidden list were carried over.','good'),400);
   }
 })();
+
+/* ================= new-build communities layer =======================
+   Individual listings answer "which house." This layer answers "which
+   neighborhood is still being built, who is building it, and what does
+   it open at" — including the ones that have not opened yet.
+====================================================================== */
+let commLayer=null, commOn=false, commMarks=[];
+const cLo=document.getElementById('fCLo'), cHi=document.getElementById('fCHi'),
+      cB =document.getElementById('fCB'),  cSt=document.getElementById('fCSt');
+
+const CSTAT={selling:'Now selling',soon:'Opening soon',final:'Final homes'};
+
+/* Builder list comes from the data so the menu can never offer a name
+   that matches nothing. */
+(function fillBuilders(){
+  const all=[...new Set(COMM.flatMap(c=>c.b))].sort();
+  cB.innerHTML='<option value="all">Any builder</option>'+
+    all.map(b=>`<option value="${b}">${b}</option>`).join('');
+})();
+
+/* A community with no published price drops out the moment a price bar is
+   set — it cannot be shown to satisfy a number nobody has published. */
+function commPasses(c){
+  const lo=cLo.value==='all'?null:+cLo.value, hi=cHi.value==='all'?null:+cHi.value;
+  if(lo!==null || hi!==null){
+    if(c.lo==null) return false;
+    const top=c.hi||c.lo;
+    if(lo!==null && top<lo) return false;
+    if(hi!==null && c.lo>hi) return false;
+  }
+  if(cB.value!=='all' && !c.b.includes(cB.value)) return false;
+  if(cSt.value!=='all' && c.st!==cSt.value) return false;
+  return true;
+}
+const shownComms=()=>COMM.filter(commPasses);
+
+function commPop(c){
+  const price=c.lo==null?`<span style="color:#8a6212;font-weight:700">${c.pl}</span>`
+                        :`<b style="font-size:14px">${c.pl}</b>`;
+  return `<div class="pp"><b style="font-size:13.5px">${c.n}</b><br>
+    <span style="color:#65635f">${c.c}</span><br><br>
+    ${price}<br>
+    <span class="cstat ${c.st}">${CSTAT[c.st]}</span><br><br>
+    <b>Builder${c.b.length>1?'s':''}:</b> ${c.b.join(', ')}<br><br>
+    ${c.note}<br>
+    ${c.ap?'<br><span style="color:#8a6212">Map point is approximate — the builder has not published a street address yet.</span>':''}
+    <br><span style="color:#65635f;font-size:11px">Pricing read ${c.src==='kb'?'from KB Home':c.src==='drh'?"from D.R. Horton":c.src==='list'?'from the listings on this map':'from builder and community sources'}, Sept 26 2026. Verify before you tour.</span></div>`;
+}
+
+function renderCommLayer(){
+  if(!commLayer) commLayer=L.layerGroup();
+  commLayer.clearLayers(); commMarks=[];
+  if(!commOn) return;
+  /* Zoomed out, 44 name plates collide into mush — so the pin carries only
+     its price until the map is close enough for the names to breathe. */
+  const wide = map.getZoom() >= 11;
+  shownComms().forEach(c=>{
+    const label=c.lo==null ? 'price TBA'
+              : kk(c.lo)+(c.hi?'\u2013'+kk(c.hi):'+');
+    const html = wide ? `<div class="cpin ${c.st}">${c.n}<small>${label}</small></div>`
+                      : `<div class="cpin tight ${c.st}">${label}</div>`;
+    const mk=L.marker([c.lat,c.lon],{icon:L.divIcon({className:'',
+      html:html,iconSize:null,iconAnchor:wide?[40,15]:[24,11]}),zIndexOffset:300});
+    mk.bindPopup(commPop(c),{maxWidth:300});
+    mk._c=c; mk.addTo(commLayer); commMarks.push(mk);
+  });
+  if(!map.hasLayer(commLayer)) commLayer.addTo(map);
+}
+
+function renderCommList(){
+  listEl.innerHTML=''; cards=[];
+  const b=map.getBounds();
+  const live=shownComms().filter(c=>!viewOnly || b.contains([c.lat,c.lon]))
+                         .sort((x,y)=>(x.lo==null?1:0)-(y.lo==null?1:0) || (x.lo||0)-(y.lo||0));
+  document.getElementById('cN').textContent=live.length;
+
+  const bn=document.createElement('div'); bn.className='banner';
+  bn.innerHTML=`<b>New-build communities.</b> Every neighbourhood still selling or about to open
+    between Beltway 8 and Willis, Woodforest to Lake Houston — sorted by starting price.
+    Builder numbers were read on September 26, 2026 and move weekly.`;
+  listEl.appendChild(bn);
+
+  if(!live.length){
+    const e=document.createElement('div'); e.className='empty';
+    e.innerHTML='No communities match these filters.<br>Try widening the price range.';
+    listEl.appendChild(e); return;
+  }
+
+  live.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='card ccard';
+    el.innerHTML=`
+      <div class="crow">
+        <div><div class="price">${c.lo==null?'Pricing TBA':c.pl}</div>
+          <div class="permo">${c.b.length} builder${c.b.length>1?'s':''}</div></div>
+        <div class="badges"><span class="cstat ${c.st}">${CSTAT[c.st]}</span></div>
+      </div>
+      <div class="addr" style="margin-top:6px">${c.n}</div>
+      <div class="sub">${c.c}${c.ap?' &middot; approximate map point':''}</div>
+      <div class="cbuild">${c.b.map(x=>`<span>${x}</span>`).join('')}</div>
+      <div class="cnote2">${c.note}</div>`;
+    el.addEventListener('click',()=>{
+      map.flyTo([c.lat,c.lon],Math.max(map.getZoom(),14),{duration:.6});
+      const mk=commMarks.find(m=>m._c===c); if(mk) mk.openPopup();
+    });
+    el.addEventListener('mouseenter',()=>cspot(c,true));
+    el.addEventListener('mouseleave',()=>cspot(c,false));
+    listEl.appendChild(el);
+  });
+}
+function cspot(c,on){
+  const mk=commMarks.find(m=>m._c===c);
+  if(!mk) return;
+  const el=mk.getElement(); if(!el) return;
+  const p=el.querySelector('.cpin'); if(p) p.classList.toggle('hot',on);
+}
+
+function setComm(on){
+  commOn=on;
+  document.getElementById('tComm').classList.toggle('on',on);
+  document.getElementById('cFilters').classList.toggle('show',on);
+  document.getElementById('lgComm').style.display=on?'flex':'none';
+  if(!on && commLayer && map.hasLayer(commLayer)) map.removeLayer(commLayer);
+  renderCommLayer();
+  setTimeout(()=>map.invalidateSize(),60);
+}
+document.getElementById('tComm').addEventListener('click',()=>{
+  const on=!commOn;
+  setComm(on);
+  if(!on && view==='comm'){                       // turning the layer off leaves the list
+    document.querySelector('.views button[data-v="all"]').click();
+  } else if(on){
+    flash(`${COMM.length} new-build communities from Beltway 8 north to Willis. Tap one for its builders and starting price.`,'good');
+  }
+});
+function syncCommChips(){
+  const on=v=>v!=='all';
+  cLo.parentElement.classList.toggle('act',on(cLo.value));
+  cHi.parentElement.classList.toggle('act',on(cHi.value));
+  cB.parentElement.classList.toggle('act',on(cB.value));
+  cSt.parentElement.classList.toggle('act',on(cSt.value));
+  document.getElementById('nComm').textContent=shownComms().length;
+}
+[cLo,cHi,cB,cSt].forEach(el=>el.addEventListener('change',()=>{
+  syncCommChips();
+  if(!commOn) setComm(true);
+  renderCommLayer();
+  if(view==='comm') renderCommList();
+}));
+document.getElementById('cReset').addEventListener('click',()=>{
+  cLo.value='all'; cHi.value='all'; cB.value='all'; cSt.value='all';
+  syncCommChips(); renderCommLayer(); if(view==='comm') renderCommList();
+});
+syncCommChips();
 
 syncChips();
 build();
