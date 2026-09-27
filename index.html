@@ -802,6 +802,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .cpin.soon{border-style:dashed;border-color:#b3781f;color:#8a6212;background:#fffdf6}
   .cpin.final{border-color:#65635f;color:#4a4845}
   .cpin.tight{padding:2px 6px;font-size:10px;max-width:none}
+  .cpin.fz-bad{border-color:#8c2f2c;color:#8c2f2c;background:#fdf6f5}
+  .cpin.fz-mid{box-shadow:0 0 0 2px #dbe8f3,var(--shadow)}
+  .cflood{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.03em;
+        padding:2px 7px;border-radius:20px;background:#e7f1ed;color:#0f4436;margin-left:4px}
+  .cflood.mid{background:#dbe8f3;color:#2c5578}
+  .cflood.bad{background:#f6e3e2;color:#8c2f2c}
+  .lr.dim{opacity:.45}
+  .lr.dim::after{content:" — zoom in";font-style:italic}
   .cpin:hover,.cpin.hot{transform:scale(1.12);z-index:9999!important;background:#f2f8f6}
   .cstat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;
          text-transform:uppercase;padding:2px 7px;border-radius:20px;
@@ -1093,6 +1101,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="fg"><label for="fCB">Builder</label>
       <select id="fCB"><option value="all">Any builder</option></select>
     </div>
+    <div class="fg"><label for="fCFz">Flood</label>
+      <select id="fCFz">
+        <option value="all">Any</option>
+        <option value="out">Outside the 1% floodplain</option>
+        <option value="clear">Nothing mapped within &frac12; mile</option>
+        <option value="in">In a mapped flood zone</option>
+      </select>
+    </div>
     <div class="fg"><label for="fCSt">Status</label>
       <select id="fCSt">
         <option value="all">Any</option>
@@ -1117,6 +1133,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="lr"><span class="sw" style="background:#ecc98f;border-color:#d0a253"></span> USDA ineligible area</div>
       <div class="lr" id="lgFema" style="display:none"><span class="sw" style="background:#b3cfe8;border-color:#7ea6c9"></span> FEMA flood zone</div>
       <div class="lr" id="lgComm" style="display:none"><span class="sw" style="background:#fff;border-color:#0f4436;border-width:2px"></span> New-build community</div>
+      <div class="lr" id="lgCommFz" style="display:none"><span class="sw" style="background:#fdf6f5;border-color:#8c2f2c;border-width:2px"></span> &#9888; community point in a flood zone</div>
       <div class="lr" id="lgHaz" style="display:none"><span class="sw" style="background:#8c2f2c;border-radius:50%"></span> Superfund / landfill</div>
       <div class="lr" style="margin-top:6px;color:#65635f">▪ after price = single story</div>
     </div>
@@ -1610,156 +1627,156 @@ const BASE = [
 ======================================================================= */
 const COMM = [
  // ---------- Spring / far south end of the corridor ----------
- {n:"Harmony",c:"Spring 77386",lat:30.097267,lon:-95.372593,st:"selling",
+ {n:"Harmony",c:"Spring 77386",lat:30.097267,lon:-95.372593,st:"selling",fz:"X",fzs:1,fzn:1,
   b:["Ashton Woods","CastleRock","Highland Homes","Perry Homes","Darling Homes"],
   lo:220000,hi:null,pl:"From the $220s",src:"web",
   note:"Master-planned, Conroe ISD. Recreation center, pools, parks. Just north of the Grand Parkway."},
- {n:"Woodson's Reserve",c:"Spring 77386",lat:30.118702,lon:-95.362717,st:"selling",
+ {n:"Woodson's Reserve",c:"Spring 77386",lat:30.118702,lon:-95.362717,st:"selling",fz:"X",fzs:1,fzn:1,
   b:["Toll Brothers","Perry Homes","Meritage","Taylor Morrison","Tri Pointe"],
   lo:350000,hi:null,pl:"From the mid $300s",src:"web",
   note:"The community you liked. Verified USDA-INELIGIBLE — it sits inside USDA's urbanized exclusion area, so 100% financing will not work here."},
- {n:"The Meadows at Imperial Oaks",c:"Conroe / Spring 77385",lat:30.157373,lon:-95.401010,st:"selling",
+ {n:"The Meadows at Imperial Oaks",c:"Conroe / Spring 77385",lat:30.157373,lon:-95.401010,st:"selling",fz:"X",fzn:1,
   b:["David Weekley","Coventry Homes","Ashton Woods"],
   lo:300000,hi:600000,pl:"Low $300s – $600s",src:"web",
   note:"Conroe ISD, minutes from the Woodlands employment centers."},
 
  // ---------- Conroe ----------
- {n:"Harper's Preserve",c:"Conroe 77385",lat:30.202400,lon:-95.424520,st:"selling",
+ {n:"Harper's Preserve",c:"Conroe 77385",lat:30.202400,lon:-95.424520,st:"selling",fz:"X",fzn:1,
   b:["D.R. Horton","Highland Homes","Perry Homes","Chesmar","Plantation Homes"],
   lo:300000,hi:1000000,pl:"Low $300s – $1M+",src:"web",
   note:"On SH 242 just east of I-45. Conroe ISD."},
- {n:"Artavia",c:"Conroe 77302",lat:30.204697,lon:-95.336410,st:"selling",
+ {n:"Artavia",c:"Conroe 77302",lat:30.204697,lon:-95.336410,st:"selling",fz:"X",
   b:["Perry Homes","Village Builders (Lennar)","David Weekley","Coventry","Highland Homes","Chesmar","Beazer"],
   lo:280000,hi:700000,pl:"High $200s – $700s",src:"web",
   note:"2,200-acre master plan on SH 242. Conroe ISD. Entry pricing sits close to your range; most sections are well above it."},
- {n:"Ladera Creek",c:"Conroe 77302",lat:30.292375,lon:-95.417866,st:"selling",
+ {n:"Ladera Creek",c:"Conroe 77302",lat:30.292375,lon:-95.417866,st:"selling",fz:"X",fzn:1,
   b:["Lennar","Stylecraft"],lo:280000,hi:null,pl:"High $200s+",src:"web",
   note:"Conroe ISD. One of the few Conroe master plans still opening in the high $200s."},
- {n:"Grand Central Park",c:"Conroe 77304",lat:30.279154,lon:-95.475130,st:"selling",
+ {n:"Grand Central Park",c:"Conroe 77304",lat:30.279154,lon:-95.475130,st:"selling",fz:"X",fzs:1,fzn:1,
   b:["David Weekley","Drees","Highland Homes","Jamestown Estate","Perry Homes","Westin Homes"],
   lo:300000,hi:600000,pl:"$300s – $600s+",src:"web",
   note:"2,046 acres at I-45 and Loop 336. Above your price band, listed for orientation."},
- {n:"Evergreen",c:"Conroe 77304",lat:30.263971,lon:-95.499448,st:"selling",ap:1,
+ {n:"Evergreen",c:"Conroe 77304",lat:30.263971,lon:-95.499448,st:"selling",ap:1,fz:"AE",fzn:1,
   b:["Shea Homes","Chesmar","Perry Homes"],lo:300000,hi:700000,pl:"$300s – $700s",src:"web",
   note:"Still building out west of Conroe off FM 2854."},
- {n:"Sagecrest Trails",c:"Conroe 77304",lat:30.357885,lon:-95.488498,st:"selling",
+ {n:"Sagecrest Trails",c:"Conroe 77304",lat:30.358478,lon:-95.489354,st:"selling",fz:"X",fzn:1,
   b:["KB Home"],lo:208995,hi:null,pl:"From $208,995",src:"kb",
   note:"KB's Conroe master plan on Teas Nursery Road — 383 acres, 266 homes. Conroe ISD."},
- {n:"Sagecrest Preserve",c:"Conroe 77304",lat:30.359400,lon:-95.490200,st:"selling",ap:1,
+ {n:"Sagecrest Preserve",c:"Conroe 77304",lat:30.358512,lon:-95.488838,st:"selling",fz:"X",fzn:1,
   b:["KB Home"],lo:230995,hi:null,pl:"From $230,995",src:"kb",
   note:"The larger-plan section of Sagecrest."},
- {n:"Glenwood Forest",c:"Conroe",lat:30.341354,lon:-95.510893,st:"soon",ap:1,
+ {n:"Glenwood Forest",c:"Conroe",lat:30.341354,lon:-95.510893,st:"soon",ap:1,fz:"X",fzn:1,
   b:["KB Home"],lo:null,hi:null,pl:"Pricing not yet published",src:"kb",
   note:"KB Home, registration phase, sales office \"coming soon.\" Plans 1,272–2,410 sf, Conroe ISD, 3–5 miles from downtown Conroe. This is one of the two KB openings that could be the October one — KB has not published a date. Call 888-KB-HOMES to get on the interest list."},
- {n:"Grangerland Meadows",c:"Grangerland 77306",lat:30.250138,lon:-95.320322,st:"soon",ap:1,
+ {n:"Grangerland Meadows",c:"Grangerland 77306",lat:30.250138,lon:-95.320322,st:"soon",ap:1,fz:"X",fzn:1,
   b:["KB Home"],lo:null,hi:null,pl:"Pricing not yet published",src:"kb",
   note:"KB Home, sales office \"coming soon.\" Plans 1,243–2,246 sf, up to 4 bedrooms, Conroe ISD — adjacent to Ben Milam Elementary and Grangerland Intermediate. The other candidate for the October opening. Sales line 281-668-3975."},
- {n:"Venetian Pines",c:"Conroe 77301",lat:30.324767,lon:-95.439944,st:"final",
+ {n:"Venetian Pines",c:"Conroe 77301",lat:30.324767,lon:-95.439944,st:"final",fz:"X",fzn:1,
   b:["D.R. Horton"],lo:243000,hi:null,pl:"From the $243s",src:"drh",
   note:"Final opportunities — only a few homes left."},
- {n:"Baron Village",c:"Conroe 77306",lat:30.281849,lon:-95.320825,st:"selling",ap:1,
+ {n:"Baron Village",c:"Conroe 77306",lat:30.281849,lon:-95.320825,st:"selling",ap:1,fz:"X",fzn:1,
   b:["D.R. Horton Express"],lo:140000,hi:null,pl:"From the $140s",src:"drh",
   note:"Cheapest new construction in the corridor, but plans start at 813 sf with 2–3 bedrooms — most are too small for a household of six."},
- {n:"Silverthorne",c:"Conroe 77303",lat:30.369568,lon:-95.442852,st:"selling",
+ {n:"Silverthorne",c:"Conroe 77303",lat:30.369929,lon:-95.442705,st:"selling",fz:"X",
   b:["D.R. Horton"],lo:245000,hi:null,pl:"From the $245s",src:"drh",
   note:"3–6 bedrooms, 1,156 sf and up, up to 4-car garages. The deepest inventory D.R. Horton has in Conroe."},
- {n:"McCrorey Trails",c:"Conroe 77303",lat:30.424051,lon:-95.364117,st:"selling",
+ {n:"McCrorey Trails",c:"Conroe 77303",lat:30.424051,lon:-95.364117,st:"selling",fz:"X",fzn:1,
   b:["D.R. Horton Express"],lo:180000,hi:null,pl:"From the $180s",src:"drh",
   note:"Entry-level. 3–4 bedrooms from 1,158 sf, one-car garage."},
- {n:"Williams Reserve East",c:"Conroe 77303",lat:30.389639,lon:-95.308340,st:"selling",ap:1,
+ {n:"Williams Reserve East",c:"Conroe 77303",lat:30.389639,lon:-95.308340,st:"selling",ap:1,fz:"X",fzn:1,
   b:["D.R. Horton"],lo:355000,hi:null,pl:"From the $355s",src:"drh",
   note:"New phase now selling. 4–5 bedrooms from 2,051 sf, 3-car garages."},
- {n:"East Williams Cove",c:"Conroe 77303",lat:30.391500,lon:-95.311000,st:"selling",ap:1,
+ {n:"East Williams Cove",c:"Conroe 77303",lat:30.391500,lon:-95.311000,st:"selling",ap:1,fz:"X",fzn:1,
   b:["D.R. Horton"],lo:355000,hi:null,pl:"From the $355s",src:"drh",
   note:"Sister section to Williams Reserve East."},
- {n:"Hills of Westlake",c:"Conroe 77304",lat:30.347175,lon:-95.535171,st:"final",
+ {n:"Hills of Westlake",c:"Conroe 77304",lat:30.347175,lon:-95.535171,st:"final",fz:"X",fzn:1,
   b:["D.R. Horton"],lo:324000,hi:null,pl:"From the $324s",src:"drh",
   note:"Final opportunities."},
- {n:"Madeley Creek Preserve",c:"Conroe 77304",lat:30.367896,lon:-95.505285,st:"soon",ap:1,
+ {n:"Madeley Creek Preserve",c:"Conroe 77304",lat:30.367896,lon:-95.505285,st:"soon",ap:1,fz:"X",
   b:["D.R. Horton"],lo:null,hi:null,pl:"Pricing not yet published",src:"drh",
   note:"Listed as Coming Soon on D.R. Horton's site — no pricing or plans released yet."},
- {n:"Granger Pines",c:"Conroe 77302",lat:30.236350,lon:-95.310200,st:"selling",
+ {n:"Granger Pines",c:"Conroe 77302",lat:30.236350,lon:-95.310200,st:"selling",fz:"AE",fzn:1,
   b:["D.R. Horton"],lo:250000,hi:null,pl:"From the $250s",src:"drh",
   note:"Conroe ISD — the only B-rated district in your search, and Hope Elementary is inside the subdivision. Several homes here are already on your map."},
 
  // ---------- Willis / Lake Conroe ----------
- {n:"The Woodlands Hills",c:"Willis 77318",lat:30.398720,lon:-95.502566,st:"selling",
+ {n:"The Woodlands Hills",c:"Willis 77318",lat:30.398720,lon:-95.502566,st:"selling",fz:"X",fzn:1,
   b:["Highland Homes","Chesmar","Perry Homes","David Weekley","Century Communities","DRB Homes","Ravenna","Westin","Smith Douglas"],
   lo:280000,hi:800000,pl:"Upper $200s – $800s",src:"web",
   note:"2,000-acre Howard Hughes master plan at I-45 and FM 830 — 112 acres of open space, 20 parks, activity center. Willis ISD. The upper-$200s entry sections are the ones worth asking about."},
- {n:"Grace Landing",c:"Willis 77318",lat:30.393309,lon:-95.443697,st:"selling",
+ {n:"Grace Landing",c:"Willis 77318",lat:30.391874,lon:-95.442862,st:"selling",fz:"X",fzn:1,
   b:["KB Home"],lo:174995,hi:null,pl:"From $174,995",src:"kb",
   note:"Lowest published KB starting price anywhere in the corridor. Willis ISD."},
- {n:"Castles Edge",c:"Willis 77378",lat:30.443586,lon:-95.439268,st:"selling",ap:1,
+ {n:"Castles Edge",c:"Willis 77378",lat:30.443586,lon:-95.439268,st:"selling",ap:1,fz:"X",
   b:["D.R. Horton Express"],lo:145000,hi:null,pl:"From the $145s",src:"drh",
   note:"Entry-level; plans start at 816 sf with 2–3 bedrooms."},
- {n:"William Trails",c:"Willis 77378",lat:30.448997,lon:-95.386045,st:"selling",
+ {n:"William Trails",c:"Willis 77378",lat:30.448997,lon:-95.386045,st:"selling",fz:"X",
   b:["D.R. Horton Express"],lo:157000,hi:null,pl:"From the $157s",src:"drh",
   note:"A new phase is listed as coming soon. Small plans — 813 sf and up."},
- {n:"Chambers Creek",c:"Willis 77318",lat:30.446838,lon:-95.504883,st:"selling",
+ {n:"Chambers Creek",c:"Willis 77318",lat:30.446838,lon:-95.504883,st:"selling",fz:"X",fzn:1,
   b:["Coventry Homes","Jamestown Estate Homes"],lo:null,hi:null,pl:"Contact builder — 55+ community",src:"web",
   note:"Gated 55+ resort community on Lake Conroe. Listed for completeness; not a fit for a household with children."},
 
  // ---------- West edge ----------
- {n:"Woodforest",c:"Montgomery 77316",lat:30.275906,lon:-95.568631,st:"selling",
+ {n:"Woodforest",c:"Montgomery 77316",lat:30.275906,lon:-95.568631,st:"selling",fz:"X",fzn:1,
   b:["Highland Homes","Taylor Morrison (Bonterra)","David Weekley","Perry Homes","Chesmar"],
   lo:200000,hi:900000,pl:"$200s – $900s",src:"web",
   note:"Montgomery County's top-selling master plan. Far west edge of your search area — about 35 minutes from I-45."},
 
  // ---------- Porter / New Caney / Splendora ----------
- {n:"The Highlands",c:"Porter 77365",lat:30.134696,lon:-95.308154,st:"selling",
+ {n:"The Highlands",c:"Porter 77365",lat:30.134696,lon:-95.308154,st:"selling",fz:"X",
   b:["Caldwell Communities — 13 builders"],lo:433000,hi:850000,pl:"$433k – $850k",src:"web",
   note:"2,300 acres with lakes, golf and trails. Sampled points inside it came back USDA-eligible, but nothing lists near your budget."},
- {n:"Madera Trails",c:"New Caney 77357",lat:30.154438,lon:-95.211759,st:"selling",ap:1,
+ {n:"Madera Trails",c:"New Caney 77357",lat:30.150500,lon:-95.137400,st:"selling",ap:1,fz:"X",fzn:1,
   b:["KB Home"],lo:172995,hi:null,pl:"From $172,995",src:"kb",
-  note:"20115 Sunlit Timber Trl. One-story plans 1,043–2,587 sf, up to 5 bedrooms. New Caney ISD. Park, playground and splash pad planned."},
- {n:"Madera Preserve",c:"New Caney 77357",lat:30.155600,lon:-95.213100,st:"selling",ap:1,
+  note:"20115 Sunlit Timber Trl — off FM 1485 at Willaby Rd. Every plan is one story, 1,043–2,587 sf, up to 5 bedrooms. New Caney ISD. Park, playground and splash pad planned."},
+ {n:"Madera Preserve",c:"New Caney 77357",lat:30.151400,lon:-95.136200,st:"selling",ap:1,fz:"X",fzn:1,
   b:["KB Home"],lo:208995,hi:null,pl:"From $208,995",src:"kb",
   note:"The larger-plan section of Madera. New Caney ISD."},
- {n:"Valley Ranch",c:"New Caney 77357",lat:30.130387,lon:-95.234488,st:"selling",
+ {n:"Valley Ranch",c:"New Caney 77357",lat:30.130387,lon:-95.234488,st:"selling",fz:"X",fzn:1,
   b:["Signorelli Homes","Legend Homes","First America Homes"],lo:180000,hi:400000,pl:"$180s – $400s",src:"web",
   note:"1,400-acre master plan at US 59 and the Grand Parkway, with its own town center. New Caney ISD."},
- {n:"Harrington Trails",c:"New Caney 77357",lat:30.231599,lon:-95.233246,st:"selling",
+ {n:"Harrington Trails",c:"New Caney 77357",lat:30.231599,lon:-95.233246,st:"selling",fz:"X",
   b:["Brohn Homes","Century Communities","HistoryMaker","Lennar","Rausch Coleman"],
   lo:220000,hi:295000,pl:"About $220k – $295k",src:"list",
   note:"Splendora ISD. Several homes here are already on your map, including the 2,600 sf Mallow Ct pick."},
- {n:"Pinewood at Grand Texas",c:"New Caney 77357",lat:30.194568,lon:-95.210846,st:"selling",
+ {n:"Pinewood at Grand Texas",c:"New Caney 77357",lat:30.194568,lon:-95.210846,st:"selling",fz:"X",fzn:1,
   b:["M/I Homes","Lennar"],lo:219000,hi:295000,pl:"About $219k – $295k",src:"list",
   note:"Splendora ISD, next to the Grand Texas / Big Rivers attractions."},
- {n:"The Canopies",c:"Splendora 77372",lat:30.249219,lon:-95.209218,st:"selling",
+ {n:"The Canopies",c:"Splendora 77372",lat:30.249219,lon:-95.209218,st:"selling",fz:"X",fzn:1,
   b:["D.R. Horton","CastleRock","Risewell Homes","Smith Douglas"],lo:200000,hi:290000,pl:"From the low $200s",src:"web",
   note:"Splendora ISD, with a new Greenleaf Elementary campus inside the community. Note: three Viceroy Way / Golden Pheasant homes here sit in FEMA Zone A, where USDA will not guarantee new construction."},
- {n:"The Presswoods",c:"Splendora 77372",lat:30.247700,lon:-95.202100,st:"selling",
+ {n:"The Presswoods",c:"Splendora 77372",lat:30.247700,lon:-95.202100,st:"selling",fz:"X",fzn:1,
   b:["D.R. Horton"],lo:220000,hi:270000,pl:"About $220k – $270k",src:"list",
   note:"Splendora ISD. Lowest HOA of the Splendora group at $450/yr."},
- {n:"Townsend Reserve",c:"Splendora 77372",lat:30.249400,lon:-95.211300,st:"selling",
+ {n:"Townsend Reserve",c:"Splendora 77372",lat:30.249400,lon:-95.211300,st:"selling",fz:"X",fzn:1,
   b:["Legend Homes","Lennar"],lo:224990,hi:260000,pl:"About $225k – $260k",src:"list",
   note:"Splendora ISD. Legend's listings here name USDA explicitly as accepted financing."},
- {n:"Firefly",c:"Splendora 77372",lat:30.231438,lon:-95.152796,st:"soon",ap:1,
+ {n:"Firefly",c:"Splendora 77372",lat:30.231438,lon:-95.152796,st:"soon",ap:1,fz:"X",fzn:1,
   b:["D.R. Horton"],lo:null,hi:null,pl:"Pricing not yet published",src:"drh",
   note:"Listed as Coming Soon by D.R. Horton. Worth a call — every other D.R. Horton community in Splendora opened in the low $200s."},
- {n:"Hill & Dale Ranch",c:"Splendora 77372",lat:30.201900,lon:-95.161700,st:"selling",
+ {n:"Hill & Dale Ranch",c:"Splendora 77372",lat:30.201900,lon:-95.161700,st:"selling",fz:"X",fzn:1,
   b:["Home Creations"],lo:254990,hi:283000,pl:"About $255k – $283k",src:"list",
   note:"Reported to sit outside a MUD, with a $300/yr HOA — which can make a $283k home here cheaper monthly than a $265k home in a MUD district. Verify the tax rate with the county."},
- {n:"Peppervine",c:"Porter 77365",lat:30.084090,lon:-95.245691,st:"selling",
+ {n:"Peppervine",c:"Porter 77365",lat:30.084090,lon:-95.245691,st:"selling",fz:"X",fzn:1,
   b:["Centex Homes"],lo:241990,hi:314930,pl:"From $241,990",src:"web",
   note:"The strongest school feeder in New Caney ISD — no D or F campus anywhere in it. Plans 1,204–2,536 sf, HOA $550/yr."},
- {n:"Northpark South",c:"Porter 77365",lat:30.068964,lon:-95.266838,st:"selling",
+ {n:"Northpark South",c:"Porter 77365",lat:30.068964,lon:-95.266838,st:"selling",fz:"X",fzs:1,fzn:1,
   b:["Century Communities"],lo:249900,hi:null,pl:"From $249,900",src:"web",
   note:"New Caney ISD. Too new to appear in the district street listing — confirm the school zone with NCISD before you write an offer."},
- {n:"Maple Heights",c:"Porter 77365",lat:30.144786,lon:-95.321489,st:"selling",
+ {n:"Maple Heights",c:"Porter 77365",lat:30.144786,lon:-95.321489,st:"selling",fz:"X",
   b:["Century Communities"],lo:215000,hi:299000,pl:"About $215k – $299k",src:"list",
   note:"New Caney ISD. Holds the lowest monthly payment on your whole map."},
- {n:"Royal Pines",c:"Porter 77365",lat:30.100300,lon:-95.192800,st:"selling",
+ {n:"Royal Pines",c:"Porter 77365",lat:30.100300,lon:-95.192800,st:"selling",fz:"X",fzn:1,
   b:["Starlight Homes"],lo:239990,hi:290000,pl:"About $240k – $290k",src:"list",
   note:"New Caney ISD. Sits just across the USDA eligibility line from Royal Brook at Kingwood, which is ineligible."},
 
  // ---------- Lake Houston / east ----------
- {n:"Balmoral",c:"Humble 77346",lat:29.944177,lon:-95.205386,st:"selling",
+ {n:"Balmoral",c:"Humble 77346",lat:29.944177,lon:-95.205386,st:"selling",fz:"X",
   b:["Ashton Woods","Chesmar","CastleRock","Lennar","Colina Homes","Highland Homes"],
   lo:200000,hi:500000,pl:"$200s – $500s",src:"web",
   note:"750 acres on the northeast Beltway with the Crystal Lagoon. Humble ISD. Inside the Houston urbanized area — expect this one to be USDA-ineligible; verify before touring."},
- {n:"Sweetgrass Village",c:"Crosby 77532",lat:29.871843,lon:-95.039459,st:"selling",
+ {n:"Sweetgrass Village",c:"Crosby 77532",lat:29.871843,lon:-95.039459,st:"selling",fz:"X",fzn:1,
   b:["KB Home"],lo:209995,hi:null,pl:"From $209,995",src:"kb",
   note:"12806 Autumn Woods Dr. Plans 1,523–2,783 sf, Crosby ISD. Pool, splash pad, pickleball. Far southeast corner of the search area, east of Lake Houston."}
 ];
@@ -2341,7 +2358,11 @@ function spot(d,on){
   const c=cards.find(x=>x.d===d); if(c) c.el.classList.toggle('hot',on);
 }
 
-map.on('zoomend',()=>{ renderMarkers(); renderCommLayer(); });
+map.on('zoomend',()=>{
+  renderMarkers(); renderCommLayer();
+  const lg=document.getElementById('lgFema');
+  if(lg && femaOn) lg.classList.toggle('dim', map.getZoom()<FEMA_MIN_Z);
+});
 map.on('moveend',()=>{ if(viewOnly) (view==='comm'?renderCommList():renderList()); });
 
 document.getElementById('tFilters').addEventListener('click',e=>{
@@ -2426,11 +2447,12 @@ document.getElementById('tUsda').addEventListener('click',e=>{
 
 /* FEMA National Flood Hazard Layer on/off */
 let femaLayer=null, femaOn=false;
+const FEMA_MIN_Z=14;                      // below this FEMA's service returns an empty image
 try{
   if(window.L && L.esri && L.esri.dynamicMapLayer){
     femaLayer=L.esri.dynamicMapLayer({
       url:'https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer',
-      layers:[28], opacity:0.45, f:'image', useCors:false
+      layers:[28], opacity:0.62, f:'image', useCors:false
     });
   }
 }catch(e){ femaLayer=null; }
@@ -2440,7 +2462,17 @@ document.getElementById('tFema').addEventListener('click',e=>{
   if(femaOn) femaLayer.addTo(map); else map.removeLayer(femaLayer);
   e.currentTarget.classList.toggle('on',femaOn);
   document.getElementById('lgFema').style.display=femaOn?'flex':'none';
-  if(femaOn) flash('Blue-hatched areas are FEMA flood zones. Each home’s own zone is under Details.','good');
+  /* FEMA publishes this layer with a minimum scale of about 1:36,000 — it simply
+     draws nothing when you are zoomed out, which reads as a broken toggle. Pull
+     the map in far enough that it has something to show. */
+  if(femaOn){
+    if(map.getZoom()<FEMA_MIN_Z){
+      map.setZoom(FEMA_MIN_Z);
+      flash('Zoomed in — FEMA only draws the floodplain at street level. Blue is the 1% floodplain; hatching is the 0.2% area.','good');
+    } else {
+      flash('Blue is the 1% floodplain, hatching the 0.2% area. Each home’s own zone is under Details.','good');
+    }
+  }
 });
 
 /* Environmental sites on the map. Points come from hazards.json, so the layer
@@ -2709,7 +2741,8 @@ function flash(msg,kind){
 ====================================================================== */
 let commLayer=null, commOn=false, commMarks=[];
 const cLo=document.getElementById('fCLo'), cHi=document.getElementById('fCHi'),
-      cB =document.getElementById('fCB'),  cSt=document.getElementById('fCSt');
+      cB =document.getElementById('fCB'),  cSt=document.getElementById('fCSt'),
+      cFz=document.getElementById('fCFz');
 
 const CSTAT={selling:'Now selling',soon:'Opening soon',final:'Final homes'};
 
@@ -2733,11 +2766,38 @@ function commPasses(c){
   }
   if(cB.value!=='all' && !c.b.includes(cB.value)) return false;
   if(cSt.value!=='all' && c.st!==cSt.value) return false;
+  if(cFz.value!=='all'){
+    const sfha=/^(A|V)/.test(c.fz||'');
+    if(cFz.value==='in'  && !sfha) return false;
+    if(cFz.value==='out' &&  sfha) return false;
+    if(cFz.value==='clear' && (sfha || c.fzs || c.fzn)) return false;
+  }
   return true;
 }
 const shownComms=()=>COMM.filter(commPasses);
 
+/* FEMA's National Flood Hazard Layer, queried per community on Sept 27 2026.
+   fz  = the zone the community's map point falls in
+   fzs = that point is Zone X shaded — outside the 1% floodplain, inside the 0.2%
+   fzn = mapped high-risk floodplain (SFHA) sits within about half a mile
+   A community is a polygon, not a point, so this describes the sample point and
+   its surroundings — never an individual lot. */
+function floodOf(c){
+  if(/^(A|V)/.test(c.fz||''))
+    return {cls:'bad', short:'Zone '+c.fz,
+      text:`The point sampled in this community falls inside <b>Zone ${c.fz}</b> — FEMA's high-risk 1% annual-chance floodplain, where lenders require flood insurance. A community this size often has streets outside it, so check the specific homesite rather than trusting the community.`};
+  if(c.fzs)
+    return {cls:'mid', short:'Zone X shaded',
+      text:'Outside the 1% floodplain but inside the <b>0.2% annual-chance</b> area. Insurance is optional here and usually inexpensive — worth carrying anyway in this corridor.'};
+  if(c.fzn)
+    return {cls:'mid', short:'X · floodplain near',
+      text:'The sample point is Zone X (minimal hazard), but <b>mapped high-risk floodplain lies within about half a mile</b>. Which side of that line a given street falls on matters — check the homesite.'};
+  return {cls:'good', short:'Zone X',
+    text:'Zone X — minimal flood hazard at the sample point, and no mapped high-risk floodplain within about half a mile. The cleanest flood picture in this set.'};
+}
+
 function commPop(c){
+  const fl=floodOf(c);
   const price=c.lo==null?`<span style="color:#8a6212;font-weight:700">${c.pl}</span>`
                         :`<b style="font-size:14px">${c.pl}</b>`;
   return `<div class="pp"><b style="font-size:13.5px">${c.n}</b><br>
@@ -2745,6 +2805,9 @@ function commPop(c){
     ${price}<br>
     <span class="cstat ${c.st}">${CSTAT[c.st]}</span><br><br>
     <b>Builder${c.b.length>1?'s':''}:</b> ${c.b.join(', ')}<br><br>
+    <div class="fzbox ${fl.cls==='bad'?'fzbad':fl.cls==='mid'?'fzmid':''}" style="margin:0 0 8px">
+      <b>Flood &mdash; ${fl.short}.</b> ${fl.text}
+      <a href="https://msc.fema.gov/portal/search#searchresultsanchor" target="_blank" rel="noopener">FEMA map</a></div>
     ${c.note}<br>
     ${c.ap?'<br><span style="color:#8a6212">Map point is approximate — the builder has not published a street address yet.</span>':''}
     <br><span style="color:#65635f;font-size:11px">Pricing read ${c.src==='kb'?'from KB Home':c.src==='drh'?"from D.R. Horton":c.src==='list'?'from the listings on this map':'from builder and community sources'}, Sept 26 2026. Verify before you tour.</span></div>`;
@@ -2760,8 +2823,9 @@ function renderCommLayer(){
   shownComms().forEach(c=>{
     const label=c.lo==null ? 'price TBA'
               : kk(c.lo)+(c.hi?'\u2013'+kk(c.hi):'+');
-    const html = wide ? `<div class="cpin ${c.st}">${c.n}<small>${label}</small></div>`
-                      : `<div class="cpin tight ${c.st}">${label}</div>`;
+    const fl=floodOf(c), warn = fl.cls==='bad' ? '&#9888; ' : '';
+    const html = wide ? `<div class="cpin ${c.st} fz-${fl.cls}">${warn}${c.n}<small>${label}</small></div>`
+                      : `<div class="cpin tight ${c.st} fz-${fl.cls}">${warn}${label}</div>`;
     const mk=L.marker([c.lat,c.lon],{icon:L.divIcon({className:'',
       html:html,iconSize:null,iconAnchor:wide?[40,15]:[24,11]}),zIndexOffset:300});
     mk.bindPopup(commPop(c),{maxWidth:300});
@@ -2780,7 +2844,10 @@ function renderCommList(){
   const bn=document.createElement('div'); bn.className='banner';
   bn.innerHTML=`<b>New-build communities.</b> Every neighbourhood still selling or about to open
     between Beltway 8 and Willis, Woodforest to Lake Houston — sorted by starting price.
-    Builder numbers were read on September 26, 2026 and move weekly.`;
+    Builder numbers were read on September 26, 2026 and move weekly. Each card carries the
+    <b>FEMA flood picture</b> at the community's map point, checked against the National Flood
+    Hazard Layer on September 27 — open a community for what it means, and turn on
+    <b>Flood zones</b> to see the mapped floodplain itself.`;
   listEl.appendChild(bn);
 
   if(!live.length){
@@ -2796,7 +2863,8 @@ function renderCommList(){
       <div class="crow">
         <div><div class="price">${c.lo==null?'Pricing TBA':c.pl}</div>
           <div class="permo">${c.b.length} builder${c.b.length>1?'s':''}</div></div>
-        <div class="badges"><span class="cstat ${c.st}">${CSTAT[c.st]}</span></div>
+        <div class="badges"><span class="cstat ${c.st}">${CSTAT[c.st]}</span>
+          <span class="cflood ${floodOf(c).cls}" title="FEMA flood picture at this community's map point">${floodOf(c).short}</span></div>
       </div>
       <div class="addr" style="margin-top:6px">${c.n}</div>
       <div class="sub">${c.c}${c.ap?' &middot; approximate map point':''}</div>
@@ -2823,6 +2891,7 @@ function setComm(on){
   document.getElementById('tComm').classList.toggle('on',on);
   document.getElementById('cFilters').classList.toggle('show',on);
   document.getElementById('lgComm').style.display=on?'flex':'none';
+  document.getElementById('lgCommFz').style.display=on?'flex':'none';
   if(!on && commLayer && map.hasLayer(commLayer)) map.removeLayer(commLayer);
   renderCommLayer();
   setTimeout(()=>map.invalidateSize(),60);
@@ -2842,16 +2911,17 @@ function syncCommChips(){
   cHi.parentElement.classList.toggle('act',on(cHi.value));
   cB.parentElement.classList.toggle('act',on(cB.value));
   cSt.parentElement.classList.toggle('act',on(cSt.value));
+  cFz.parentElement.classList.toggle('act',on(cFz.value));
   document.getElementById('nComm').textContent=shownComms().length;
 }
-[cLo,cHi,cB,cSt].forEach(el=>el.addEventListener('change',()=>{
+[cLo,cHi,cB,cSt,cFz].forEach(el=>el.addEventListener('change',()=>{
   syncCommChips();
   if(!commOn) setComm(true);
   renderCommLayer();
   if(view==='comm') renderCommList();
 }));
 document.getElementById('cReset').addEventListener('click',()=>{
-  cLo.value='all'; cHi.value='all'; cB.value='all'; cSt.value='all';
+  cLo.value='all'; cHi.value='all'; cB.value='all'; cSt.value='all'; cFz.value='all';
   syncCommChips(); renderCommLayer(); if(view==='comm') renderCommList();
 });
 syncCommChips();
