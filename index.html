@@ -887,6 +887,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .views button:last-child{border-right:none}
   .views button.on{background:var(--accent);color:#fff}
   .pin.fv{background:#b3781f}
+  .b-inv{background:#f1ece1;color:#8a6212;border-color:#e2d6bd}
   .b-new{background:#1d6e57;color:#fff}
   .b-env{background:#7a4a1e;color:#fff}
   .b-gone{background:#5f5c57;color:#fff}
@@ -1013,7 +1014,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <button class="tab" data-p="idx">All MLS search</button>
 </div>
 <div class="top">
-  <div class="brand">Your Home Search<span>USDA-verified &middot; North Houston &middot; listings Aug 7 &middot; communities Sept 26, 2026</span></div>
+  <div class="brand">Your Home Search<span>North Houston &middot; Beltway 8 to Willis, Tomball to Lake Houston &middot; updated Sept 27, 2026</span></div>
 
   <div class="views">
     <button data-v="all" class="on">All</button>
@@ -1056,8 +1057,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <option value="D">D</option>
       </select>
     </div>
+    <div class="fg"><label for="fUsda">USDA</label>
+      <select id="fUsda">
+        <option value="all">Any home</option>
+        <option value="yes">Verified eligible only</option>
+        <option value="inv">Builder inventory only</option>
+      </select>
+    </div>
     <div class="fg fprice"><label for="fPrice">Max price</label>
-      <input type="range" id="fPrice" min="200000" max="300000" step="5000" value="300000">
+      <input type="range" id="fPrice" min="200000" max="450000" step="5000" value="450000">
       <output id="fPriceV" for="fPrice">$300k</output>
     </div>
     <button class="btn" id="tReset" title="Clear all filters">Reset</button>
@@ -1128,6 +1136,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="legend">
       <h4>Legend</h4>
       <div class="lr"><span class="sw" style="background:#14503f"></span> USDA eligible (verified)</div>
+      <div class="lr"><span class="sw" style="background:#8a6212"></span> Builder inventory &mdash; USDA not checked</div>
       <div class="lr"><span class="sw" style="background:#8c2f2c"></span> USDA ineligible</div>
       <div class="lr"><span class="sw" style="background:#5f5c57"></span> Reference point (not for sale)</div>
       <div class="lr"><span class="sw" style="background:#ecc98f;border-color:#d0a253"></span> USDA ineligible area</div>
@@ -1320,7 +1329,7 @@ from August 2026, not as current fact, until it has been rewritten.
   <h4>1. Flood risk is the defining hazard of this corridor</h4>
   <p>The East Fork of the San Jacinto River, Peach Creek and Caney Creek all run through Porter, New Caney and Splendora, and this area has taken repeated severe flooding, including evacuations along FM 1485.</p>
   <p><strong>USDA will not guarantee a loan on new construction inside a Special Flood Hazard Area</strong> without a zone-removal letter or a qualifying elevation certificate; existing homes in a flood zone need flood insurance in force. On a zero-down purchase, flood insurance is worth carrying even outside the mapped zone &amp;mdash; it runs a few hundred dollars a year.</p>
-  <p style=&quot;margin-bottom:0&quot;>Every home on the interactive map shows its FEMA flood zone under Details, checked against FEMA's National Flood Hazard Layer on August 9, 2026. <strong>Three new builds in The Canopies &amp;mdash; 13905 Viceroy Way, 23757 and 23769 Golden Pheasant Ln &amp;mdash; sit in Zone A</strong>, the high-risk 1% floodplain where USDA will not guarantee new construction, and have been excluded from this search for that reason. Re-verify any shortlisted home on FEMA's own map during the option period.</p>
+  <p style=&quot;margin-bottom:0&quot;>Every home on the interactive map shows its FEMA flood zone under Details, checked against FEMA's National Flood Hazard Layer on August 9, 2026. <strong>Four new builds in The Canopies &amp;mdash; 13905 Viceroy Way and 23721, 23757 and 23769 Golden Pheasant Ln &amp;mdash; sit in Zone A</strong>, the high-risk 1% floodplain. They were once left out of this search because USDA will not guarantee new construction there; now that USDA is no longer the deciding filter they are shown on the map, each carrying a flood-zone badge. Treat the zone, not the financing, as the reason to think twice. Re-verify any shortlisted home on FEMA's own map during the option period.</p>
 </div>
 
 <div class=&quot;panel flag&quot;>
@@ -1626,6 +1635,29 @@ const BASE = [
    ap:1 = map point is approximate (street-level address not published yet)
 ======================================================================= */
 const COMM = [
+ // ---------- Magnolia, Tomball and the west edge ----------
+ {n:"Oakwood Trails",c:"Tomball 77377",lat:30.082357,lon:-95.708066,st:"selling",fz:"X",
+  b:["KB Home"],lo:197995,hi:null,pl:"From $197,995",src:"kb",
+  note:"18327 Walnut Canopy Way. One- and two-story plans 1,042–2,245 sf, up to 4 bedrooms. Tomball ISD, next door to Rosehill Elementary. Splash pad, playground and pavilion planned. No mapped floodplain within half a mile — the cleanest flood picture anywhere in this search."},
+ {n:"Oakwood Preserve",c:"Tomball 77377",lat:30.082291,lon:-95.707314,st:"selling",ap:1,fz:"X",
+  b:["KB Home"],lo:250995,hi:null,pl:"From $250,995",src:"kb",
+  note:"The larger-plan half of Oakwood — 1,567–2,980 sf, up to 5 bedrooms. Tomball ISD. Same clean flood picture as Oakwood Trails."},
+ {n:"Mustang Ridge",c:"Magnolia 77354",lat:30.221176,lon:-95.762570,st:"selling",fz:"X",
+  b:["KB Home"],lo:184995,hi:null,pl:"From $184,995",src:"kb",
+  note:"842 Mustang Ridge Terrace. Plans 1,042–2,526 sf, up to 4 bedrooms. Magnolia ISD, adjacent to Magnolia West High School. No mapped floodplain within half a mile."},
+ {n:"Grand Pines",c:"Magnolia 77355",lat:30.099875,lon:-95.733062,st:"selling",fz:"X",fzn:1,
+  b:["D.R. Horton"],lo:249990,hi:null,pl:"From $249,990",src:"drh",
+  note:"24903 Evergreen Leaf Loop. Four-bedroom two-storeys in current inventory from $299,990."},
+ {n:"Mill Creek",c:"Magnolia 77354",lat:30.231100,lon:-95.704972,st:"selling",fz:"X",fzn:1,
+  b:["D.R. Horton"],lo:219990,hi:null,pl:"From $219,990",src:"drh",
+  note:"14706 Clover Summit Court. The Franklin — five bedrooms, 1,892 sf over two floors — starts at $275,000 here."},
+ {n:"Mill Creek Estates",c:"Magnolia 77354",lat:30.199056,lon:-95.627286,st:"selling",ap:1,fz:"X",fzs:1,fzn:1,
+  b:["D.R. Horton"],lo:312990,hi:null,pl:"From $312,990",src:"drh",
+  note:"40812 Lilac Branch Street. The larger Estates section. Street is too new to geocode to the rooftop, so the map point and its flood reading are approximate."},
+ {n:"Porters Mill",c:"New Caney 77357",lat:30.167718,lon:-95.295746,st:"final",fz:"X",fzn:1,
+  b:["D.R. Horton"],lo:229000,hi:480000,pl:"From the $229s",src:"drh",
+  note:"18194 Woodpecker Trail. Final opportunities — New Caney ISD. The Franklin five-bedroom starts at $276,000."},
+
  // ---------- Spring / far south end of the corridor ----------
  {n:"Harmony",c:"Spring 77386",lat:30.097267,lon:-95.372593,st:"selling",fz:"X",fzs:1,fzn:1,
   b:["Ashton Woods","CastleRock","Highland Homes","Perry Homes","Darling Homes"],
@@ -1781,7 +1813,52 @@ const COMM = [
   note:"12806 Autumn Woods Dr. Plans 1,523–2,783 sf, Crosby ISD. Pool, splash pad, pickleball. Far southeast corner of the search area, east of Lake Houston."}
 ];
 
-let P = BASE.slice();
+/* ===== BUILDER INVENTORY (added Sept 27 2026) =====================
+   Homes listed directly by the builder rather than on the MLS, gathered
+   because the search is no longer limited to USDA-eligible addresses.
+   None of these has been run against USDA's map — the drawer says so on
+   each one. Every FEMA zone below was queried per address.
+================================================================= */
+const INV = [
+ {a:"14368 Tawny Street",c:"The Canopies, Splendora 77372",lat:30.240679,lon:-95.203264,fz:"X",p:254990,m:2120,bd:5,ba:"2 full + 1 half",sf:1892,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/splendora/canopies",s:S.splGL,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"633 Iron Horse Drive",c:"Silverthorne, Conroe 77303",lat:30.363677,lon:-95.440087,fz:"X",p:274990,m:2286,bd:5,ba:"2 full + 1 half",sf:2252,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"641 Iron Horse Drive",c:"Silverthorne, Conroe 77303",lat:30.363790,lon:-95.439754,fz:"X",p:274990,m:2286,bd:5,ba:"2 full + 1 half",sf:2252,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"23721 Golden Pheasant Lane",c:"The Canopies, Splendora 77372",lat:30.244608,lon:-95.203937,fz:"A",p:277990,m:2311,bd:5,ba:"3 full",sf:2129,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/splendora/canopies",s:S.splGL,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"653 Iron Horse Drive",c:"Silverthorne, Conroe 77303",lat:30.364018,lon:-95.439306,fz:"X",p:279990,m:2328,bd:5,ba:"2 full + 1 half",sf:2252,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"659 Iron Horse Drive",c:"Silverthorne, Conroe 77303",lat:30.364100,lon:-95.439175,fz:"X",p:282990,m:2352,bd:6,ba:"2 full + 1 half",sf:2349,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"16329 Misty Cedar Court",c:"Grand Pines, Magnolia 77355",lat:30.110351,lon:-95.727979,fz:"X",p:299990,m:2494,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/grand-pines",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"14961 Cherry Creek Drive",c:"Mill Creek, Magnolia 77354",lat:30.241915,lon:-95.704924,fz:"X",p:299990,m:2494,bd:4,ba:"3 full",sf:2292,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/mill-creek",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"16624 Woodland Retreat Lane",c:"Granger Pines, Conroe 77302",lat:30.232364,lon:-95.325537,fz:"X",p:304990,m:2535,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/granger-pines",s:S.granger,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"21730 Piper Betel Road",c:"Harrington Trails at The Canopies, New Caney 77372",lat:30.233037,lon:-95.230766,fz:"X",p:304990,m:2535,bd:4,ba:"3 full",sf:2482,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/harrington-trails-at-the-canopies",s:S.splTL,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"27627 Acorn Haven Lane",c:"Grand Pines, Magnolia 77355",lat:30.109719,lon:-95.728489,fz:"X",p:307490,m:2556,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/grand-pines",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"14313 Moonflower Drive",c:"Harrington Trails at The Canopies, New Caney 77372",lat:30.233749,lon:-95.231496,fz:"X",p:309990,m:2577,bd:4,ba:"3 full",sf:2475,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/harrington-trails-at-the-canopies",s:S.splTL,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"21746 Piper Betel Road",c:"Harrington Trails at The Canopies, New Caney 77372",lat:30.232872,lon:-95.230156,fz:"X",p:309990,m:2577,bd:4,ba:"3 full",sf:2475,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/harrington-trails-at-the-canopies",s:S.splTL,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"14710 Frosted Leaf Trail",c:"Harrington Trails at The Canopies, New Caney 77372",lat:30.232382,lon:-95.229355,fz:"X",p:315990,m:2627,bd:4,ba:"3 full",sf:2482,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/harrington-trails-at-the-canopies",s:S.splTL,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"20680 Miller Heights Drive",c:"Porters Mill, New Caney 77357",lat:30.160759,lon:-95.297280,fz:"X",p:319990,m:2660,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/porters-mill",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"16808 Country Roots Avenue",c:"Granger Pines, Conroe 77302",lat:30.231797,lon:-95.324335,fz:"X",p:324390,m:2697,bd:4,ba:"2 full + 1 half",sf:2561,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/granger-pines",s:S.granger,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"738 Merit Badge Trail",c:"Silverthorne, Conroe 77303",lat:30.366897,lon:-95.442598,fz:"X",p:324990,m:2702,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"16628 Woodland Retreat Lane",c:"Granger Pines, Conroe 77302",lat:30.232222,lon:-95.325550,fz:"X",p:326490,m:2714,bd:4,ba:"2 full + 1 half",sf:2561,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/granger-pines",s:S.granger,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"27651 Acorn Haven Lane",c:"Grand Pines, Magnolia 77355",lat:30.108974,lon:-95.729213,fz:"X",p:328490,m:2731,bd:4,ba:"3 full",sf:2475,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/grand-pines",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"20196 Fermat Drive",c:"Porters Mill, New Caney 77357",lat:30.160870,lon:-95.298609,fz:"X",p:329990,m:2743,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/porters-mill",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"20687 Miller Heights Drive",c:"Porters Mill, New Caney 77357",lat:30.160338,lon:-95.297236,fz:"X",p:329990,m:2743,bd:4,ba:"3 full",sf:2170,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/new-caney/porters-mill",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"16423 Misty Cedar Lane",c:"Grand Pines, Magnolia 77355",lat:30.110426,lon:-95.731478,fz:"X",p:334490,m:2781,bd:4,ba:"3 full",sf:2681,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/grand-pines",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"3923 Grizzly Bear Pass",c:"Silverthorne, Conroe 77303",lat:30.367401,lon:-95.444084,fz:"X",p:349990,m:2909,bd:4,ba:"2 full + 1 half",sf:2563,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"14953 Cherry Creek Drive",c:"Mill Creek, Magnolia 77354",lat:30.241949,lon:-95.704560,fz:"X",p:351390,m:2921,bd:4,ba:"3 full",sf:2681,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/mill-creek",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"633 Bronze Wolf Court",c:"Silverthorne, Conroe 77303",lat:30.366501,lon:-95.442859,fz:"X",p:358990,m:2984,bd:4,ba:"2 full + 1 half",sf:2563,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"622 Bronze Wolf Court",c:"Silverthorne, Conroe 77303",lat:30.366242,lon:-95.443406,fz:"X",p:386990,m:3217,bd:5,ba:"3 full",sf:2716,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"635 Bronze Wolf Court",c:"Silverthorne, Conroe 77303",lat:30.366467,lon:-95.442704,fz:"X",p:386990,m:3217,bd:5,ba:"3 full",sf:2716,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"15218 Evening Light Drive",c:"Mill Creek Estates, Magnolia 77354",lat:30.199056,lon:-95.627286,fz:"X",fzs:1,p:394935,m:3283,bd:4,ba:"2 full + 1 half",sf:2599,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/mill-creek-estates",s:S.none,e:null,inv:1,ap:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Street too new to geocode to the rooftop — map point is approximate. Ask about the fall rate-buydown incentive."},
+ {a:"4526 Iguaza Falls Drive",c:"Silverthorne, Conroe 77303",lat:30.374984,lon:-95.440145,fz:"X",p:399990,m:3325,bd:4,ba:"2 full + 1 half",sf:2592,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"1112 Skyline Trails Avenue",c:"Silverthorne, Conroe 77303",lat:30.374214,lon:-95.441101,fz:"X",p:409990,m:3408,bd:4,ba:"2 full + 1 half",sf:2599,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"1132 Skyline Trails Avenue",c:"Silverthorne, Conroe 77303",lat:30.373910,lon:-95.440149,fz:"X",p:409990,m:3408,bd:4,ba:"2 full + 1 half",sf:2592,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"15234 Evening Light Drive",c:"Mill Creek Estates, Magnolia 77354",lat:30.199056,lon:-95.627286,fz:"X",fzs:1,p:419635,m:3488,bd:5,ba:"3 full",sf:2766,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/magnolia/mill-creek-estates",s:S.none,e:null,inv:1,ap:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Street too new to geocode to the rooftop — map point is approximate. Ask about the fall rate-buydown incentive."},
+ {a:"420 Springfield Terrace Dr",c:"Hills of Westlake, Conroe 77304",lat:30.349470,lon:-95.538248,fz:"X",p:422885,m:3515,bd:5,ba:"3 full",sf:2766,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/hills-of-westlake",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"1009 Eternal Elk Drive",c:"Silverthorne, Conroe 77303",lat:30.373845,lon:-95.441490,fz:"X",p:424990,m:3533,bd:4,ba:"2 full + 1 half",sf:2592,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"1013 Eternal Elk Drive",c:"Silverthorne, Conroe 77303",lat:30.373794,lon:-95.441334,fz:"X",p:429990,m:3574,bd:5,ba:"3 full",sf:2767,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."},
+ {a:"1128 Skyline Trails Avenue",c:"Silverthorne, Conroe 77303",lat:30.373972,lon:-95.440341,fz:"X",p:429990,m:3574,bd:5,ba:"3 full",sf:2767,yr:2026,st:2,gf:"",hoa:0,mls:"",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",s:S.none,e:null,inv:1,n:"D.R. Horton builder inventory, read 27 Sep 2026. Ask about the fall rate-buydown incentive."}
+];
+
+let P = BASE.concat(INV);
 
 /* ================= live data =========================================
    listings.json  — the current MLS set, rewritten on a schedule by
@@ -2036,13 +2113,18 @@ function mergeListings(){
     });
   } else {
     const have=new Set(BASE.map(d=>d.mls||d.a));
-    core = BASE.filter(d=>!d.ref).concat((ST.added||[]).filter(d=>!have.has(d.mls||d.a)));
+    const invHave=new Set(BASE.map(d=>d.a.toLowerCase().replace(/[^a-z0-9]/g,'')));
+    core = BASE.filter(d=>!d.ref)
+      .concat(INV.filter(d=>!invHave.has(d.a.toLowerCase().replace(/[^a-z0-9]/g,''))))
+      .concat((ST.added||[]).filter(d=>!have.has(d.mls||d.a)));
   }
 
-  P = core.concat(refs)
-    // USDA will not guarantee NEW construction inside a FEMA high-risk zone,
-    // so those homes are not eligible for this search and are excluded outright
-    .filter(d=> d.ref || d.gone || !(isSFHA(d) && d.yr>=2025));
+  // Homes in a mapped high-risk flood zone used to be dropped here, because
+  // USDA will not guarantee new construction inside one. The search is no
+  // longer built around USDA, so they stay — carrying a flood-zone badge on
+  // the card and the full FEMA reading under Details, which is the thing
+  // actually worth deciding on.
+  P = core.concat(refs);
 
   P.forEach(attachEnv);
 
@@ -2073,6 +2155,9 @@ function passes(d,over){
   const di=o.di!==undefined?o.di:document.getElementById('fDist').value;
   const lv=o.lv!==undefined?o.lv:document.getElementById('fLvl').value;
   const lr=o.lr!==undefined?o.lr:document.getElementById('fLvlR').value;
+  const ue=document.getElementById('fUsda').value;
+  if(ue==='yes' && d.e!==1) return false;
+  if(ue==='inv' && !d.inv)  return false;
   if(st!=='all' && d.st!==+st) return false;
   if(d.p>mx) return false;
   if(gf==='suite' && d.gf!=='suite') return false;
@@ -2123,9 +2208,10 @@ function counts(){
 
 /* ---------------- payment breakdown ---------------- */
 function parts(d){
-  const loan=d.p*1.01, r=0.0699/12;
+  const usda = d.e===1;                       // only verified homes carry USDA's fees
+  const loan = usda ? d.p*1.01 : d.p, r=0.0699/12;
   const pi=loan*r/(1-Math.pow(1+r,-360));
-  const fee=loan*0.0035/12, hoa=d.hoa/12;
+  const fee= usda ? loan*0.0035/12 : 0, hoa=d.hoa/12;
   return {loan:Math.round(loan),pi:Math.round(pi),fee:Math.round(fee),hoa:Math.round(hoa),
           ti:Math.round(d.m-pi-fee-hoa)};
 }
@@ -2170,9 +2256,9 @@ function drawer(d){
     <h5>Monthly payment, estimated</h5>
     <dl class="dgrid">
       <dt>Rate assumed</dt><dd>6.99% &middot; 30-year fixed <span style="color:#65635f">(not a quote or lock)</span></dd>
-      <dt>Loan amount</dt><dd>${money(b.loan)} <span style="color:#65635f">(price + 1% USDA fee, $0 down)</span></dd>
+      <dt>Loan amount</dt><dd>${money(b.loan)} <span style="color:#65635f">${d.e===1?'(price + 1% USDA fee, $0 down)':'(full price, $0 down — adjust for your down payment)'}</span></dd>
       <dt>Principal &amp; interest</dt><dd>${money(b.pi)}</dd>
-      <dt>USDA annual fee</dt><dd>${money(b.fee)}</dd>
+      ${d.e===1?`<dt>USDA annual fee</dt><dd>${money(b.fee)}</dd>`:''}
       <dt>Taxes &amp; insurance</dt><dd>${money(b.ti)}</dd>
       <dt>HOA</dt><dd>${d.hoa?money(b.hoa):'—'}</dd>
       <dt style="font-weight:700;color:#1c1b19">Total</dt><dd style="font-weight:700">${money(d.m)}</dd>
@@ -2180,15 +2266,19 @@ function drawer(d){
     <h5>Schools</h5>
     ${schoolsBlock(d)}
     <h5>USDA eligibility</h5>
-    <div class="verif">&#10003; <b>Verified eligible.</b> This exact address was tested against USDA Rural
-      Development's own eligibility map at <code>${d.lat.toFixed(6)}, ${d.lon.toFixed(6)}</code> and returned
-      <code>0</code> — meaning it falls outside every ineligible area. Your lender still issues the formal
-      determination at application.</div>
+    ${d.e===1
+      ? `<div class="verif">&#10003; <b>Verified eligible.</b> This exact address was tested against USDA Rural
+         Development's own eligibility map at <code>${d.lat.toFixed(6)}, ${d.lon.toFixed(6)}</code> and returned
+         <code>0</code> — meaning it falls outside every ineligible area. Your lender still issues the formal
+         determination at application.</div>`
+      : `<div class="fzbox"><b>Not checked.</b> This home came from the builder's own inventory, not the
+         USDA-verified set, so nothing here says whether 100% financing would work on it. If USDA matters on
+         this one, ask and I'll run the address. The payment above assumes $0 down with no USDA fee.</div>`}
     <h5>FEMA flood zone</h5>
     ${floodHTML(d)}
     ${envHTML(d)}
     ${d.n?`<h5>Notes on this home</h5><div style="font-size:12.5px">${d.n}</div>`:''}
-    ${d.u?`<a class="harbtn emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">View full listing on HAR</a>`:
+    ${d.u?`<a class="harbtn emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">${d.e===1?'View full listing on HAR':'View this community on the builder\u2019s site'}</a>`:
           `<div style="font-size:12.5px;color:#65635f;margin-top:12px">Builder inventory — no public listing page. Ask me for the builder sheet.</div>`}
     <div class="acts">
       <button class="favb ${ST.fav[k]?'on':''}" data-k="${k}">${ST.fav[k]?'&#9733; Saved':'&#9734; Save'}</button>
@@ -2242,7 +2332,7 @@ function renderList(){
               ${d.gone?`<span class="b b-gone">${d.gone}</span>`:''}
               ${isSFHA(d)?`<span class="b b-flood">Flood zone ${d.fz}</span>`:''}
               ${(d.env&&d.env.alert)?'<span class="b b-env">Environmental site nearby</span>':''}
-              <span class="b b-elig">&#10003; USDA verified</span>
+              ${d.e===1?'<span class="b b-elig">&#10003; USDA verified</span>':'<span class="b b-inv">Builder inventory</span>'}
               ${d.gf==='suite'?'<span class="b b-elig">Ground-floor suite</span>':''}
               ${d.gf==='no'?'<span class="b b-inel">All beds upstairs</span>':''}
             </div>
@@ -2307,10 +2397,11 @@ function popHTML(d){
    : `<div class="pp"><b>${money(d.p)}</b> &middot; ${d.bd} bd / ${d.ba}<br>
       ${d.sf.toLocaleString()} sf &middot; ${d.st} story &middot; built ${d.yr}<br>
       ${d.a}<br>${d.c}<br>
-      <span style="color:#14503f;font-weight:600">&#10003; USDA eligible (verified)</span><br>
+      ${d.e===1?'<span style="color:#14503f;font-weight:600">&#10003; USDA eligible (verified)</span><br>'
+               :'<span style="color:#8a6212;font-weight:600">Builder inventory &middot; USDA not checked</span><br>'}
       ${isSFHA(d)?`<span style="color:#8c2f2c;font-weight:700">&#9888; FEMA flood zone ${d.fz}</span><br>`:''}
       Est. ${money(d.m)}/mo${ST.fav[k]?'<br><span style="color:#b3781f;font-weight:600">&#9733; Saved</span>':''}<br>
-      ${d.u?`<a class="emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">Open on HAR &#8599;</a>`:''}</div>`;
+      ${d.u?`<a class="emb" data-t="${d.a}" href="${d.u}" target="_blank" rel="noopener">${d.e===1?'Open on HAR':'Open the builder page'} &#8599;</a>`:''}</div>`;
 }
 
 function renderMarkers(){
@@ -2384,6 +2475,7 @@ document.getElementById('tView').addEventListener('click',e=>{
 /* ---------------- filters ---------------- */
 const fStory=document.getElementById('fStory'), fGf=document.getElementById('fGf'),
       fSch=document.getElementById('fSch'), fPrice=document.getElementById('fPrice'),
+      fUsda=document.getElementById('fUsda'),
       fPriceV=document.getElementById('fPriceV'), fDist=document.getElementById('fDist'),
       fLvl=document.getElementById('fLvl'), fLvlR=document.getElementById('fLvlR');
 
@@ -2418,6 +2510,7 @@ function syncChips(){
   fStory.parentElement.classList.toggle('act',fStory.value!=='all');
   fGf.parentElement.classList.toggle('act',fGf.value!=='all');
   fSch.parentElement.classList.toggle('act',fSch.value!=='all');
+  fUsda.parentElement.classList.toggle('act',fUsda.value!=='all');
   fDist.parentElement.classList.toggle('act',fDist.value!=='all');
   const lvOn = fLvl.value!=='all' && fLvlR.value!=='all';
   fLvl.parentElement.classList.toggle('act',lvOn);
@@ -2427,11 +2520,11 @@ function syncChips(){
 }
 function applyFilters(){ syncChips(); openKey=null; build(); }
 
-[fStory,fGf,fSch,fDist,fLvl,fLvlR].forEach(el=>el.addEventListener('change',applyFilters));
+[fStory,fGf,fSch,fDist,fLvl,fLvlR,fUsda].forEach(el=>el.addEventListener('change',applyFilters));
 fPrice.addEventListener('input',()=>{ syncChips(); build(); });
 
 document.getElementById('tReset').addEventListener('click',()=>{
-  fStory.value='all'; fGf.value='all'; fSch.value='all'; fPrice.value=fPrice.max;
+  fStory.value='all'; fGf.value='all'; fSch.value='all'; fPrice.value=fPrice.max; fUsda.value='all';
   fDist.value='all'; fLvl.value='all'; fLvlR.value='all';
   if(viewOnly){ viewOnly=false; document.getElementById('tView').classList.remove('on'); }
   applyFilters();
