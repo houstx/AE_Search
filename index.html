@@ -821,6 +821,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .ccard .cbuild span{font-size:11px;background:#f2efea;border:1px solid var(--line);
         border-radius:5px;padding:1px 6px;color:#4a4845}
   .ccard .cnote2{font-size:12.5px;color:#4a4845;margin-top:9px}
+  .commlink{display:inline-block;margin-top:11px;font-size:12.5px;font-weight:600;text-decoration:none;
+        color:#fff;background:var(--accent);border-radius:7px;padding:7px 12px}
+  .commlink:hover{background:#0d3f31}
   .cfilters{display:none;border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
   .cfilters.show{display:flex}
   .cfilters .cflab{font-size:10px;font-weight:700;text-transform:uppercase;
@@ -1062,6 +1065,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <option value="all">Any home</option>
         <option value="yes">Verified eligible only</option>
         <option value="inv">Builder inventory only</option>
+      </select>
+    </div>
+    <div class="fg"><label for="fSf">Sq ft</label>
+      <select id="fSf">
+        <option value="0">Any size</option>
+        <option value="1600">1,600+</option>
+        <option value="1800">1,800+</option>
+        <option value="2000">2,000+</option>
+        <option value="2200">2,200+</option>
+        <option value="2500">2,500+</option>
       </select>
     </div>
     <div class="fg fprice"><label for="fPrice">Max price</label>
@@ -1636,179 +1649,179 @@ const BASE = [
 ======================================================================= */
 const COMM = [
  // ---------- Magnolia, Tomball and the west edge ----------
- {n:"Oakwood Trails",c:"Tomball 77377",lat:30.082357,lon:-95.708066,st:"selling",fz:"X",
+ {n:"Oakwood Trails",c:"Tomball 77377",lat:30.082357,lon:-95.708066,st:"selling",fz:"X",u:"https://www.kbhome.com/new-homes-houston/oakwood-trails",ul:"KB Home",
   b:["KB Home"],lo:197995,hi:null,pl:"From $197,995",src:"kb",
   note:"18327 Walnut Canopy Way. One- and two-story plans 1,042–2,245 sf, up to 4 bedrooms. Tomball ISD, next door to Rosehill Elementary. Splash pad, playground and pavilion planned. No mapped floodplain within half a mile — the cleanest flood picture anywhere in this search."},
- {n:"Oakwood Preserve",c:"Tomball 77377",lat:30.082291,lon:-95.707314,st:"selling",ap:1,fz:"X",
+ {n:"Oakwood Preserve",c:"Tomball 77377",lat:30.082291,lon:-95.707314,st:"selling",ap:1,fz:"X",u:"https://www.kbhome.com/new-homes-houston/oakwood-preserve",ul:"KB Home",
   b:["KB Home"],lo:250995,hi:null,pl:"From $250,995",src:"kb",
   note:"The larger-plan half of Oakwood — 1,567–2,980 sf, up to 5 bedrooms. Tomball ISD. Same clean flood picture as Oakwood Trails."},
- {n:"Mustang Ridge",c:"Magnolia 77354",lat:30.221176,lon:-95.762570,st:"selling",fz:"X",
+ {n:"Mustang Ridge",c:"Magnolia 77354",lat:30.221176,lon:-95.762570,st:"selling",fz:"X",u:"https://www.kbhome.com/new-homes-houston/mustang-ridge",ul:"KB Home",
   b:["KB Home"],lo:184995,hi:null,pl:"From $184,995",src:"kb",
   note:"842 Mustang Ridge Terrace. Plans 1,042–2,526 sf, up to 4 bedrooms. Magnolia ISD, adjacent to Magnolia West High School. No mapped floodplain within half a mile."},
- {n:"Grand Pines",c:"Magnolia 77355",lat:30.099875,lon:-95.733062,st:"selling",fz:"X",fzn:1,
+ {n:"Grand Pines",c:"Magnolia 77355",lat:30.099875,lon:-95.733062,st:"selling",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/magnolia/grand-pines",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:249990,hi:null,pl:"From $249,990",src:"drh",
   note:"24903 Evergreen Leaf Loop. Four-bedroom two-storeys in current inventory from $299,990."},
- {n:"Mill Creek",c:"Magnolia 77354",lat:30.231100,lon:-95.704972,st:"selling",fz:"X",fzn:1,
+ {n:"Mill Creek",c:"Magnolia 77354",lat:30.231100,lon:-95.704972,st:"selling",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/magnolia/mill-creek",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:219990,hi:null,pl:"From $219,990",src:"drh",
   note:"14706 Clover Summit Court. The Franklin — five bedrooms, 1,892 sf over two floors — starts at $275,000 here."},
- {n:"Mill Creek Estates",c:"Magnolia 77354",lat:30.199056,lon:-95.627286,st:"selling",ap:1,fz:"X",fzs:1,fzn:1,
+ {n:"Mill Creek Estates",c:"Magnolia 77354",lat:30.199056,lon:-95.627286,st:"selling",ap:1,fz:"X",fzs:1,fzn:1,u:"https://www.drhorton.com/texas/houston/magnolia/mill-creek-estates",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:312990,hi:null,pl:"From $312,990",src:"drh",
   note:"40812 Lilac Branch Street. The larger Estates section. Street is too new to geocode to the rooftop, so the map point and its flood reading are approximate."},
- {n:"Porters Mill",c:"New Caney 77357",lat:30.167718,lon:-95.295746,st:"final",fz:"X",fzn:1,
+ {n:"Porters Mill",c:"New Caney 77357",lat:30.167718,lon:-95.295746,st:"final",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/new-caney/porters-mill",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:229000,hi:480000,pl:"From the $229s",src:"drh",
   note:"18194 Woodpecker Trail. Final opportunities — New Caney ISD. The Franklin five-bedroom starts at $276,000."},
 
  // ---------- Spring / far south end of the corridor ----------
- {n:"Harmony",c:"Spring 77386",lat:30.097267,lon:-95.372593,st:"selling",fz:"X",fzs:1,fzn:1,
+ {n:"Harmony",c:"Spring 77386",lat:30.097267,lon:-95.372593,st:"selling",fz:"X",fzs:1,fzn:1,u:"https://www.johnsondevelopment.com/spring-tx/mpc_harmony",ul:"Johnson Development",
   b:["Ashton Woods","CastleRock","Highland Homes","Perry Homes","Darling Homes"],
   lo:220000,hi:null,pl:"From the $220s",src:"web",
   note:"Master-planned, Conroe ISD. Recreation center, pools, parks. Just north of the Grand Parkway."},
- {n:"Woodson's Reserve",c:"Spring 77386",lat:30.118702,lon:-95.362717,st:"selling",fz:"X",fzs:1,fzn:1,
+ {n:"Woodson's Reserve",c:"Spring 77386",lat:30.118702,lon:-95.362717,st:"selling",fz:"X",fzs:1,fzn:1,u:"https://woodsonsreserve.com/",ul:"woodsonsreserve.com",
   b:["Toll Brothers","Perry Homes","Meritage","Taylor Morrison","Tri Pointe"],
   lo:350000,hi:null,pl:"From the mid $300s",src:"web",
   note:"The community you liked. Verified USDA-INELIGIBLE — it sits inside USDA's urbanized exclusion area, so 100% financing will not work here."},
- {n:"The Meadows at Imperial Oaks",c:"Conroe / Spring 77385",lat:30.157373,lon:-95.401010,st:"selling",fz:"X",fzn:1,
+ {n:"The Meadows at Imperial Oaks",c:"Conroe / Spring 77385",lat:30.157373,lon:-95.401010,st:"selling",fz:"X",fzn:1,u:"https://www.themeadowsatimperialoaks.com/",ul:"themeadowsatimperialoaks.com",
   b:["David Weekley","Coventry Homes","Ashton Woods"],
   lo:300000,hi:600000,pl:"Low $300s – $600s",src:"web",
   note:"Conroe ISD, minutes from the Woodlands employment centers."},
 
  // ---------- Conroe ----------
- {n:"Harper's Preserve",c:"Conroe 77385",lat:30.202400,lon:-95.424520,st:"selling",fz:"X",fzn:1,
+ {n:"Harper's Preserve",c:"Conroe 77385",lat:30.202400,lon:-95.424520,st:"selling",fz:"X",fzn:1,u:"https://harperspreserve.com/",ul:"harperspreserve.com",
   b:["D.R. Horton","Highland Homes","Perry Homes","Chesmar","Plantation Homes"],
   lo:300000,hi:1000000,pl:"Low $300s – $1M+",src:"web",
   note:"On SH 242 just east of I-45. Conroe ISD."},
- {n:"Artavia",c:"Conroe 77302",lat:30.204697,lon:-95.336410,st:"selling",fz:"X",
+ {n:"Artavia",c:"Conroe 77302",lat:30.204697,lon:-95.336410,st:"selling",fz:"X",u:"https://artaviatx.com/",ul:"artaviatx.com",
   b:["Perry Homes","Village Builders (Lennar)","David Weekley","Coventry","Highland Homes","Chesmar","Beazer"],
   lo:280000,hi:700000,pl:"High $200s – $700s",src:"web",
   note:"2,200-acre master plan on SH 242. Conroe ISD. Entry pricing sits close to your range; most sections are well above it."},
- {n:"Ladera Creek",c:"Conroe 77302",lat:30.292375,lon:-95.417866,st:"selling",fz:"X",fzn:1,
+ {n:"Ladera Creek",c:"Conroe 77302",lat:30.292375,lon:-95.417866,st:"selling",fz:"X",fzn:1,u:"https://www.google.com/search?q=Ladera+Creek+Conroe+TX+new+homes",ul:"search the web",
   b:["Lennar","Stylecraft"],lo:280000,hi:null,pl:"High $200s+",src:"web",
   note:"Conroe ISD. One of the few Conroe master plans still opening in the high $200s."},
- {n:"Grand Central Park",c:"Conroe 77304",lat:30.279154,lon:-95.475130,st:"selling",fz:"X",fzs:1,fzn:1,
+ {n:"Grand Central Park",c:"Conroe 77304",lat:30.279154,lon:-95.475130,st:"selling",fz:"X",fzs:1,fzn:1,u:"https://www.grandcentralparktx.com/",ul:"grandcentralparktx.com",
   b:["David Weekley","Drees","Highland Homes","Jamestown Estate","Perry Homes","Westin Homes"],
   lo:300000,hi:600000,pl:"$300s – $600s+",src:"web",
   note:"2,046 acres at I-45 and Loop 336. Above your price band, listed for orientation."},
- {n:"Evergreen",c:"Conroe 77304",lat:30.263971,lon:-95.499448,st:"selling",ap:1,fz:"AE",fzn:1,
+ {n:"Evergreen",c:"Conroe 77304",lat:30.263971,lon:-95.499448,st:"selling",ap:1,fz:"AE",fzn:1,u:"https://www.google.com/search?q=Evergreen+Conroe+TX+new+home+community",ul:"search the web",
   b:["Shea Homes","Chesmar","Perry Homes"],lo:300000,hi:700000,pl:"$300s – $700s",src:"web",
   note:"Still building out west of Conroe off FM 2854."},
- {n:"Sagecrest Trails",c:"Conroe 77304",lat:30.358478,lon:-95.489354,st:"selling",fz:"X",fzn:1,
+ {n:"Sagecrest Trails",c:"Conroe 77304",lat:30.358478,lon:-95.489354,st:"selling",fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/sagecrest-trails",ul:"KB Home",
   b:["KB Home"],lo:208995,hi:null,pl:"From $208,995",src:"kb",
   note:"KB's Conroe master plan on Teas Nursery Road — 383 acres, 266 homes. Conroe ISD."},
- {n:"Sagecrest Preserve",c:"Conroe 77304",lat:30.358512,lon:-95.488838,st:"selling",fz:"X",fzn:1,
+ {n:"Sagecrest Preserve",c:"Conroe 77304",lat:30.358512,lon:-95.488838,st:"selling",fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/sagecrest-preserve",ul:"KB Home",
   b:["KB Home"],lo:230995,hi:null,pl:"From $230,995",src:"kb",
   note:"The larger-plan section of Sagecrest."},
- {n:"Glenwood Forest",c:"Conroe",lat:30.341354,lon:-95.510893,st:"soon",ap:1,fz:"X",fzn:1,
+ {n:"Glenwood Forest",c:"Conroe",lat:30.341354,lon:-95.510893,st:"soon",ap:1,fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/glenwood-forest",ul:"KB Home",
   b:["KB Home"],lo:null,hi:null,pl:"Pricing not yet published",src:"kb",
   note:"KB Home, registration phase, sales office \"coming soon.\" Plans 1,272–2,410 sf, Conroe ISD, 3–5 miles from downtown Conroe. This is one of the two KB openings that could be the October one — KB has not published a date. Call 888-KB-HOMES to get on the interest list."},
- {n:"Grangerland Meadows",c:"Grangerland 77306",lat:30.250138,lon:-95.320322,st:"soon",ap:1,fz:"X",fzn:1,
+ {n:"Grangerland Meadows",c:"Grangerland 77306",lat:30.250138,lon:-95.320322,st:"soon",ap:1,fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/grangerland-meadows",ul:"KB Home",
   b:["KB Home"],lo:null,hi:null,pl:"Pricing not yet published",src:"kb",
   note:"KB Home, sales office \"coming soon.\" Plans 1,243–2,246 sf, up to 4 bedrooms, Conroe ISD — adjacent to Ben Milam Elementary and Grangerland Intermediate. The other candidate for the October opening. Sales line 281-668-3975."},
- {n:"Venetian Pines",c:"Conroe 77301",lat:30.324767,lon:-95.439944,st:"final",fz:"X",fzn:1,
+ {n:"Venetian Pines",c:"Conroe 77301",lat:30.324767,lon:-95.439944,st:"final",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/conroe/venetian-pines",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:243000,hi:null,pl:"From the $243s",src:"drh",
   note:"Final opportunities — only a few homes left."},
- {n:"Baron Village",c:"Conroe 77306",lat:30.281849,lon:-95.320825,st:"selling",ap:1,fz:"X",fzn:1,
+ {n:"Baron Village",c:"Conroe 77306",lat:30.281849,lon:-95.320825,st:"selling",ap:1,fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/conroe/baron-village",ul:"D.R. Horton",
   b:["D.R. Horton Express"],lo:140000,hi:null,pl:"From the $140s",src:"drh",
   note:"Cheapest new construction in the corridor, but plans start at 813 sf with 2–3 bedrooms — most are too small for a household of six."},
- {n:"Silverthorne",c:"Conroe 77303",lat:30.369929,lon:-95.442705,st:"selling",fz:"X",
+ {n:"Silverthorne",c:"Conroe 77303",lat:30.369929,lon:-95.442705,st:"selling",fz:"X",u:"https://www.drhorton.com/texas/houston/conroe/silverthorne",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:245000,hi:null,pl:"From the $245s",src:"drh",
   note:"3–6 bedrooms, 1,156 sf and up, up to 4-car garages. The deepest inventory D.R. Horton has in Conroe."},
- {n:"McCrorey Trails",c:"Conroe 77303",lat:30.424051,lon:-95.364117,st:"selling",fz:"X",fzn:1,
+ {n:"McCrorey Trails",c:"Conroe 77303",lat:30.424051,lon:-95.364117,st:"selling",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/willis/mccrorey-trails",ul:"D.R. Horton",
   b:["D.R. Horton Express"],lo:180000,hi:null,pl:"From the $180s",src:"drh",
   note:"Entry-level. 3–4 bedrooms from 1,158 sf, one-car garage."},
- {n:"Williams Reserve East",c:"Conroe 77303",lat:30.389639,lon:-95.308340,st:"selling",ap:1,fz:"X",fzn:1,
+ {n:"Williams Reserve East",c:"Conroe 77303",lat:30.389639,lon:-95.308340,st:"selling",ap:1,fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/conroe/williams-reserve-east",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:355000,hi:null,pl:"From the $355s",src:"drh",
   note:"New phase now selling. 4–5 bedrooms from 2,051 sf, 3-car garages."},
- {n:"East Williams Cove",c:"Conroe 77303",lat:30.391500,lon:-95.311000,st:"selling",ap:1,fz:"X",fzn:1,
+ {n:"East Williams Cove",c:"Conroe 77303",lat:30.391500,lon:-95.311000,st:"selling",ap:1,fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/conroe/east-williams-cove",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:355000,hi:null,pl:"From the $355s",src:"drh",
   note:"Sister section to Williams Reserve East."},
- {n:"Hills of Westlake",c:"Conroe 77304",lat:30.347175,lon:-95.535171,st:"final",fz:"X",fzn:1,
+ {n:"Hills of Westlake",c:"Conroe 77304",lat:30.347175,lon:-95.535171,st:"final",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/conroe/hills-of-westlake",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:324000,hi:null,pl:"From the $324s",src:"drh",
   note:"Final opportunities."},
- {n:"Madeley Creek Preserve",c:"Conroe 77304",lat:30.367896,lon:-95.505285,st:"soon",ap:1,fz:"X",
+ {n:"Madeley Creek Preserve",c:"Conroe 77304",lat:30.367896,lon:-95.505285,st:"soon",ap:1,fz:"X",u:"https://www.drhorton.com/texas/houston/conroe",ul:"D.R. Horton, Conroe",
   b:["D.R. Horton"],lo:null,hi:null,pl:"Pricing not yet published",src:"drh",
   note:"Listed as Coming Soon on D.R. Horton's site — no pricing or plans released yet."},
- {n:"Granger Pines",c:"Conroe 77302",lat:30.236350,lon:-95.310200,st:"selling",fz:"AE",fzn:1,
+ {n:"Granger Pines",c:"Conroe 77302",lat:30.236350,lon:-95.310200,st:"selling",fz:"AE",fzn:1,u:"https://www.drhorton.com/texas/houston/conroe/granger-pines",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:250000,hi:null,pl:"From the $250s",src:"drh",
   note:"Conroe ISD — the only B-rated district in your search, and Hope Elementary is inside the subdivision. Several homes here are already on your map."},
 
  // ---------- Willis / Lake Conroe ----------
- {n:"The Woodlands Hills",c:"Willis 77318",lat:30.398720,lon:-95.502566,st:"selling",fz:"X",fzn:1,
+ {n:"The Woodlands Hills",c:"Willis 77318",lat:30.398720,lon:-95.502566,st:"selling",fz:"X",fzn:1,u:"https://thewoodlandshills.com/",ul:"thewoodlandshills.com",
   b:["Highland Homes","Chesmar","Perry Homes","David Weekley","Century Communities","DRB Homes","Ravenna","Westin","Smith Douglas"],
   lo:280000,hi:800000,pl:"Upper $200s – $800s",src:"web",
   note:"2,000-acre Howard Hughes master plan at I-45 and FM 830 — 112 acres of open space, 20 parks, activity center. Willis ISD. The upper-$200s entry sections are the ones worth asking about."},
- {n:"Grace Landing",c:"Willis 77318",lat:30.391874,lon:-95.442862,st:"selling",fz:"X",fzn:1,
+ {n:"Grace Landing",c:"Willis 77318",lat:30.391874,lon:-95.442862,st:"selling",fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/grace-landing",ul:"KB Home",
   b:["KB Home"],lo:174995,hi:null,pl:"From $174,995",src:"kb",
   note:"Lowest published KB starting price anywhere in the corridor. Willis ISD."},
- {n:"Castles Edge",c:"Willis 77378",lat:30.443586,lon:-95.439268,st:"selling",ap:1,fz:"X",
+ {n:"Castles Edge",c:"Willis 77378",lat:30.443586,lon:-95.439268,st:"selling",ap:1,fz:"X",u:"https://www.drhorton.com/texas/houston/willis/castles-edge",ul:"D.R. Horton",
   b:["D.R. Horton Express"],lo:145000,hi:null,pl:"From the $145s",src:"drh",
   note:"Entry-level; plans start at 816 sf with 2–3 bedrooms."},
- {n:"William Trails",c:"Willis 77378",lat:30.448997,lon:-95.386045,st:"selling",fz:"X",
+ {n:"William Trails",c:"Willis 77378",lat:30.448997,lon:-95.386045,st:"selling",fz:"X",u:"https://www.drhorton.com/texas/houston/willis/william-trails",ul:"D.R. Horton",
   b:["D.R. Horton Express"],lo:157000,hi:null,pl:"From the $157s",src:"drh",
   note:"A new phase is listed as coming soon. Small plans — 813 sf and up."},
- {n:"Chambers Creek",c:"Willis 77318",lat:30.446838,lon:-95.504883,st:"selling",fz:"X",fzn:1,
+ {n:"Chambers Creek",c:"Willis 77318",lat:30.446838,lon:-95.504883,st:"selling",fz:"X",fzn:1,u:"https://chamberscreektx.com/",ul:"chamberscreektx.com",
   b:["Coventry Homes","Jamestown Estate Homes"],lo:null,hi:null,pl:"Contact builder — 55+ community",src:"web",
   note:"Gated 55+ resort community on Lake Conroe. Listed for completeness; not a fit for a household with children."},
 
  // ---------- West edge ----------
- {n:"Woodforest",c:"Montgomery 77316",lat:30.275906,lon:-95.568631,st:"selling",fz:"X",fzn:1,
+ {n:"Woodforest",c:"Montgomery 77316",lat:30.275906,lon:-95.568631,st:"selling",fz:"X",fzn:1,u:"https://www.woodforesttx.com/",ul:"woodforesttx.com",
   b:["Highland Homes","Taylor Morrison (Bonterra)","David Weekley","Perry Homes","Chesmar"],
   lo:200000,hi:900000,pl:"$200s – $900s",src:"web",
   note:"Montgomery County's top-selling master plan. Far west edge of your search area — about 35 minutes from I-45."},
 
  // ---------- Porter / New Caney / Splendora ----------
- {n:"The Highlands",c:"Porter 77365",lat:30.134696,lon:-95.308154,st:"selling",fz:"X",
+ {n:"The Highlands",c:"Porter 77365",lat:30.134696,lon:-95.308154,st:"selling",fz:"X",u:"https://thehighlands.com/",ul:"thehighlands.com",
   b:["Caldwell Communities — 13 builders"],lo:433000,hi:850000,pl:"$433k – $850k",src:"web",
   note:"2,300 acres with lakes, golf and trails. Sampled points inside it came back USDA-eligible, but nothing lists near your budget."},
- {n:"Madera Trails",c:"New Caney 77357",lat:30.150500,lon:-95.137400,st:"selling",ap:1,fz:"X",fzn:1,
+ {n:"Madera Trails",c:"New Caney 77357",lat:30.150500,lon:-95.137400,st:"selling",ap:1,fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/madera-trails",ul:"KB Home",
   b:["KB Home"],lo:172995,hi:null,pl:"From $172,995",src:"kb",
   note:"20115 Sunlit Timber Trl — off FM 1485 at Willaby Rd. Every plan is one story, 1,043–2,587 sf, up to 5 bedrooms. New Caney ISD. Park, playground and splash pad planned."},
- {n:"Madera Preserve",c:"New Caney 77357",lat:30.151400,lon:-95.136200,st:"selling",ap:1,fz:"X",fzn:1,
+ {n:"Madera Preserve",c:"New Caney 77357",lat:30.151400,lon:-95.136200,st:"selling",ap:1,fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/madera-preserve",ul:"KB Home",
   b:["KB Home"],lo:208995,hi:null,pl:"From $208,995",src:"kb",
   note:"The larger-plan section of Madera. New Caney ISD."},
- {n:"Valley Ranch",c:"New Caney 77357",lat:30.130387,lon:-95.234488,st:"selling",fz:"X",fzn:1,
+ {n:"Valley Ranch",c:"New Caney 77357",lat:30.130387,lon:-95.234488,st:"selling",fz:"X",fzn:1,u:"https://www.valley-ranch.com/",ul:"valley-ranch.com",
   b:["Signorelli Homes","Legend Homes","First America Homes"],lo:180000,hi:400000,pl:"$180s – $400s",src:"web",
   note:"1,400-acre master plan at US 59 and the Grand Parkway, with its own town center. New Caney ISD."},
- {n:"Harrington Trails",c:"New Caney 77357",lat:30.231599,lon:-95.233246,st:"selling",fz:"X",
+ {n:"Harrington Trails",c:"New Caney 77357",lat:30.231599,lon:-95.233246,st:"selling",fz:"X",u:"https://www.drhorton.com/texas/houston/new-caney/harrington-trails-at-the-canopies",ul:"D.R. Horton",
   b:["Brohn Homes","Century Communities","HistoryMaker","Lennar","Rausch Coleman"],
   lo:220000,hi:295000,pl:"About $220k – $295k",src:"list",
   note:"Splendora ISD. Several homes here are already on your map, including the 2,600 sf Mallow Ct pick."},
- {n:"Pinewood at Grand Texas",c:"New Caney 77357",lat:30.194568,lon:-95.210846,st:"selling",fz:"X",fzn:1,
+ {n:"Pinewood at Grand Texas",c:"New Caney 77357",lat:30.194568,lon:-95.210846,st:"selling",fz:"X",fzn:1,u:"https://www.google.com/search?q=Pinewood+at+Grand+Texas+New+Caney+M%2FI+Homes",ul:"search the web",
   b:["M/I Homes","Lennar"],lo:219000,hi:295000,pl:"About $219k – $295k",src:"list",
   note:"Splendora ISD, next to the Grand Texas / Big Rivers attractions."},
- {n:"The Canopies",c:"Splendora 77372",lat:30.249219,lon:-95.209218,st:"selling",fz:"X",fzn:1,
+ {n:"The Canopies",c:"Splendora 77372",lat:30.249219,lon:-95.209218,st:"selling",fz:"X",fzn:1,u:"https://thecanopies.com/",ul:"thecanopies.com",
   b:["D.R. Horton","CastleRock","Risewell Homes","Smith Douglas"],lo:200000,hi:290000,pl:"From the low $200s",src:"web",
   note:"Splendora ISD, with a new Greenleaf Elementary campus inside the community. Note: three Viceroy Way / Golden Pheasant homes here sit in FEMA Zone A, where USDA will not guarantee new construction."},
- {n:"The Presswoods",c:"Splendora 77372",lat:30.247700,lon:-95.202100,st:"selling",fz:"X",fzn:1,
+ {n:"The Presswoods",c:"Splendora 77372",lat:30.247700,lon:-95.202100,st:"selling",fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/splendora/presswoods",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:220000,hi:270000,pl:"About $220k – $270k",src:"list",
   note:"Splendora ISD. Lowest HOA of the Splendora group at $450/yr."},
- {n:"Townsend Reserve",c:"Splendora 77372",lat:30.249400,lon:-95.211300,st:"selling",fz:"X",fzn:1,
+ {n:"Townsend Reserve",c:"Splendora 77372",lat:30.249400,lon:-95.211300,st:"selling",fz:"X",fzn:1,u:"https://www.google.com/search?q=Townsend+Reserve+Splendora+TX+Legend+Homes",ul:"search the web",
   b:["Legend Homes","Lennar"],lo:224990,hi:260000,pl:"About $225k – $260k",src:"list",
   note:"Splendora ISD. Legend's listings here name USDA explicitly as accepted financing."},
- {n:"Firefly",c:"Splendora 77372",lat:30.231438,lon:-95.152796,st:"soon",ap:1,fz:"X",fzn:1,
+ {n:"Firefly",c:"Splendora 77372",lat:30.231438,lon:-95.152796,st:"soon",ap:1,fz:"X",fzn:1,u:"https://www.drhorton.com/texas/houston/splendora/firefly",ul:"D.R. Horton",
   b:["D.R. Horton"],lo:null,hi:null,pl:"Pricing not yet published",src:"drh",
   note:"Listed as Coming Soon by D.R. Horton. Worth a call — every other D.R. Horton community in Splendora opened in the low $200s."},
- {n:"Hill & Dale Ranch",c:"Splendora 77372",lat:30.201900,lon:-95.161700,st:"selling",fz:"X",fzn:1,
+ {n:"Hill & Dale Ranch",c:"Splendora 77372",lat:30.201900,lon:-95.161700,st:"selling",fz:"X",fzn:1,u:"https://www.google.com/search?q=Hill+and+Dale+Ranch+Splendora+TX+Home+Creations",ul:"search the web",
   b:["Home Creations"],lo:254990,hi:283000,pl:"About $255k – $283k",src:"list",
   note:"Reported to sit outside a MUD, with a $300/yr HOA — which can make a $283k home here cheaper monthly than a $265k home in a MUD district. Verify the tax rate with the county."},
- {n:"Peppervine",c:"Porter 77365",lat:30.084090,lon:-95.245691,st:"selling",fz:"X",fzn:1,
+ {n:"Peppervine",c:"Porter 77365",lat:30.084090,lon:-95.245691,st:"selling",fz:"X",fzn:1,u:"https://www.google.com/search?q=Peppervine+Porter+TX+Centex+new+homes",ul:"search the web",
   b:["Centex Homes"],lo:241990,hi:314930,pl:"From $241,990",src:"web",
   note:"The strongest school feeder in New Caney ISD — no D or F campus anywhere in it. Plans 1,204–2,536 sf, HOA $550/yr."},
- {n:"Northpark South",c:"Porter 77365",lat:30.068964,lon:-95.266838,st:"selling",fz:"X",fzs:1,fzn:1,
+ {n:"Northpark South",c:"Porter 77365",lat:30.068964,lon:-95.266838,st:"selling",fz:"X",fzs:1,fzn:1,u:"https://www.centurycommunities.com/find-your-new-home/texas/houston-metro/porter/northpark-south/",ul:"Century Communities",
   b:["Century Communities"],lo:249900,hi:null,pl:"From $249,900",src:"web",
   note:"New Caney ISD. Too new to appear in the district street listing — confirm the school zone with NCISD before you write an offer."},
- {n:"Maple Heights",c:"Porter 77365",lat:30.144786,lon:-95.321489,st:"selling",fz:"X",
+ {n:"Maple Heights",c:"Porter 77365",lat:30.144786,lon:-95.321489,st:"selling",fz:"X",u:"https://www.centurycommunities.com/find-your-new-home/texas/houston-metro/porter/maple-heights/",ul:"Century Communities",
   b:["Century Communities"],lo:215000,hi:299000,pl:"About $215k – $299k",src:"list",
   note:"New Caney ISD. Holds the lowest monthly payment on your whole map."},
- {n:"Royal Pines",c:"Porter 77365",lat:30.100300,lon:-95.192800,st:"selling",fz:"X",fzn:1,
+ {n:"Royal Pines",c:"Porter 77365",lat:30.100300,lon:-95.192800,st:"selling",fz:"X",fzn:1,u:"https://www.starlighthomes.com/houston/royal-pines",ul:"Starlight Homes",
   b:["Starlight Homes"],lo:239990,hi:290000,pl:"About $240k – $290k",src:"list",
   note:"New Caney ISD. Sits just across the USDA eligibility line from Royal Brook at Kingwood, which is ineligible."},
 
  // ---------- Lake Houston / east ----------
- {n:"Balmoral",c:"Humble 77346",lat:29.944177,lon:-95.205386,st:"selling",fz:"X",
+ {n:"Balmoral",c:"Humble 77346",lat:29.944177,lon:-95.205386,st:"selling",fz:"X",u:"https://balmoralhouston.com/",ul:"balmoralhouston.com",
   b:["Ashton Woods","Chesmar","CastleRock","Lennar","Colina Homes","Highland Homes"],
   lo:200000,hi:500000,pl:"$200s – $500s",src:"web",
   note:"750 acres on the northeast Beltway with the Crystal Lagoon. Humble ISD. Inside the Houston urbanized area — expect this one to be USDA-ineligible; verify before touring."},
- {n:"Sweetgrass Village",c:"Crosby 77532",lat:29.871843,lon:-95.039459,st:"selling",fz:"X",fzn:1,
+ {n:"Sweetgrass Village",c:"Crosby 77532",lat:29.871843,lon:-95.039459,st:"selling",fz:"X",fzn:1,u:"https://www.kbhome.com/new-homes-houston/sweetgrass-village",ul:"KB Home",
   b:["KB Home"],lo:209995,hi:null,pl:"From $209,995",src:"kb",
   note:"12806 Autumn Woods Dr. Plans 1,523–2,783 sf, Crosby ISD. Pool, splash pad, pickleball. Far southeast corner of the search area, east of Lake Houston."}
 ];
@@ -2155,6 +2168,8 @@ function passes(d,over){
   const di=o.di!==undefined?o.di:document.getElementById('fDist').value;
   const lv=o.lv!==undefined?o.lv:document.getElementById('fLvl').value;
   const lr=o.lr!==undefined?o.lr:document.getElementById('fLvlR').value;
+  const sfMin=+document.getElementById('fSf').value;
+  if(sfMin && d.sf<sfMin) return false;
   const ue=document.getElementById('fUsda').value;
   if(ue==='yes' && d.e!==1) return false;
   if(ue==='inv' && !d.inv)  return false;
@@ -2475,7 +2490,7 @@ document.getElementById('tView').addEventListener('click',e=>{
 /* ---------------- filters ---------------- */
 const fStory=document.getElementById('fStory'), fGf=document.getElementById('fGf'),
       fSch=document.getElementById('fSch'), fPrice=document.getElementById('fPrice'),
-      fUsda=document.getElementById('fUsda'),
+      fUsda=document.getElementById('fUsda'), fSf=document.getElementById('fSf'),
       fPriceV=document.getElementById('fPriceV'), fDist=document.getElementById('fDist'),
       fLvl=document.getElementById('fLvl'), fLvlR=document.getElementById('fLvlR');
 
@@ -2511,6 +2526,7 @@ function syncChips(){
   fGf.parentElement.classList.toggle('act',fGf.value!=='all');
   fSch.parentElement.classList.toggle('act',fSch.value!=='all');
   fUsda.parentElement.classList.toggle('act',fUsda.value!=='all');
+  fSf.parentElement.classList.toggle('act',fSf.value!=='0');
   fDist.parentElement.classList.toggle('act',fDist.value!=='all');
   const lvOn = fLvl.value!=='all' && fLvlR.value!=='all';
   fLvl.parentElement.classList.toggle('act',lvOn);
@@ -2520,11 +2536,12 @@ function syncChips(){
 }
 function applyFilters(){ syncChips(); openKey=null; build(); }
 
-[fStory,fGf,fSch,fDist,fLvl,fLvlR,fUsda].forEach(el=>el.addEventListener('change',applyFilters));
+[fStory,fGf,fSch,fDist,fLvl,fLvlR,fUsda,fSf].forEach(el=>el.addEventListener('change',applyFilters));
 fPrice.addEventListener('input',()=>{ syncChips(); build(); });
 
 document.getElementById('tReset').addEventListener('click',()=>{
   fStory.value='all'; fGf.value='all'; fSch.value='all'; fPrice.value=fPrice.max; fUsda.value='all';
+  fSf.value='0';
   fDist.value='all'; fLvl.value='all'; fLvlR.value='all';
   if(viewOnly){ viewOnly=false; document.getElementById('tView').classList.remove('on'); }
   applyFilters();
@@ -2630,6 +2647,9 @@ document.addEventListener('click',e=>{
   const a=e.target.closest('a.emb');
   if(!a) return;
   if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;   // let power users open a real tab
+  // The in-site viewer only works for HAR, which allows framing. Builder sites
+  // refuse it and would show a blank pane, so those open in a normal tab.
+  if(!/(^|\.)har\.com$/i.test(new URL(a.href, location.href).hostname)) return;
   e.preventDefault(); e.stopPropagation();
   openListing(a.href,a.dataset.t);
 },true); // capture: the details drawer stops bubbling clicks
@@ -2903,6 +2923,9 @@ function commPop(c){
       <a href="https://msc.fema.gov/portal/search#searchresultsanchor" target="_blank" rel="noopener">FEMA map</a></div>
     ${c.note}<br>
     ${c.ap?'<br><span style="color:#8a6212">Map point is approximate — the builder has not published a street address yet.</span>':''}
+    ${c.u?`<a class="harbtn emb" data-t="${c.n}" href="${c.u}" target="_blank" rel="noopener">See homes in ${c.n} &#8599;</a>
+          <div style="font-size:11px;color:#65635f;margin-top:4px">${c.ul==='search the web'
+            ? 'No public community page &mdash; this searches the web for it.' : c.ul}</div>`:''}
     <br><span style="color:#65635f;font-size:11px">Pricing read ${c.src==='kb'?'from KB Home':c.src==='drh'?"from D.R. Horton":c.src==='list'?'from the listings on this map':'from builder and community sources'}, Sept 26 2026. Verify before you tour.</span></div>`;
 }
 
@@ -2962,7 +2985,9 @@ function renderCommList(){
       <div class="addr" style="margin-top:6px">${c.n}</div>
       <div class="sub">${c.c}${c.ap?' &middot; approximate map point':''}</div>
       <div class="cbuild">${c.b.map(x=>`<span>${x}</span>`).join('')}</div>
-      <div class="cnote2">${c.note}</div>`;
+      <div class="cnote2">${c.note}</div>
+      ${c.u?`<a class="commlink emb" data-t="${c.n}" href="${c.u}" target="_blank" rel="noopener"
+              onclick="event.stopPropagation()">See homes in ${c.n} &#8599;</a>`:''}`;
     el.addEventListener('click',()=>{
       map.flyTo([c.lat,c.lon],Math.max(map.getZoom(),14),{duration:.6});
       const mk=commMarks.find(m=>m._c===c); if(mk) mk.openPopup();
